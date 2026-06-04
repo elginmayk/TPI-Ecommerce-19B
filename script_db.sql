@@ -1,0 +1,42 @@
+﻿USE master
+GO
+IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = 'TPI_ECOMMERCE')
+BEGIN
+    CREATE DATABASE TPI_ECOMMERCE
+END
+GO
+
+USE TPI_ECOMMERCE
+GO
+
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[CATEGORIAS]') AND type in (N'U'))
+BEGIN
+CREATE TABLE CATEGORIAS (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    Nombre VARCHAR(50) NOT NULL,
+    Estado BIT DEFAULT 1
+);
+END
+GO
+
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[PRODUCTOS]') AND type in (N'U'))
+BEGIN
+CREATE TABLE PRODUCTOS (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    Nombre VARCHAR(50) NOT NULL,
+    Descripcion VARCHAR(200),
+    Precio DECIMAL(18,2),
+    Id_Categoria INT FOREIGN KEY REFERENCES CATEGORIAS(Id),
+    Stock INT,
+    Estado BIT DEFAULT 1
+);
+END
+GO
+
+IF NOT EXISTS (SELECT * FROM PRODUCTOS WHERE Nombre = 'Teclado Mecánico')
+BEGIN
+INSERT INTO CATEGORIAS (Nombre, Estado) VALUES ('Electrónica', 1);
+INSERT INTO PRODUCTOS (Nombre, Descripcion, Precio, Id_Categoria, Stock, Estado) 
+VALUES ('Teclado Mecánico', 'RGB, Switch Blue', 4500.00, 1, 10, 1);
+END
+GO

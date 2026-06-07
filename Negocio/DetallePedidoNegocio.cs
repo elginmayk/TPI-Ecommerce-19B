@@ -1,0 +1,121 @@
+﻿using AccesoDatos;
+using Dominio;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Negocio
+{
+    public class DetallePedidoNegocio
+    {
+        public List<DetallePedido> listar()
+        {
+            List<DetallePedido> lista = new List<DetallePedido>();
+            Acceso datos = new Acceso();
+
+            try
+            {
+                datos.setearConsulta("SELECT DP.Id, DP.Cantidad" +
+                                     "PE.Id AS DP.IdPedido" +
+                                     "PR.Id AS DP.IdProducto, PR.Nombre AS Nombre, PR.Descripcion AS Descripcion, PR.Precio AS Precio FROM DETALLE_PEDIDOS DP" +
+                                     "INNER JOIN PEDIDOS PE ON DP.IdPedido = PE.Id" +
+                                     "INNER JOIN PRODUCTOS PR ON DP.IdProducto = PR.Id");
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    DetallePedido aux = new DetallePedido();
+                    aux.Id = (int)datos.Lector["Id"];
+                    aux.Cantidad = (int)datos.Lector["Cantidad"];
+
+                    aux.Pedido = new Pedido();
+                    aux.Pedido.Id = (int)datos.Lector["IdPedido"];
+
+                    aux.Producto = new Producto();
+                    aux.Producto.Id = (int)datos.Lector["IdProducto"];
+                    aux.Producto.Nombre = (string)datos.Lector["Nombre"];
+                    aux.Producto.Descripcion = (string)datos.Lector["Decripcion"];
+                    aux.Producto.Precio = (decimal)datos.Lector["Precio"];
+
+
+                    lista.Add(aux);
+                }
+
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+        public int Agregar(DetallePedido nuevo)
+        {
+
+            Acceso datos = new Acceso();
+            try
+            {
+                datos.setearConsulta(
+                    "INSERT INTO DETALLE_PEDIDOS " +
+                    "(Cantidad, IdPedido, IdProducto) " +
+                    "OUTPUT INSERTED.Id " +
+                    "VALUES (@Cantidad, @Pedido, @Producto)"
+                );
+
+                datos.agregarParametro("@Cantidad", nuevo.Cantidad);
+                datos.agregarParametro("@Pedido", nuevo.Pedido.Id);
+                datos.agregarParametro("@Producto", nuevo.Producto.Id);
+
+                return datos.ejecutarAccionScalar();
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+        public void Modificar(DetallePedido Detalle)
+        {
+            Acceso datos = new Acceso();
+
+            try
+            {
+                datos.setearConsulta(
+                    "UPDATE DETALLE_PEDIDOS SET " +
+                    "Cantidad = @Cantidad" +
+                    "Pedido = @Pedido" +
+                    "Producto = @Producto" +
+                    "WHERE Id = @Id");
+
+                datos.agregarParametro("@Cantidad", Detalle.Cantidad);
+                datos.agregarParametro("@Pedido", Detalle.Pedido.Id);
+                datos.agregarParametro("@Producto", Detalle.Producto.Id);
+
+                datos.ejecutarAccion();
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+        public void Eliminar(int id)
+        {
+            Acceso datos = new Acceso();
+
+            try
+            {
+                datos.setearConsulta("DELETE FROM DETALLE_PEDIDOS WHERE Id = @Id");
+                datos.agregarParametro("@Id", id);
+                datos.ejecutarAccion();
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+    }
+}

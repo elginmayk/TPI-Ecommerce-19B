@@ -43,6 +43,26 @@ namespace AccesoDatos
             }
         }
 
+        public void agregarParametro(string nombre, object valor)
+        {
+            comando.Parameters.AddWithValue(nombre, valor);
+        }
+
+        public void ejecutarAccion()
+        {
+            comando.Connection = conexion;
+            conexion.Open();
+            comando.ExecuteNonQuery();
+        }
+
+        public int ejecutarAccionScalar()
+        {
+            comando.Connection = conexion;
+            conexion.Open();
+            int id = (int)comando.ExecuteScalar();
+            return id;
+        }
+
         public void cerrarConexion()
         {
             if (lector != null)

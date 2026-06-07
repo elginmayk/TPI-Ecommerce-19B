@@ -41,8 +41,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CategoriaNegocio.cs" />
+    <Compile Include="DetallePedidoNegocio.cs" />
+    <Compile Include="DireccioNegocio.cs" />
+    <Compile Include="FormaPagoNegocio.cs" />
+    <Compile Include="FormaEntregaNegocio.cs" />
+    <Compile Include="PedidoNegocio.cs" />
     <Compile Include="ProductoNegocio.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UsuarioNegocio.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AccesoDatos\AccesoDatos.csproj">

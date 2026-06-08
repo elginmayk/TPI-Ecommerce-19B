@@ -17,28 +17,25 @@ namespace Negocio
 
             try
             {
-                datos.setearConsulta("SELECT Id, Nombre, Descripcion, Precio, Stock, Estado, UrlImagen FROM PRODUCTOS");
+                datos.setearConsulta("SELECT P.IdProducto,P.Nombre,P.Descripcion,P.Precio,P.Stock,P.Estado,P.UrlImagen,C.Nombre AS CategoriaNombre FROM PRODUCTOS P INNER JOIN CATEGORIAS C ON P.IdCategoria = C.IdCategoria WHERE Estado = 1 AND Stock > 0 ORDER BY C.Nombre;");
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
                 {
                     Producto aux = new Producto();
-                    aux.Id = (int)datos.Lector["Id"];
+
+                    aux.Id = (int)datos.Lector["IdProducto"];
                     aux.Nombre = (string)datos.Lector["Nombre"];
-                    aux.Descripcion = (string)datos.Lector["Descripcion"];
+                    aux.Descripcion = datos.Lector["Descripcion"] != DBNull.Value ? datos.Lector["Descripcion"].ToString() : "";
                     aux.Precio = (decimal)datos.Lector["Precio"];
                     aux.Stock = (int)datos.Lector["Stock"];
                     aux.Estado = (bool)datos.Lector["Estado"];
-                    aux.ImagenUrl = (string)datos.Lector["UrlImagen"];
-
+                    aux.ImagenUrl = datos.Lector["UrlImagen"] != DBNull.Value ? datos.Lector["UrlImagen"].ToString() : "";
+                    aux.CategoriaNombre = (string)datos.Lector["CategoriaNombre"];
                     lista.Add(aux);
                 }
 
                 return lista;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
             }
             finally
             {

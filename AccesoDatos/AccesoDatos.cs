@@ -19,7 +19,8 @@ namespace AccesoDatos
 
         public Acceso()
         {
-            conexion = new SqlConnection("server=.\\SQLEXPRESS; database=TPI_ECOMMERCE; integrated security=true");
+          //  conexion = new SqlConnection("server=.\\SQLEXPRESS; database=TPI_ECOMMERCE; integrated security=true");
+            conexion = new SqlConnection("Server=localhost,1433;Database=TPI_ECOMMERCE;User Id=sa;Password=Maycol-123456;TrustServerCertificate=True");
             comando = new SqlCommand();
         }
 

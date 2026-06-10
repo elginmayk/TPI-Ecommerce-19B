@@ -42,7 +42,7 @@
 
         <!-- LOGO -->
         <a class="navbar-brand fw-bold text-uppercase" runat="server" href="~/Default.aspx">
-            THE TORMENT STORE
+            THE DIBA STORE
         </a>
 
         <!-- BOTON RESPONSIVE -->
@@ -62,12 +62,18 @@
                         Inicio
                     </a>
                 </li>
-
-                <!-- PRODUCTOS -->
+                 <!-- PRODUCTOS -->
+                 <li class="nav-item">
+                    <a class='nav-link <%: Request.Url.AbsolutePath.ToLower().Contains("listaproductos") ? "active" : "" %>'
+                    runat="server" href="~/Productos.aspx">
+                    Productos
+                    </a>
+                  </li>
+                <!-- PRODUCTOS ADMINISTRAR PRODUCTO -->
                 <li class="nav-item">
                     <a class='nav-link <%: Request.Url.AbsolutePath.ToLower().Contains("listaproductos") ? "active" : "" %>'
                         runat="server" href="~/ListaProductos.aspx">
-                        Productos
+                        Administrar Producto
                     </a>
                 </li>
 
@@ -104,9 +110,36 @@
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
             </asp:ContentPlaceHolder>
             <hr />
-            <footer>
-                <p>&copy; <%: DateTime.Now.Year %> - Mi aplicación ASP.NET</p>
-            </footer>
+           
+<footer class="footer">
+
+    <div class="footer-contenido">
+
+        <div class="footer-seccion">
+            <h4>The Diba Store</h4>
+            <p>Tu tienda online de confianza</p>
+        </div>
+
+        <div class="footer-seccion">
+            <h4>Contacto</h4>
+            <p>📧 email@diba.com</p>
+            <p>📍 Argentina</p>
+        </div>
+
+        <div class="footer-seccion">
+            <h4>Seguinos</h4>
+            <p>📱 Instagram</p>
+            <p>👍 Facebook</p>
+        </div>
+
+    </div>
+
+    <div class="footer-copy">
+        © <%: DateTime.Now.Year %> The Diba Store
+    </div>
+
+</footer>
+
         </div>
     </form>
     <asp:PlaceHolder runat="server">

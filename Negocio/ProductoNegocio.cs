@@ -42,6 +42,31 @@ namespace Negocio
                 datos.cerrarConexion();
             }
         }
+
+        public List<IGrouping<string, Producto>> listarAgrupados()
+        {
+            var lista = listar();
+
+            return lista
+                .Where(p => p.Estado && p.Stock > 0)
+                .GroupBy(p => p.CategoriaNombre)
+                .ToList();
+        }
+
+        public List<Producto> listarDestacados()
+        {
+            var lista = listar();
+
+            return lista
+                .Where(p => p.Estado && p.Stock > 0)
+                .Take(6) // solo 6 productos
+                .ToList();
+        }
+
+
+
+
+
         public int Agregar(Producto nuevo)
         {
 

@@ -1,15 +1,14 @@
-﻿using AccesoDatos;
-using Dominio;
-using Negocio;
+﻿using Negocio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
-
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 
 namespace EcommerceWeb
 {
-    public partial class _Default : System.Web.UI.Page
+    public partial class Productos : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -19,29 +18,18 @@ namespace EcommerceWeb
                 CargarProductos();
             }
 
-
         }
+
 
 
         private void CargarProductos()
         {
-
-
             ProductoNegocio negocio = new ProductoNegocio();
 
-            rptProductos.DataSource = negocio.listarDestacados();
-            rptProductos.DataBind();
-
-
-
-
+            rptCategorias.DataSource = negocio.listarAgrupados();
+            rptCategorias.DataBind();
         }
 
 
-
-        protected void AgregarCarrito_Click(object sender, System.Web.UI.WebControls.CommandEventArgs e)
-        {
-           
-        }
     }
 }

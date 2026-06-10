@@ -1,42 +1,78 @@
 ﻿<%@ Page Title="Inicio" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="EcommerceWeb._Default" %>
-
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
-    <main>
-        <h2 style="margin-bottom:20px;">Productos</h2>
+<main>
+        
+<div class="banner">
+    <div class="overlay">
+        <h1>Bienvenido a The Diba Store</h1>
+        <p>Los mejores productos al mejor precio</p>
 
-<asp:Repeater ID="rptCategorias" runat="server">
-    <ItemTemplate>
-
-        <!-- 🔥 NOMBRE DE CATEGORIA -->
-        <h3><%# Eval("Key") %></h3>
-
-        <asp:Repeater ID="rptProductos" runat="server" 
-            DataSource='<%# Container.DataItem %>'>
-            
-            <ItemTemplate>
-
-                <div style="border:1px solid #ccc; padding:10px; width:200px; display:inline-block; margin:10px; text-align:center;">
-                    
-                    <img src="<%# Eval("ImagenUrl") %>" style="width:100%; height:150px;" />
-
-                    <h4><%# Eval("Nombre") %></h4>
-
-                    <p>$ <%# Eval("Precio", "{0:N2}") %></p>
-
-                </div>
-
-            </ItemTemplate>
-
-        </asp:Repeater>
-
-    </ItemTemplate>
-</asp:Repeater>
+        <a href="#productos" class="btn-banner">Ver productos</a>
+    </div>
+</div>
 
 
- 
+
+      
+
+<h2 class="titulo-seccion">Productos destacados</h2>
+
+<div class="contenedor-productos">
+
+    <asp:Repeater ID="rptProductos" runat="server">
+
+        <ItemTemplate>
+
+            <div class="card-producto">
+
+                <img src='<%# Eval("ImagenUrl") %>' />
+
+                <h4><%# Eval("Nombre") %></h4>
+
+                <p class="precio">
+                    $ <%# Eval("Precio", "{0:N2}") %>
+                </p>
+
+            </div>
+
+        </ItemTemplate>
+
+    </asp:Repeater>
+
+</div>
+
+<div class="beneficios">
+
+    <div class="beneficio">
+        🚚 <h4>Envíos rápidos</h4>
+        <p>A todo el país</p>
+    </div>
+
+    <div class="beneficio">
+        💳 <h4>Pagos seguros</h4>
+        <p>Protección garantizada</p>
+    </div>
+
+    <div class="beneficio">
+        🔄 <h4>Cambios gratis</h4>
+        <p>Hasta 30 días</p>
+    </div>
+
+</div>
 
 
-    </main>
+<h2 class="titulo-categorias">Categorías</h2>
+
+<div class="categorias">
+
+    <div class="categoria-item">👟 Calzado</div>
+    <div class="categoria-item">🎒 Accesorios</div>
+    <div class="categoria-item">👕 Ropa</div>
+
+</div>
+
+
+ </main>
 
 </asp:Content>

@@ -182,3 +182,36 @@ BEGIN
     );
 END
 GO
+INSERT INTO CATEGORIAS (Nombre)
+VALUES 
+('Ropa'),
+('Calzado'),
+('Accesorios');
+
+GO
+-- =====================
+-- ROPA (IdCategoria = 1)
+-- =====================
+('Remera Blanca', 'Remera de algodón básica', 8000, 50, 1, 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab', 1),
+('Campera Invierno', 'Campera abrigada impermeable', 75000, 12, 1, 'https://images.unsplash.com/photo-1520975916090-3105956dac38', 1),
+('Jeans Slim', 'Pantalón jeans moderno', 45000, 18, 1, 'https://images.unsplash.com/photo-1514996937319-344454492b37', 1);
+
+-- =====================
+-- INSERT PRODUCTOS CORREGIDO
+-- =====================
+INSERT INTO PRODUCTOS (Nombre, Descripcion, Precio, Stock, Estado, UrlImagen, IdCategoria) VALUES
+
+-- =====================
+-- CALZADO (IdCategoria = 2)
+-- =====================
+('Zapatillas Nike Air', 'Zapatillas deportivas Nike originales', 120000, 15, 1, 'https://images.unsplash.com/photo-1542291026-7eec264c27ff', 2),
+('Adidas Running', 'Zapatillas para correr muy cómodas', 95000, 20, 1, 'https://images.unsplash.com/photo-1519744792095-2f2205e87b6f', 2),
+('Botas Cuero', 'Botas de cuero elegantes', 110000, 10, 1, 'https://images.unsplash.com/photo-1600185365483-26d7a4cc7519', 2),
+
+-- =====================
+-- ACCESORIOS (IdCategoria = 3)
+-- =====================
+('Mochila Urbana', 'Mochila resistente para uso diario', 35000, 25, 1, 'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c', 3),
+('Reloj Deportivo', 'Reloj digital resistente al agua', 22000, 30, 1, 'https://images.unsplash.com/photo-1518546305927-5a555bb7020d', 3),
+('Gorra Negra', 'Gorra clásica ajustable', 9000, 40, 1, 'https://images.unsplash.com/photo-1521369909029-2afed882baee', 3),
+

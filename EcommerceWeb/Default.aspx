@@ -3,14 +3,15 @@
 
 <main>
         
+
 <div class="banner">
-    <div class="overlay">
+    <div class="overlay-left">
         <h1>Bienvenido a The Diba Store</h1>
         <p>Los mejores productos al mejor precio</p>
-
         <a href="#productos" class="btn-banner">Ver productos</a>
     </div>
 </div>
+
 
 
 

@@ -29,6 +29,9 @@
                                 <p class="precio">
                                     $ <%# Eval("Precio", "{0:N2}") %>
                                 </p>
+                                
+                          <!--  BOTON CARRITO -->
+                          <button class="btn-carrito" onclick="agregarCarrito('<%# Eval("Nombre") %>', '<%# Eval("Precio") %>')">🛒 Agregar al carrito</button>
 
                             </div>
 

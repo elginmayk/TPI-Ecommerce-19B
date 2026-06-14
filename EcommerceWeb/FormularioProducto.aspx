@@ -4,23 +4,40 @@
         <div class="row">
             <div class="col-6">
                 <h2>Cargar Nuevo Producto</h2>
+                <hr />
+                 <asp:Label ID="lblError" runat="server" CssClass="text-danger" Visible="false" />
                 <div class="mb-3">
                     <label class="form-label">Nombre</label>
                     <asp:TextBox ID="txtNombre" runat="server" CssClass="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Descripción</label>
+                    <asp:TextBox ID="txtDescripcion" runat="server" CssClass="form-control" TextMode="MultiLine" Rows="3" />
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Precio</label>
                     <asp:TextBox ID="txtPrecio" runat="server" CssClass="form-control" />
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">Categoría</label>
-                    <asp:DropDownList ID="ddlCategoria" runat="server" CssClass="form-select">
-                        <asp:ListItem Text="Seleccione..." Value="0" />
-                        <asp:ListItem Text="Electrónica" Value="1" />
-                    </asp:DropDownList>
+                    <label class="form-label">Stock</label>
+                    <asp:TextBox ID="txtStock" runat="server" CssClass="form-control" />
                 </div>
-                <asp:Button Text="Guardar" ID="btnAceptar" CssClass="btn btn-primary" runat="server" />
-                <a href="ListaProductos.aspx" class="btn btn-link">Cancelar</a>
+                <div class="mb-3">
+                    <label class="form-label">URL Imagen</label>
+                    <asp:TextBox ID="txtUrlImagen" runat="server" CssClass="form-control" />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Categoría</label>
+                    <asp:DropDownList ID="ddlCategoria" runat="server" CssClass="form-select" />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Estado</label>
+                    <asp:CheckBox ID="chkEstado" runat="server" Text=" Activo" />
+                </div>
+                <asp:Button ID="btnGuardar" Text="Guardar" runat="server" 
+                    CssClass="btn btn-primary" OnClick="btnGuardar_Click" />
+                <a href="ListaProductos.aspx" class="btn btn-secondary ms-2">Cancelar</a>
             </div>
         </div>
     </div>

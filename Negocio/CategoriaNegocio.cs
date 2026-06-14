@@ -17,14 +17,14 @@ namespace Negocio
 
             try
             {
-                datos.setearConsulta("SELECT Id, Descripcion FROM CATEGORIAS");
+                datos.setearConsulta("SELECT IdCategoria, Nombre FROM CATEGORIAS");
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
                 {
                     Categoria aux = new Categoria();
-                    aux.Id = (int)datos.Lector["Id"];
-                    aux.Descripcion = (string)datos.Lector["Descripcion"];
+                    aux.Id = (int)datos.Lector["IdCategoria"];
+                    aux.Nombre = (string)datos.Lector["Nombre"];
 
                     lista.Add(aux);
                 }
@@ -48,12 +48,12 @@ namespace Negocio
             {
                 datos.setearConsulta(
                     "INSERT INTO CATEGORIAS " +
-                    "(Descripcion) " +
-                    "OUTPUT INSERTED.Id " +
-                    "VALUES (@Descripcion)"
+                    "(Nombre) " +
+                    "OUTPUT INSERTED.IdCategoria " +
+                    "VALUES (@Nombre)"
                 );
 
-                datos.agregarParametro("@Descripcion", nuevo.Descripcion);
+                datos.agregarParametro("@Nombre", nuevo.Nombre);
 
                 return datos.ejecutarAccionScalar();
             }
@@ -70,10 +70,11 @@ namespace Negocio
             {
                 datos.setearConsulta(
                     "UPDATE CATEGORIAS SET " +
-                    "Descripcion = @Descripcion" +
-                    "WHERE Id = @Id");
+                    "Nombre = @Nombre " +
+                    "WHERE IdCategoria = @Id");
 
-                datos.agregarParametro("@Descripcion", Categoria.Descripcion);
+                datos.agregarParametro("@Nombre", Categoria.Nombre);
+                datos.agregarParametro("@Id", Categoria.Id);
 
                 datos.ejecutarAccion();
             }
@@ -88,7 +89,7 @@ namespace Negocio
 
             try
             {
-                datos.setearConsulta("DELETE FROM CATEGORIAS WHERE Id = @Id");
+                datos.setearConsulta("DELETE FROM CATEGORIAS WHERE IdCategoria = @Id");
                 datos.agregarParametro("@Id", id);
                 datos.ejecutarAccion();
             }

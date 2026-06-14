@@ -11,43 +11,43 @@ namespace EcommerceWeb
 {
 
 
-    public partial class ListaProductos
+    public partial class FormularioCategoria
     {
 
         /// <summary>
-        /// Control lblMensaje.
+        /// Control litTitulo.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblMensaje;
+        protected global::System.Web.UI.WebControls.Literal litTitulo;
 
         /// <summary>
-        /// Control txtFiltroRapido.
+        /// Control lblError.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtFiltroRapido;
+        protected global::System.Web.UI.WebControls.Label lblError;
 
         /// <summary>
-        /// Control btnBuscar.
+        /// Control txtNombre.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnBuscar;
+        protected global::System.Web.UI.WebControls.TextBox txtNombre;
 
         /// <summary>
-        /// Control dgvArticulos.
+        /// Control btnGuardar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView dgvArticulos;
+        protected global::System.Web.UI.WebControls.Button btnGuardar;
     }
 }

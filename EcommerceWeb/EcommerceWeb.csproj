@@ -121,10 +121,18 @@
     <Content Include="Content\Site.css" />
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
+    <Content Include="FormularioCategoria.aspx" />
+    <Content Include="FormularioFormaEntrega.aspx" />
+    <Content Include="FormularioFormaPago.aspx" />
     <Content Include="FormularioProducto.aspx" />
+    <Content Include="FormularioUsuario.aspx" />
     <Content Include="Global.asax" />
     <Content Include="imagen\banner.jpg" />
+    <Content Include="ListaCategorias.aspx" />
+    <Content Include="ListaFormasEntrega.aspx" />
+    <Content Include="ListaFormasPago.aspx" />
     <Content Include="ListaProductos.aspx" />
+    <Content Include="ListaUsuarios.aspx" />
     <Content Include="Productos.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -218,6 +226,27 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="FormularioCategoria.aspx.cs">
+      <DependentUpon>FormularioCategoria.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FormularioCategoria.aspx.designer.cs">
+      <DependentUpon>FormularioCategoria.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FormularioFormaEntrega.aspx.cs">
+      <DependentUpon>FormularioFormaEntrega.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FormularioFormaEntrega.aspx.designer.cs">
+      <DependentUpon>FormularioFormaEntrega.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FormularioFormaPago.aspx.cs">
+      <DependentUpon>FormularioFormaPago.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FormularioFormaPago.aspx.designer.cs">
+      <DependentUpon>FormularioFormaPago.aspx</DependentUpon>
+    </Compile>
     <Compile Include="FormularioProducto.aspx.cs">
       <DependentUpon>FormularioProducto.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -225,8 +254,36 @@
     <Compile Include="FormularioProducto.aspx.designer.cs">
       <DependentUpon>FormularioProducto.aspx</DependentUpon>
     </Compile>
+    <Compile Include="FormularioUsuario.aspx.cs">
+      <DependentUpon>FormularioUsuario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FormularioUsuario.aspx.designer.cs">
+      <DependentUpon>FormularioUsuario.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="ListaCategorias.aspx.cs">
+      <DependentUpon>ListaCategorias.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ListaCategorias.aspx.designer.cs">
+      <DependentUpon>ListaCategorias.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ListaFormasEntrega.aspx.cs">
+      <DependentUpon>ListaFormasEntrega.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ListaFormasEntrega.aspx.designer.cs">
+      <DependentUpon>ListaFormasEntrega.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ListaFormasPago.aspx.cs">
+      <DependentUpon>ListaFormasPago.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ListaFormasPago.aspx.designer.cs">
+      <DependentUpon>ListaFormasPago.aspx</DependentUpon>
     </Compile>
     <Compile Include="ListaProductos.aspx.cs">
       <DependentUpon>ListaProductos.aspx</DependentUpon>
@@ -234,6 +291,13 @@
     </Compile>
     <Compile Include="ListaProductos.aspx.designer.cs">
       <DependentUpon>ListaProductos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ListaUsuarios.aspx.cs">
+      <DependentUpon>ListaUsuarios.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ListaUsuarios.aspx.designer.cs">
+      <DependentUpon>ListaUsuarios.aspx</DependentUpon>
     </Compile>
     <Compile Include="Productos.aspx.cs">
       <DependentUpon>Productos.aspx</DependentUpon>

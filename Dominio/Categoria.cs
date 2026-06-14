@@ -9,12 +9,12 @@ namespace Dominio
     public class Categoria
     {
         public int Id { get; set; }
-        public string Descripcion { get; set; }
+        public string Nombre { get; set; }
 
         // Esto ayuda a que en los desplegables se vea el nombre y no el código
         public override string ToString()
         {
-            return Descripcion;
+            return Nombre;
         }
     }
 }

@@ -17,19 +17,19 @@ namespace Negocio
 
             try
             {
-                datos.setearConsulta("SELECT Id, Nombre, Apellido, Email, Pass, Telefono, Rol FROM USUARIOS");
+                datos.setearConsulta("SELECT IdUsuario, Nombre, Apellido, Email, Pass, Telefono, Rol FROM USUARIOS");
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
                 {
                     Usuario aux = new Usuario();
-                    aux.Id = (int)datos.Lector["Id"];
+                    aux.Id = (int)datos.Lector["IdUsuario"];
                     aux.Nombre = (string)datos.Lector["Nombre"];
                     aux.Apellido = (string)datos.Lector["Apellido"];
                     aux.Email = (string)datos.Lector["Email"];
                     aux.Password = (string)datos.Lector["Pass"];
                     aux.Telefono = (string)datos.Lector["Telefono"];
-                    aux.Rol = (int)datos.Lector["Rol"];
+                    aux.Rol = Convert.ToInt32(datos.Lector["Rol"]);
 
 
                     lista.Add(aux);
@@ -55,7 +55,7 @@ namespace Negocio
                 datos.setearConsulta(
                     "INSERT INTO USUARIOS " +
                     "(Nombre, Apellido, Email, Pass, Telefono, Rol) " +
-                    "OUTPUT INSERTED.Id " +
+                    "OUTPUT INSERTED.IdUsuario " +
                     "VALUES (@Nombre, @Apellido, @Email, @Pass, @Telefono, @Rol)"
                 );
 
@@ -83,13 +83,14 @@ namespace Negocio
                     "UPDATE USUARIOS SET " +
                     "Nombre = @Nombre, " +
                     "Apellido = @Apellido, " +
-                    "Telefono = @Telefono, " +
-                    "WHERE Id = @Id"
+                    "Telefono = @Telefono " +
+                    "WHERE IdUsuario = @Id"
                 );
 
                 datos.agregarParametro("@Nombre", Usuario.Nombre);
                 datos.agregarParametro("@Apellido", Usuario.Apellido);
                 datos.agregarParametro("@Telefono", Usuario.Telefono);
+                datos.agregarParametro("@Id", Usuario.Id);
 
                 datos.ejecutarAccion();
             }
@@ -99,7 +100,7 @@ namespace Negocio
             }
         }
 
-        public void Modificar(Usuario Usuario, string Password)
+        public void ModificarPassword(int id, string Password)
         {
             Acceso datos = new Acceso();
 
@@ -107,10 +108,11 @@ namespace Negocio
             {
                 datos.setearConsulta(
                     "UPDATE USUARIOS SET " +
-                    "Password = @Pass" +
-                    "WHERE Id = @Id");
+                    "Pass = @Pass" +
+                    "WHERE IdUsuario = @Id");
 
                 datos.agregarParametro("@Pass", Password);
+                datos.agregarParametro("@Id", id);
 
                 datos.ejecutarAccion();
             }
@@ -119,7 +121,7 @@ namespace Negocio
                 datos.cerrarConexion();
             }
         }
-        public void Modificar(Usuario Usuario, int Rol)
+        public void ModificarRol(int id, int Rol)
         {
             Acceso datos = new Acceso();
 
@@ -127,10 +129,11 @@ namespace Negocio
             {
                 datos.setearConsulta(
                     "UPDATE USUARIOS SET " +
-                    "Rol = @Rol" +
-                    "WHERE Id = @Id");
+                    "Rol = @Rol " +
+                    "WHERE IdUsuario = @Id");
 
                 datos.agregarParametro("@Rol", Rol);
+                datos.agregarParametro("@Id", id);
 
                 datos.ejecutarAccion();
             }
@@ -146,7 +149,7 @@ namespace Negocio
 
             try
             {
-                datos.setearConsulta("DELETE FROM USUARIOS WHERE Id = @Id");
+                datos.setearConsulta("DELETE FROM USUARIOS WHERE IdUsuario = @Id");
                 datos.agregarParametro("@Id", id);
                 datos.ejecutarAccion();
             }

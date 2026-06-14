@@ -17,7 +17,7 @@ namespace Negocio
 
             try
             {
-                datos.setearConsulta("SELECT P.IdProducto,P.Nombre,P.Descripcion,P.Precio,P.Stock,P.Estado,P.UrlImagen,C.Nombre AS CategoriaNombre FROM PRODUCTOS P INNER JOIN CATEGORIAS C ON P.IdCategoria = C.IdCategoria WHERE Estado = 1 AND Stock > 0 ORDER BY C.Nombre;");
+                datos.setearConsulta("SELECT P.IdProducto,P.Nombre,P.Descripcion,P.Precio,P.Stock,P.Estado,P.UrlImagen,P.IdCategoria,C.Nombre AS CategoriaNombre FROM PRODUCTOS P INNER JOIN CATEGORIAS C ON P.IdCategoria = C.IdCategoria WHERE P.Estado = 1 AND P.Stock > 0 ORDER BY C.Nombre");
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
@@ -32,6 +32,45 @@ namespace Negocio
                     aux.Estado = (bool)datos.Lector["Estado"];
                     aux.ImagenUrl = datos.Lector["UrlImagen"] != DBNull.Value ? datos.Lector["UrlImagen"].ToString() : "";
                     aux.CategoriaNombre = (string)datos.Lector["CategoriaNombre"];
+                    lista.Add(aux);
+                }
+
+                return lista;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public List<Producto> listarTodos()
+        {
+            List<Producto> lista = new List<Producto>();
+            Acceso datos = new Acceso();
+
+            try
+            {
+                datos.setearConsulta(
+                    "SELECT P.IdProducto, P.Nombre, P.Descripcion, P.Precio, P.Stock, " +
+                    "P.Estado, P.UrlImagen, P.IdCategoria, C.Nombre AS CategoriaNombre " +
+                    "FROM PRODUCTOS P " +
+                    "INNER JOIN CATEGORIAS C ON P.IdCategoria = C.IdCategoria " +
+                    "ORDER BY C.Nombre"
+                );
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    Producto aux = new Producto();
+                    aux.Id = (int)datos.Lector["IdProducto"];
+                    aux.Nombre = (string)datos.Lector["Nombre"];
+                    aux.Descripcion = datos.Lector["Descripcion"] != DBNull.Value ? datos.Lector["Descripcion"].ToString() : "";
+                    aux.Precio = (decimal)datos.Lector["Precio"];
+                    aux.Stock = (int)datos.Lector["Stock"];
+                    aux.Estado = (bool)datos.Lector["Estado"];
+                    aux.ImagenUrl = datos.Lector["UrlImagen"] != DBNull.Value ? datos.Lector["UrlImagen"].ToString() : "";
+                    aux.CategoriaNombre = (string)datos.Lector["CategoriaNombre"];
+                    aux.Categoria = new Categoria { Id = (int)datos.Lector["IdCategoria"] };
                     lista.Add(aux);
                 }
 
@@ -75,9 +114,9 @@ namespace Negocio
             {
                 datos.setearConsulta(
                     "INSERT INTO PRODUCTOS " +
-                    "(Nombre, Descripcion, Precio, Stock, Estado, UrlImagen) " +
-                    "OUTPUT INSERTED.Id " +
-                    "VALUES (@Nombre, @Descripcion, @Precio, @Stock, @Estado, @UrlImagen)"
+                    "(Nombre, Descripcion, Precio, Stock, Estado, UrlImagen, IdCategoria) " +
+                    "OUTPUT INSERTED.IdProducto " +
+                    "VALUES (@Nombre, @Descripcion, @Precio, @Stock, @Estado, @UrlImagen, @IdCategoria)"
                 );
 
                 datos.agregarParametro("@Nombre", nuevo.Nombre);
@@ -87,6 +126,7 @@ namespace Negocio
                 datos.agregarParametro("@Estado", nuevo.Estado);
 
                 datos.agregarParametro("@UrlImagen", nuevo.ImagenUrl);
+                datos.agregarParametro("@IdCategoria", nuevo.Categoria.Id);
 
                 return datos.ejecutarAccionScalar();
             }
@@ -108,8 +148,9 @@ namespace Negocio
                     "Precio = @Precio, " +
                     "Stock = @Stock, " +
                     "Estado = @Estado, " +
-                    "UrlImagen = @UrlImagen" +
-                    "WHERE Id = @Id"
+                    "UrlImagen = @UrlImagen, " +
+                    "IdCategoria = @IdCategoria " +
+                    "WHERE IdProducto = @Id"
                 );
 
                 datos.agregarParametro("@Nombre", Producto.Nombre);
@@ -118,6 +159,8 @@ namespace Negocio
                 datos.agregarParametro("@Stock", Producto.Stock);
                 datos.agregarParametro("@Estado", Producto.Estado);
                 datos.agregarParametro("@UrlImagen", Producto.ImagenUrl);
+                datos.agregarParametro("@IdCategoria", Producto.Categoria.Id);
+                datos.agregarParametro("@Id", Producto.Id);
 
                 datos.ejecutarAccion();
             }
@@ -132,7 +175,7 @@ namespace Negocio
 
             try
             {
-                datos.setearConsulta("DELETE FROM PRODUCTOS WHERE Id = @Id");
+                datos.setearConsulta("DELETE FROM PRODUCTOS WHERE IdProducto = @Id");
                 datos.agregarParametro("@Id", id);
                 datos.ejecutarAccion();
             }

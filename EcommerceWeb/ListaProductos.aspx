@@ -11,6 +11,12 @@
         </div>
 
         <div class="row mb-3">
+            <div class="col">
+                <asp:Label ID="lblMensaje" runat="server" Visible="false" />
+            </div>
+        </div>
+
+        <div class="row mb-3">
             <div class="col-md-6">
                 <div class="input-group">
                     <asp:TextBox ID="txtFiltroRapido" runat="server" CssClass="form-control" placeholder="Buscar por nombre..." />
@@ -21,7 +27,34 @@
 
         <div class="row">
             <div class="col">
-                <asp:GridView ID="dgvArticulos" runat="server" AutoGenerateColumns="true" CssClass="table table-dark table-hover table-striped table-bordered">
+                <asp:GridView ID="dgvArticulos" runat="server"
+                    AutoGenerateColumns="false"
+                    CssClass="table table-dark table-hover table-striped table-bordered"
+                    DataKeyNames="Id"
+                    OnRowCommand="dgvArticulos_RowCommand">
+
+                    <Columns>
+                        <asp:BoundField DataField="Id" HeaderText="ID" />
+                        <asp:BoundField DataField="Nombre" HeaderText="Nombre" />
+                        <asp:BoundField DataField="CategoriaNombre" HeaderText="Categoría" />
+                        <asp:BoundField DataField="Precio" HeaderText="Precio" DataFormatString="{0:C2}" />
+                        <asp:BoundField DataField="Stock" HeaderText="Stock" />
+                        <asp:BoundField DataField="Estado" HeaderText="Activo" />
+
+                        <asp:TemplateField HeaderText="Acciones">
+                            <ItemTemplate>
+                                <a href='FormularioProducto.aspx?id=<%# Eval("Id") %>' 
+                                   class="btn btn-warning btn-sm">Editar</a>
+                                <asp:LinkButton ID="btnEliminar" runat="server"
+                                    CommandName="Eliminar"
+                                    CommandArgument='<%# Eval("Id") %>'
+                                    CssClass="btn btn-danger btn-sm"
+                                    OnClientClick="return confirm('¿Seguro que querés eliminar este producto?');"
+                                    Text="Eliminar" />
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                    </Columns>
+
                 </asp:GridView>
             </div>
         </div>

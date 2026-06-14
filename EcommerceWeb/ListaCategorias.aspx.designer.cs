@@ -11,7 +11,7 @@ namespace EcommerceWeb
 {
 
 
-    public partial class ListaProductos
+    public partial class ListaCategorias
     {
 
         /// <summary>
@@ -24,30 +24,12 @@ namespace EcommerceWeb
         protected global::System.Web.UI.WebControls.Label lblMensaje;
 
         /// <summary>
-        /// Control txtFiltroRapido.
+        /// Control gvCategorias.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtFiltroRapido;
-
-        /// <summary>
-        /// Control btnBuscar.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnBuscar;
-
-        /// <summary>
-        /// Control dgvArticulos.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView dgvArticulos;
+        protected global::System.Web.UI.WebControls.GridView gvCategorias;
     }
 }

@@ -34,6 +34,7 @@
                 <asp:ScriptReference Name="WebParts.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebParts.js" />
                 <asp:ScriptReference Name="Focus.js" Assembly="System.Web" Path="~/Scripts/WebForms/Focus.js" />
                 <asp:ScriptReference Name="WebFormsBundle" />
+                <asp:ScriptReference Path="~/Scripts/bootstrap.bundle.js" />
                 <%--Site Scripts--%>
             </Scripts>
         </asp:ScriptManager>
@@ -63,18 +64,26 @@
                     </a>
                 </li>
                  <!-- PRODUCTOS -->
-                 <li class="nav-item">
-                    <a class='nav-link <%: Request.Url.AbsolutePath.ToLower().Contains("listaproductos") ? "active" : "" %>'
-                    runat="server" href="~/Productos.aspx">
-                    Productos
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Productos
                     </a>
-                  </li>
-                <!-- PRODUCTOS ADMINISTRAR PRODUCTO -->
-                <li class="nav-item">
-                    <a class='nav-link <%: Request.Url.AbsolutePath.ToLower().Contains("listaproductos") ? "active" : "" %>'
-                        runat="server" href="~/ListaProductos.aspx">
-                        Administrar Producto
-                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark">
+        
+                        <asp:Repeater ID="rptCategorias" runat="server">
+                            <ItemTemplate>
+                                <li>
+                                    <a class="dropdown-item" runat="server" 
+                                       href='<%# Eval("Id", "~/Productos.aspx?idCat={0}") %>'>
+                                        <%# Eval("Nombre") %>
+                                    </a>
+                                </li>
+                            </ItemTemplate>
+                        </asp:Repeater>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" runat="server" href="~/Productos.aspx">Ver Todas</a></li>
+        
+                    </ul>
                 </li>
 
                 <!-- ACERCA -->
@@ -94,7 +103,7 @@
                 </li>
 
                 <!-- ADMINISTRACION -->
-               <li class="nav-item dropdown">
+               <li class="nav-item dropdown" id="menuAdministracion" runat="server">
                   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
                  Administración
                   </a>
@@ -119,6 +128,31 @@
 
         </div>
     </div>
+    <!-- LOGIN -->
+        <ul class="navbar-nav ms-auto align-items-center">
+            <li class="nav-item pe-2">
+                <a id="btnIngresar" runat="server" class="btn-login-nav" href="~/Login.aspx"> Login </a>
+
+                <%--<span id="lblSaludo" runat="server" class="nav-link text-white fw-bold" visible="false">--%>
+                <%--</span>--%>
+            </li>
+            <li id="menuUsuario" runat="server" class="nav-item dropdown pe-2" visible="false">
+                <a id="lblSaludo" runat="server" class="nav-link dropdown-toggle text-white fw-bold" href="#" role="button" data-bs-toggle="dropdown"></a>
+        
+                <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
+                    <li><a class="dropdown-item" href="~/FormularioUsuario.aspx">Mi Perfil</a></li>
+                    <li><hr class="dropdown-divider"></li>
+            
+                    <li>
+                        <asp:LinkButton ID="btnCerrarSesion" runat="server" CssClass="dropdown-item text-danger fw-bold" OnClick="btnCerrarSesion_Click">
+                            Cerrar Sesión
+                        </asp:LinkButton>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+
+
 </nav>
             <div class="container body-content">
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
@@ -164,8 +198,5 @@
 
 
     </form>
-    <asp:PlaceHolder runat="server">
-        <%: Scripts.Render("~/Scripts/bootstrap.js") %>
-    </asp:PlaceHolder>
 </body>
 </html>

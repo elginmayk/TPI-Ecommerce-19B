@@ -1,6 +1,7 @@
 ﻿using AccesoDatos;
 using Dominio;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -30,7 +31,7 @@ namespace Negocio
                     aux.Password = (string)datos.Lector["Pass"];
                     aux.Telefono = (string)datos.Lector["Telefono"];
                     aux.Rol = Convert.ToInt32(datos.Lector["Rol"]);
-
+                    aux.Nivel = (Nivel)aux.Rol;
 
                     lista.Add(aux);
                 }
@@ -46,6 +47,40 @@ namespace Negocio
                 datos.cerrarConexion();
             }
         }
+
+        public bool Login(Usuario usuario)
+        {
+            Acceso datos = new Acceso();
+
+            try
+            {
+                datos.setearConsulta("SELECT IdUsuario, Email, Pass, Rol, Nombre FROM USUARIOS WHERE Email = @usuario AND Pass = @password");
+                datos.agregarParametro("@usuario", usuario.Email);
+                datos.agregarParametro("@password", usuario.Password);
+
+                datos.ejecutarLectura();
+                
+                while (datos.Lector.Read())
+                {
+                    usuario.Id = (int)datos.Lector["IdUsuario"];
+                    usuario.Nombre = (string)datos.Lector["Nombre"];
+                    usuario.Rol = Convert.ToInt32(datos.Lector["Rol"]);
+                    usuario.Nivel = (Nivel)usuario.Rol;
+                    return true;
+                }
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
         public int Agregar(Usuario nuevo)
         {
 
@@ -100,7 +135,7 @@ namespace Negocio
             }
         }
 
-        public void ModificarPassword(int id, string Password)
+        public void ModificarPassword(string Email, string Password)
         {
             Acceso datos = new Acceso();
 
@@ -109,10 +144,10 @@ namespace Negocio
                 datos.setearConsulta(
                     "UPDATE USUARIOS SET " +
                     "Pass = @Pass" +
-                    "WHERE IdUsuario = @Id");
+                    "WHERE Email = @Email");
 
                 datos.agregarParametro("@Pass", Password);
-                datos.agregarParametro("@Id", id);
+                datos.agregarParametro("@Email", Email);
 
                 datos.ejecutarAccion();
             }

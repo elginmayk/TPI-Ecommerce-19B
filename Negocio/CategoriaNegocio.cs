@@ -40,6 +40,40 @@ namespace Negocio
                 datos.cerrarConexion();
             }
         }
+
+
+        public List<Categoria> listarNav()
+        {
+            List<Categoria> lista = new List<Categoria>();
+            Acceso datos = new Acceso();
+
+            try
+            {
+                datos.setearConsulta("SELECT IdCategoria, Nombre FROM CATEGORIAS ORDER BY Nombre ASC");
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    Categoria aux = new Categoria();
+                    aux.Id = (int)datos.Lector["IdCategoria"];
+                    aux.Nombre = (string)datos.Lector["Nombre"];
+
+                    lista.Add(aux);
+                }
+
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+
         public int Agregar(Categoria nuevo)
         {
 

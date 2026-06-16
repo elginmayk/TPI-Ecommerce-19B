@@ -15,7 +15,16 @@ namespace EcommerceWeb
 
             if (!IsPostBack)
             {
-                CargarProductos();
+                string Categoria = Request.QueryString["Categoria"];
+
+                if (!string.IsNullOrEmpty(Categoria))
+                {
+                    CargarProductos(Categoria);
+                }
+                else
+                {
+                    CargarProductos();
+                }
             }
 
         }
@@ -25,11 +34,15 @@ namespace EcommerceWeb
         private void CargarProductos()
         {
             ProductoNegocio negocio = new ProductoNegocio();
-
             rptCategorias.DataSource = negocio.listarAgrupados();
             rptCategorias.DataBind();
         }
 
-
+        private void CargarProductos(string categoria)
+        {
+            ProductoNegocio negocio = new ProductoNegocio();
+            rptCategorias.DataSource = negocio.ListarCategoria(categoria);
+            rptCategorias.DataBind();
+        }
     }
 }

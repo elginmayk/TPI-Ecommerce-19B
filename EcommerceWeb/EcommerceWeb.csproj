@@ -122,6 +122,7 @@
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="FormularioCategoria.aspx" />
+    <Content Include="FormularioContrasena.aspx" />
     <Content Include="FormularioFormaEntrega.aspx" />
     <Content Include="FormularioFormaPago.aspx" />
     <Content Include="FormularioProducto.aspx" />
@@ -133,6 +134,7 @@
     <Content Include="ListaFormasPago.aspx" />
     <Content Include="ListaProductos.aspx" />
     <Content Include="ListaUsuarios.aspx" />
+    <Content Include="Login.aspx" />
     <Content Include="Productos.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -233,6 +235,13 @@
     <Compile Include="FormularioCategoria.aspx.designer.cs">
       <DependentUpon>FormularioCategoria.aspx</DependentUpon>
     </Compile>
+    <Compile Include="FormularioContrasena.aspx.cs">
+      <DependentUpon>FormularioContrasena.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FormularioContrasena.aspx.designer.cs">
+      <DependentUpon>FormularioContrasena.aspx</DependentUpon>
+    </Compile>
     <Compile Include="FormularioFormaEntrega.aspx.cs">
       <DependentUpon>FormularioFormaEntrega.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -298,6 +307,13 @@
     </Compile>
     <Compile Include="ListaUsuarios.aspx.designer.cs">
       <DependentUpon>ListaUsuarios.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
     <Compile Include="Productos.aspx.cs">
       <DependentUpon>Productos.aspx</DependentUpon>

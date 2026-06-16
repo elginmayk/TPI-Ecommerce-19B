@@ -189,12 +189,13 @@ VALUES
 ('Accesorios');
 
 GO
--- =====================
--- ROPA (IdCategoria = 1)
--- =====================
-('Remera Blanca', 'Remera de algodón básica', 8000, 50, 1, 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab', 1),
-('Campera Invierno', 'Campera abrigada impermeable', 75000, 12, 1, 'https://images.unsplash.com/photo-1520975916090-3105956dac38', 1),
-('Jeans Slim', 'Pantalón jeans moderno', 45000, 18, 1, 'https://images.unsplash.com/photo-1514996937319-344454492b37', 1);
+
+---- =====================
+---- ROPA (IdCategoria = 1)
+---- =====================
+--('Remera Blanca', 'Remera de algodón básica', 8000, 50, 1, 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab', 1),
+--('Campera Invierno', 'Campera abrigada impermeable', 75000, 12, 1, 'https://images.unsplash.com/photo-1520975916090-3105956dac38', 1),
+--('Jeans Slim', 'Pantalón jeans moderno', 45000, 18, 1, 'https://images.unsplash.com/photo-1514996937319-344454492b37', 1);
 
 -- =====================
 -- INSERT PRODUCTOS CORREGIDO
@@ -213,5 +214,12 @@ INSERT INTO PRODUCTOS (Nombre, Descripcion, Precio, Stock, Estado, UrlImagen, Id
 -- =====================
 ('Mochila Urbana', 'Mochila resistente para uso diario', 35000, 25, 1, 'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c', 3),
 ('Reloj Deportivo', 'Reloj digital resistente al agua', 22000, 30, 1, 'https://images.unsplash.com/photo-1518546305927-5a555bb7020d', 3),
-('Gorra Negra', 'Gorra clásica ajustable', 9000, 40, 1, 'https://images.unsplash.com/photo-1521369909029-2afed882baee', 3),
+('Gorra Negra', 'Gorra clásica ajustable', 9000, 40, 1, 'https://images.unsplash.com/photo-1521369909029-2afed882baee', 3);
 
+-- =====================
+-- USUARIO ADMINISTRADOR
+-- =====================
+INSERT INTO USUARIOS (Nombre, Apellido, Email, Pass, Telefono, Rol) VALUES
+
+('Administrador', '-', 'Admin@TheDibaStore.com', 'Administrador', '1234', 1),
+('Usuario', '-', 'Usuario@TheDibaStore.com', 'Usuario', '1234', 2);

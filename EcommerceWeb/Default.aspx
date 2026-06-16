@@ -5,10 +5,10 @@
         
 
 <div class="banner">
-    <div class="overlay-left">
+    <div class="text-center">
         <h1>Bienvenido a The Diba Store</h1>
         <p>Los mejores productos al mejor precio</p>
-        <a href="#productos" class="btn-banner">Ver productos</a>
+        <a href="/Productos" class="btn-banner">Ver productos</a>
     </div>
 </div>
 
@@ -67,9 +67,17 @@
 
 <div class="categorias">
 
-    <div class="categoria-item">👟 Calzado</div>
-    <div class="categoria-item">🎒 Accesorios</div>
-    <div class="categoria-item">👕 Ropa</div>
+    <a class="categoria-item" href="~/Productos.aspx?Categoria=Calzado" runat="server" onclick="IrACategoria(Calzado)" style="text-decoration: none; color: inherit;">
+        👟 Calzado
+    </a>
+
+    <a class="categoria-item" href="~/Productos.aspx?Categoria=Accesorios" runat="server" onclick="IrACategoria(Accesorios)" style="text-decoration: none; color: inherit;">
+        🎒 Accesorios
+    </a>
+
+    <a class="categoria-item" href="~/Productos.aspx?Categoria=Ropa" runat="server" onclick="IrACategoria(Ropa)" style="text-decoration: none; color: inherit;">
+        👕 Ropa
+    </a>
 
 </div>
 

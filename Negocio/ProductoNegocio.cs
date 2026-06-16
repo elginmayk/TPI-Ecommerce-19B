@@ -82,12 +82,22 @@ namespace Negocio
             }
         }
 
-        public List<IGrouping<string, Producto>> listarAgrupados()
+        public List<IGrouping<string, Producto>>  listarAgrupados()
         {
             var lista = listar();
 
             return lista
                 .Where(p => p.Estado && p.Stock > 0)
+                .GroupBy(p => p.CategoriaNombre)
+                .ToList();
+        }
+
+        public List<IGrouping<string, Producto>> ListarCategoria(string Categoria)
+        {
+            var lista = listar();
+
+            return lista
+                .Where(p => p.Estado && p.Stock > 0 && p.CategoriaNombre == Categoria)
                 .GroupBy(p => p.CategoriaNombre)
                 .ToList();
         }

@@ -15,10 +15,13 @@ namespace EcommerceWeb
         {
             if (!IsPostBack)
             {
+                ddlRol.Visible = false;
+                lblRol.Visible = false;
+
                 if (Request.QueryString["id"] != null)
                 {
                     litTitulo.Text = "Editar Usuario";
-                    lblPasswordHelp.Visible = true; // modo edición: aviso de "opcional"
+                    //lblPasswordHelp.Visible = true; // modo edición: aviso de "opcional"
 
                     int id = int.Parse(Request.QueryString["id"]);
                     CargarUsuario(id);
@@ -26,7 +29,7 @@ namespace EcommerceWeb
                 else
                 {
                     litTitulo.Text = "Nuevo Usuario";
-                    lblPasswordHelp.Visible = false; // modo alta: contraseña obligatoria
+                    //lblPasswordHelp.Visible = false; // modo alta: contraseña obligatoria
                 }
             }
         }
@@ -67,12 +70,13 @@ namespace EcommerceWeb
                     usuario.Telefono = txtTelefono.Text.Trim();
 
                     negocio.Modificar(usuario);
-                    negocio.ModificarRol(id, int.Parse(ddlRol.SelectedValue));
+                    if (usuario.Nivel == Nivel.ADMINISTRADOR)
+                        negocio.ModificarRol(id, int.Parse(ddlRol.SelectedValue));
 
-                    if (!string.IsNullOrWhiteSpace(txtPassword.Text))
-                    {
-                        negocio.ModificarPassword(id, txtPassword.Text.Trim());
-                    }
+                    //if (!string.IsNullOrWhiteSpace(txtPassword.Text))
+                    //{
+                    //    negocio.ModificarPassword(id, txtPassword.Text.Trim());
+                    //}
                 }
                 else
                 {
@@ -82,13 +86,14 @@ namespace EcommerceWeb
                     usuario.Apellido = txtApellido.Text.Trim();
                     usuario.Email = txtEmail.Text.Trim();
                     usuario.Telefono = txtTelefono.Text.Trim();
-                    usuario.Rol = int.Parse(ddlRol.SelectedValue);
-                    usuario.Password = txtPassword.Text.Trim();
+                    if (usuario.Nivel == Nivel.ADMINISTRADOR)
+                        usuario.Rol = int.Parse(ddlRol.SelectedValue);
+                    //usuario.Password = txtPassword.Text.Trim();
 
                     negocio.Agregar(usuario);
                 }
 
-                Response.Redirect("ListaUsuarios.aspx");
+                Response.Redirect("Default.aspx");
             }
             catch (Exception ex)
             {
@@ -114,12 +119,12 @@ namespace EcommerceWeb
             }
 
             // En alta, la contraseña es obligatoria
-            if (Request.QueryString["id"] == null && string.IsNullOrWhiteSpace(txtPassword.Text))
-            {
-                lblError.Text = "La contraseña es obligatoria.";
-                lblError.Visible = true;
-                return false;
-            }
+            //if (Request.QueryString["id"] == null && string.IsNullOrWhiteSpace(txtPassword.Text))
+            //{
+            //    lblError.Text = "La contraseña es obligatoria.";
+            //    lblError.Visible = true;
+            //    return false;
+            //}
 
             lblError.Visible = false;
             return true;

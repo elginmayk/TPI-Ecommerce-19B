@@ -30,19 +30,19 @@
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label">Rol</label>
+                    <asp:label ID="lblRol" class="form-label" runat="server">Rol</asp:label>
                     <asp:DropDownList ID="ddlRol" runat="server" CssClass="form-select">
                         <asp:ListItem Text="Cliente" Value="2" />
                         <asp:ListItem Text="Admin" Value="1" />
                     </asp:DropDownList>
                 </div>
 
-                <div class="mb-3">
+<%--                <div class="mb-3">
                     <label class="form-label" id="lblPasswordLabel" runat="server">Contraseña</label>
                     <asp:TextBox ID="txtPassword" runat="server" CssClass="form-control" TextMode="Password" />
                     <asp:Label ID="lblPasswordHelp" runat="server" CssClass="form-text text-muted" 
                         Text="Dejar en blanco para no cambiarla" Visible="false" />
-                </div>
+                </div>--%>
 
                 <asp:Button ID="btnGuardar" Text="Guardar" runat="server"
                     CssClass="btn btn-primary" OnClick="btnGuardar_Click" />

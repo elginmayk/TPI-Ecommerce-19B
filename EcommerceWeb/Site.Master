@@ -14,6 +14,7 @@
     </asp:PlaceHolder>
 
     <webopt:bundlereference runat="server" path="~/Content/css" />
+    <link href="~/Content/fontello.css" rel="stylesheet" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
 </head>
@@ -159,25 +160,37 @@
             </asp:ContentPlaceHolder>
             <hr />
            
+
 <footer class="footer">
 
     <div class="footer-contenido">
 
         <div class="footer-seccion">
-            <h4>The Diba Store</h4>
+            <h4><i class="icon-shop"></i> The Diba Store</h4>
             <p>Tu tienda online de confianza</p>
         </div>
 
         <div class="footer-seccion">
             <h4>Contacto</h4>
-            <p>📧 email@diba.com</p>
-            <p>📍 Argentina</p>
+            <p><i class="icon-mail"></i> email@diba.com</p>
+            <p><i class="icon-flag"></i> Argentina</p>
         </div>
 
         <div class="footer-seccion">
             <h4>Seguinos</h4>
-            <p>📱 Instagram</p>
-            <p>👍 Facebook</p>
+
+            <div class="footer-redes">
+                <a href="#" title="Instagram">
+                    <i class="icon-instagram"></i>
+                </a>
+                <a href="#" title="Facebook">
+                    <i class="icon-facebook-squared"></i>
+                </a>
+                <a href="#" title="WhatsApp">
+                    <i class="icon-whatsapp"></i>
+                </a>
+            </div>
+
         </div>
 
     </div>
@@ -187,6 +200,9 @@
     </div>
 
 </footer>
+
+
+
 
         </div>
    

@@ -216,25 +216,22 @@ body {
     }
 
 
+
+
 /* ===== FOOTER FULL WIDTH ===== */
 
 .footer {
     background: linear-gradient(90deg, #141e30, #243b55);
     color: white;
-    width: 100vw; /* ancho TOTAL real */
+    width: 100vw;
     position: relative;
     left: 50%;
-    right: 50%;
-    margin-left: -50vw; /* rompe el container */
-    margin-right: -50vw;
+    transform: translateX(-50%);
     padding: 40px 0;
 }
 
 
-/* CONTENIDO CENTRADO */
-
-
-
+/* ✅ CONTENIDO CENTRADO */
 .footer-contenido {
     max-width: 1200px;
     margin: auto;
@@ -245,27 +242,113 @@ body {
 }
 
 
-/* COLUMNAS */
+/* ✅ COLUMNAS */
 .footer-seccion {
     width: 30%;
-    min-width: 250px; /* 🔥 evita que se rompa en pantallas chicas */
+    min-width: 250px;
 }
 
     .footer-seccion h4 {
         margin-bottom: 10px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
     }
 
+    /* ✅ TEXTO + ICONOS */
     .footer-seccion p {
         color: #ccc;
+        margin: 6px 0;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        transition: 0.3s;
     }
 
-/* COPYRIGHT */
+
+        /* ✅ ICONOS CONTACTO (EMAIL + BANDERA) */
+        .footer-seccion p i {
+            font-size: 18px;
+            transition: 0.3s;
+        }
+
+        /* ✉️ Email PRO */
+        .footer-seccion p:first-of-type i {
+            color: #00c6ff;
+        }
+
+        .footer-seccion p:first-of-type:hover {
+            color: #00c6ff;
+        }
+
+        /* 🇦🇷 Bandera PRO */
+        .footer-seccion p:last-of-type i {
+            color: #74d2ff;
+        }
+
+        /* hover animación */
+        .footer-seccion p:hover i {
+            transform: scale(1.2);
+        }
+
+
+/* ✅ ICONOS DE REDES (MEJORADOS) */
+.footer-redes {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+    .footer-redes a {
+        width: 45px;
+        height: 45px;
+        background: rgba(255, 255, 255, 0.08); /* efecto glass */
+        backdrop-filter: blur(6px);
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: all 0.3s ease;
+        text-decoration: none;
+    }
+
+        /* animación hover */
+        .footer-redes a:hover {
+            transform: scale(1.15);
+            box-shadow: 0 0 12px rgba(255,255,255,0.2);
+        }
+
+    /* iconos */
+    .footer-redes i {
+        color: white;
+        font-size: 20px;
+    }
+
+
+    /* ✅ COLORES PRO POR RED SOCIAL */
+    .footer-redes a:nth-child(1):hover {
+        background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366);
+    }
+    /* Instagram */
+
+    .footer-redes a:nth-child(2):hover {
+        background: #1877F2;
+    }
+    /* Facebook */
+
+    .footer-redes a:nth-child(3):hover {
+        background: #25D366;
+    }
+/* WhatsApp */
+
+
+/* ✅ COPYRIGHT */
 .footer-copy {
     text-align: center;
-    border-top: 1px solid #555;
-    margin-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    margin-top: 25px;
     padding-top: 15px;
-    color: #aaa;
+    color: #bbb;
+    font-size: 14px;
 }
 
 

@@ -120,5 +120,43 @@ namespace Negocio
                 datos.cerrarConexion();
             }
         }
+
+
+        public Direccion obtenerPorUsuario(int idUsuario)
+        {
+            Direccion dir = null;
+            Acceso datos = new Acceso();
+
+            try
+            {
+                datos.setearConsulta("SELECT Calle, Numero, Localidad, CodigoPostal FROM DIRECCIONES WHERE IdUsuario = @IdUsuario");
+
+                datos.agregarParametro("@IdUsuario", idUsuario);
+
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                {
+                    dir = new Direccion();
+
+                    dir.Calle = (string)datos.Lector["Calle"];
+                    dir.Numero = (string)datos.Lector["Numero"];
+                    dir.Localidad = (string)datos.Lector["Localidad"];
+                    dir.CodigoPostal = (string)datos.Lector["CodigoPostal"];
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+
+            return dir;
+        }
+
+
     }
 }

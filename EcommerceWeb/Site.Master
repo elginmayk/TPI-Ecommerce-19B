@@ -141,7 +141,11 @@
                 <a id="lblSaludo" runat="server" class="nav-link dropdown-toggle text-white fw-bold" href="#" role="button" data-bs-toggle="dropdown"></a>
         
                 <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
-                    <li><a class="dropdown-item" href="~/FormularioUsuario.aspx">Mi Perfil</a></li>
+                    <li>
+<asp:HyperLink runat="server" CssClass="dropdown-item" NavigateUrl="~/Perfil.aspx">
+    Mi Perfil
+</asp:HyperLink>
+</li>
                     <li><hr class="dropdown-divider"></li>
             
                     <li>

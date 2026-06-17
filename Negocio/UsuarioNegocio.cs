@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Negocio;
+
 
 namespace Negocio
 {
@@ -193,5 +195,36 @@ namespace Negocio
                 datos.cerrarConexion();
             }
         }
+
+
+
+        public void actualizar(Usuario usuario)
+        {
+            Acceso datos = new Acceso();
+
+            try
+            {
+                datos.setearConsulta("UPDATE USUARIOS SET Nombre = @Nombre, Apellido = @Apellido, Email = @Email, Telefono = @Telefono WHERE IdUsuario = @Id");
+
+                datos.agregarParametro("@Nombre", usuario.Nombre);
+                datos.agregarParametro("@Apellido", usuario.Apellido);
+                datos.agregarParametro("@Email", usuario.Email);
+                datos.agregarParametro("@Telefono", usuario.Telefono);
+                datos.agregarParametro("@Id", usuario.Id);
+
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+
+
     }
 }

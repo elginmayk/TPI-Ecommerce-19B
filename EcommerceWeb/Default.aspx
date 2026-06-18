@@ -67,17 +67,15 @@
 
 <div class="categorias">
 
-    <a class="categoria-item" href="~/Productos.aspx?Categoria=Calzado" runat="server" onclick="IrACategoria(Calzado)" style="text-decoration: none; color: inherit;">
-        👟 Calzado
-    </a>
-
-    <a class="categoria-item" href="~/Productos.aspx?Categoria=Accesorios" runat="server" onclick="IrACategoria(Accesorios)" style="text-decoration: none; color: inherit;">
-        🎒 Accesorios
-    </a>
-
-    <a class="categoria-item" href="~/Productos.aspx?Categoria=Ropa" runat="server" onclick="IrACategoria(Ropa)" style="text-decoration: none; color: inherit;">
-        👕 Ropa
-    </a>
+<asp:Repeater ID="rptCategorias" runat="server">
+    <ItemTemplate>
+        <a class="categoria-item" runat="server"
+           href='<%# Eval("Id", "~/Productos.aspx?idCat={0}") %>'
+           style="text-decoration: none; color: inherit;">
+            <%# Eval("Nombre") %>
+        </a>
+    </ItemTemplate>
+</asp:Repeater>
 
 </div>
 

@@ -16,6 +16,10 @@ namespace EcommerceWeb
             if (!IsPostBack)
             {
                 CargarProductos();
+
+                CategoriaNegocio negocio = new CategoriaNegocio();
+                rptCategorias.DataSource = negocio.listar();
+                rptCategorias.DataBind();
             }
         }
 

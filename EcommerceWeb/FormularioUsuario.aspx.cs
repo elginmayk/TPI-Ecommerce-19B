@@ -86,9 +86,8 @@ namespace EcommerceWeb
                     usuario.Apellido = txtApellido.Text.Trim();
                     usuario.Email = txtEmail.Text.Trim();
                     usuario.Telefono = txtTelefono.Text.Trim();
-                    if (usuario.Nivel == Nivel.ADMINISTRADOR)
-                        usuario.Rol = int.Parse(ddlRol.SelectedValue);
-                    //usuario.Password = txtPassword.Text.Trim();
+                    usuario.Rol = 2;
+                    usuario.Password = txtPassword.Text.Trim();
 
                     negocio.Agregar(usuario);
                 }

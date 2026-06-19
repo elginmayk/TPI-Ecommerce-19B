@@ -194,5 +194,35 @@ namespace Negocio
                 datos.cerrarConexion();
             }
         }
+
+        public Producto obtenerPorId(int id)
+        {
+            Acceso datos = new Acceso();
+            Producto p = null;
+
+            try
+            {
+                datos.setearConsulta(
+                    "SELECT IdProducto, Nombre, Precio, UrlImagen, IdCategoria " +
+                    "FROM PRODUCTOS WHERE IdProducto = @Id");
+                datos.agregarParametro("@Id", id);
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                {
+                    p = new Producto();
+                    p.Id = (int)datos.Lector["IdProducto"];
+                    p.Nombre = datos.Lector["Nombre"].ToString();
+                    p.Precio = (decimal)datos.Lector["Precio"];
+                    p.ImagenUrl = datos.Lector["UrlImagen"] != DBNull.Value ? datos.Lector["UrlImagen"].ToString() : "";
+                    p.Categoria = new Categoria { Id = (int)datos.Lector["IdCategoria"] };
+                }
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+            return p;
+        }
     }
 }

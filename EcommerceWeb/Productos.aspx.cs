@@ -44,5 +44,37 @@ namespace EcommerceWeb
             rptCategorias.DataSource = negocio.ListarCategoria(categoria);
             rptCategorias.DataBind();
         }
+
+        protected void AgregarCarrito_Click(object sender, CommandEventArgs e)
+        {
+            int idProducto = int.Parse(e.CommandArgument.ToString());
+
+            // Obtener o crear el carrito en Session
+            List<int> carrito = Session["carrito"] as List<int>;
+            if (carrito == null)
+            {
+                carrito = new List<int>();
+            }
+
+            // Agregar el producto
+            carrito.Add(idProducto);
+            Session["carrito"] = carrito;
+
+            // Redirigir al carrito
+            Response.Redirect("Carrito.aspx");
+        }
+
+        protected void rptCategorias_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            if (e.Item.ItemType == ListItemType.Item ||
+                e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                Repeater rptProductos = (Repeater)e.Item.FindControl("rptProductos");
+                if (rptProductos != null)
+                {
+                    rptProductos.ItemCommand += new RepeaterCommandEventHandler(AgregarCarrito_Click);
+                }
+            }
+        }
     }
 }

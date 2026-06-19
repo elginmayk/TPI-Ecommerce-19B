@@ -5,7 +5,7 @@
 
     <h2 class="titulo-seccion">🛍 Productos</h2>
 
-    <asp:Repeater ID="rptCategorias" runat="server">
+    <asp:Repeater ID="rptCategorias" runat="server" OnItemDataBound="rptCategorias_ItemDataBound">
 
         <ItemTemplate>
 
@@ -31,7 +31,12 @@
                                 </p>
                                 
                           <!--  BOTON CARRITO -->
-                          <button class="btn-carrito" onclick="agregarCarrito('<%# Eval("Nombre") %>', '<%# Eval("Precio") %>')">🛒 Agregar al carrito</button>
+                          <asp:Button runat="server" 
+                                Text="🛒 Agregar al carrito"
+                                CssClass="btn-carrito"
+                                CommandName="Agregar"
+                                CommandArgument='<%# Eval("Id") %>'
+                                OnCommand="AgregarCarrito_Click" />
 
                             </div>
 

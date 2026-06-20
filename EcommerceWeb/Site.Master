@@ -119,11 +119,14 @@
 
                 <!-- CARRITO -->
                 <li class="nav-item">
-                    <a class='nav-link <%: Request.Url.AbsolutePath.ToLower().Contains("carrito") ? "active" : "" %>'
-                        runat="server" href="~/Carrito">
-                        Carrito 🛒
-                    </a>
-                </li>
+    <a class='nav-link <%: Request.Url.AbsolutePath.ToLower().Contains("carrito") ? "active" : "" %>'
+        runat="server" href="~/Carrito.aspx">
+        Carrito 🛒
+        <asp:Label ID="lblCantidadCarrito" runat="server" 
+            CssClass="badge bg-danger ms-1" 
+            Visible="false" />
+           </a>
+         </li>
 
             </ul>
 

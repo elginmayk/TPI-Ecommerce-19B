@@ -224,5 +224,42 @@ namespace Negocio
             }
             return p;
         }
+
+        public List<IGrouping<string, Producto>> buscar(string nombre, int idCategoria)
+        {
+            if (!string.IsNullOrEmpty(nombre) && idCategoria > 0)
+            {
+                // busqueda por nombre Y categoria
+                CategoriaNegocio catNegocio = new CategoriaNegocio();
+                Categoria cat = catNegocio.listar().FirstOrDefault(c => c.Id == idCategoria);
+                string nombreCat = cat != null ? cat.Nombre : "";
+                var lista = listar();
+                return lista
+                    .Where(p => p.Estado && p.Stock > 0
+                        && p.Nombre.Contains(nombre)
+                        && p.CategoriaNombre == nombreCat)
+                    .GroupBy(p => p.CategoriaNombre)
+                    .ToList();
+            }
+            else if (idCategoria > 0)
+            {
+                CategoriaNegocio catNegocio = new CategoriaNegocio();
+                Categoria cat = catNegocio.listar().FirstOrDefault(c => c.Id == idCategoria);
+                string nombreCat = cat != null ? cat.Nombre : "";
+                return ListarCategoria(nombreCat);
+            }
+            else if (!string.IsNullOrEmpty(nombre))
+            {
+                var lista = listar();
+                return lista
+                    .Where(p => p.Estado && p.Stock > 0 && p.Nombre.Contains(nombre))
+                    .GroupBy(p => p.CategoriaNombre)
+                    .ToList();
+            }
+            else
+            {
+                return listarAgrupados();
+            }
+        }
     }
 }

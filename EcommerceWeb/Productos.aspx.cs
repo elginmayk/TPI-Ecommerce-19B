@@ -15,18 +15,32 @@ namespace EcommerceWeb
 
             if (!IsPostBack)
             {
+                CategoriaNegocio categoriaNegocio = new CategoriaNegocio();
+                ddlCategoria.DataSource = categoriaNegocio.listar();
+                ddlCategoria.DataTextField = "Nombre";
+                ddlCategoria.DataValueField = "Id";
+                ddlCategoria.DataBind();
+                ddlCategoria.Items.Insert(0, new ListItem("Todas las categorías", "0"));
+
                 string Categoria = Request.QueryString["Categoria"];
-
                 if (!string.IsNullOrEmpty(Categoria))
-                {
                     CargarProductos(Categoria);
-                }
                 else
-                {
                     CargarProductos();
-                }
             }
-
+            else
+            {
+                // En PostBack recargamos el dropdown pero mantenemos el valor seleccionado
+                string valorSeleccionado = Request.Form[ddlCategoria.UniqueID];
+                CategoriaNegocio categoriaNegocio = new CategoriaNegocio();
+                ddlCategoria.DataSource = categoriaNegocio.listar();
+                ddlCategoria.DataTextField = "Nombre";
+                ddlCategoria.DataValueField = "Id";
+                ddlCategoria.DataBind();
+                ddlCategoria.Items.Insert(0, new ListItem("Todas las categorías", "0"));
+                if (!string.IsNullOrEmpty(valorSeleccionado))
+                    ddlCategoria.SelectedValue = valorSeleccionado;
+            }
         }
 
 
@@ -75,6 +89,16 @@ namespace EcommerceWeb
                     rptProductos.ItemCommand += new RepeaterCommandEventHandler(AgregarCarrito_Click);
                 }
             }
+        }
+
+        protected void btnBuscar_Click(object sender, EventArgs e)
+        {
+            string busqueda = txtBuscar.Text.Trim();
+            int idCategoria = int.Parse(ddlCategoria.SelectedValue);
+
+            ProductoNegocio negocio = new ProductoNegocio();
+            rptCategorias.DataSource = negocio.buscar(busqueda, idCategoria);
+            rptCategorias.DataBind();
         }
     }
 }

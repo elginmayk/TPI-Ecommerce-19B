@@ -190,11 +190,11 @@ GO
 --('Jeans Slim', 'Pantalón jeans moderno', 45000, 18, 1, 'https://images.unsplash.com/photo-1514996937319-344454492b37', 1);
 
 -- CATEGORIAS
-INSERT INTO CATEGORIAS (Nombre, Estado) VALUES
-('Electrónica', 1),
-('Ropa', 1),
-('Calzado', 1),
-('Accesorios', 1)
+INSERT INTO CATEGORIAS (Nombre) VALUES
+('Electrónica'),
+('Ropa'),
+('Calzado'),
+('Accesorios')
 
 -- =====================
 -- INSERT PRODUCTOS CORREGIDO

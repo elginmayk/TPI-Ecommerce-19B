@@ -63,8 +63,7 @@ namespace EcommerceWeb
 
         protected void btnFinalizar_Click(object sender, EventArgs e)
         {
-            // Por ahora redirigimos, acá irá la lógica de pedido
-            Response.Redirect("Default.aspx");
+            Response.Redirect("Checkout.aspx");
         }
 
     }

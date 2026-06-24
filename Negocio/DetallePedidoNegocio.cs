@@ -63,7 +63,7 @@ namespace Negocio
                 datos.setearConsulta(
                     "INSERT INTO DETALLE_PEDIDOS " +
                     "(Cantidad, IdPedido, IdProducto) " +
-                    "OUTPUT INSERTED.Id " +
+                    "OUTPUT INSERTED.IdDetallePedido " +
                     "VALUES (@Cantidad, @Pedido, @Producto)"
                 );
 

@@ -211,12 +211,18 @@ INSERT INTO PRODUCTOS (Nombre, Descripcion, Precio, Stock, IdCategoria, UrlImage
 ('Mochila Urbana', 'Mochila resistente al agua', 35000, 45, 4, 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400'),
 ('Reloj Deportivo', 'Reloj resistente al agua', 28000, 35, 4, 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400')
 
+-- FORMA DE PAGO
 INSERT INTO FORMAS_PAGO (Nombre, Estado) VALUES
 ('Efectivo', 1),
 ('Tarjeta de débito', 1),
 ('Tarjeta de crédito', 1),
 ('Transferencia bancaria', 1),
 ('Mercado Pago', 1)
+
+-- FORMA DE ENTREGA 
+INSERT INTO FORMAS_ENTREGA (Nombre, Estado) VALUES
+('Envío a domicilio', 1),
+('Retiro en punto', 1)
 
 -- =====================
 -- USUARIO ADMINISTRADOR

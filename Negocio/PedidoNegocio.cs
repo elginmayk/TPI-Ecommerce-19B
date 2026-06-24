@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Negocio
 {
-    internal class PedidoNegocio
+    public class PedidoNegocio
     {
         public List<Pedido> listar()
         {
@@ -84,7 +84,7 @@ namespace Negocio
                 datos.setearConsulta(
                     "INSERT INTO PEDIDOS " +
                     "(Fecha, Total, Estado, IdUsuario, IdFormaPago, IdFormaEntrega, IdDireccion) " +
-                    "OUTPUT INSERTED.Id " +
+                    "OUTPUT INSERTED.IdPedido " +
                     "VALUES (@Fecha, @Total, @Estado, @Usuario, @FormaPago, @FormaEntrega, @Direccion)"
                 );
 
@@ -94,7 +94,7 @@ namespace Negocio
                 datos.agregarParametro("@Usuario", nuevo.Usuario.Id);
                 datos.agregarParametro("@FormaPago", nuevo.FormaPago.Id);
                 datos.agregarParametro("@FormaEntrega", nuevo.FormaEntrega.Id);
-                datos.agregarParametro("@Direccion", nuevo.Direccion.Id);
+                datos.agregarParametro("@Direccion", nuevo.Direccion != null ? (object)nuevo.Direccion.Id : DBNull.Value);
 
                 return datos.ejecutarAccionScalar();
             }

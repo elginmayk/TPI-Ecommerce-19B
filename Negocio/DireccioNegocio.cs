@@ -59,7 +59,7 @@ namespace Negocio
                 datos.setearConsulta(
                     "INSERT INTO DIRECCIONES " +
                     "(Calle, Numero, Localidad, CodigoPostal, Observaciones, IdUsuario) " +
-                    "OUTPUT INSERTED.Id " +
+                    "OUTPUT INSERTED.IdDireccion " +
                     "VALUES (@Calle, @Numero, @Localidad, @CP, @Observaciones, @Usuario)"
                 );
 

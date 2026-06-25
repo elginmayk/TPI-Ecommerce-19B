@@ -115,17 +115,18 @@ namespace Negocio
             try
             {
                 datos.setearConsulta(
-                    "UPDATE PEDIDOS SET " +
-                    "Estado = @Estado" +
-                    "FormaPago = @FormaPago" +
-                    "FormaEntrega = @FormaEntrega" +
-                    "Direccion = @Direccion" +
-                    "WHERE Id = @Id");
+                            "UPDATE PEDIDOS SET " +
+                            "Estado = @Estado, " +
+                            "IdFormaPago = @FormaPago, " +
+                            "IdFormaEntrega = @FormaEntrega, " +
+                            "IdDireccion = @Direccion " +
+                            "WHERE IdPedido = @Id");
 
                 datos.agregarParametro("@Estado", Pedido.Estado);
-                datos.agregarParametro("@FormaPago", Pedido.FormaPago);
-                datos.agregarParametro("@FormaEntrega", Pedido.FormaEntrega);
-                datos.agregarParametro("@Direccion", Pedido.Direccion);
+                datos.agregarParametro("@FormaPago", Pedido.FormaPago.Id);
+                datos.agregarParametro("@FormaEntrega", Pedido.FormaEntrega.Id);
+                datos.agregarParametro("@Direccion", Pedido.Direccion != null ? (object)Pedido.Direccion.Id : DBNull.Value);
+                datos.agregarParametro("@Id", Pedido.Id);
 
                 datos.ejecutarAccion();
             }

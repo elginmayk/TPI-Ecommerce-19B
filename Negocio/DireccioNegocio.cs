@@ -86,19 +86,20 @@ namespace Negocio
             try
             {
                 datos.setearConsulta(
-                    "UPDATE DIRECCIONES SET " +
-                    "Calle = @Calle" +
-                    "Numero = @Numero" +
-                    "Localidad = @Localidad" +
-                    "CP = @CP" +
-                    "Observaciones = @Observaciones" +
-                    "WHERE Id = @Id");
+                            "UPDATE DIRECCIONES SET " +
+                            "Calle = @Calle, " +
+                            "Numero = @Numero, " +
+                            "Localidad = @Localidad, " +
+                            "CodigoPostal = @CP, " +
+                            "Observaciones = @Observaciones " +
+                            "WHERE IdDireccion = @Id");
 
                 datos.agregarParametro("@Calle", Direccion.Calle);
                 datos.agregarParametro("@Numero", Direccion.Numero);
                 datos.agregarParametro("@Localidad", Direccion.Localidad);
                 datos.agregarParametro("@CP", Direccion.CodigoPostal);
                 datos.agregarParametro("@Observaciones", Direccion.Observaciones);
+                datos.agregarParametro("@Id", Direccion.Id);
 
                 datos.ejecutarAccion();
             }

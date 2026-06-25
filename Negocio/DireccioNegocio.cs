@@ -17,24 +17,26 @@ namespace Negocio
 
             try
             {
-                datos.setearConsulta("SELECT D.Id, D.Calle, D.Numero, D.Localidad, D.CodigoPostal, D.Observaciones, " +
-                                     "U.Id AS IdUsuario FROM DIRECCIONES D" +
-                                     "INNER JOIN USUARIO U ON D.IdUsuario = U.Id");
+                datos.setearConsulta(
+                   "SELECT D.IdDireccion, D.Calle, D.Numero, D.Localidad, D.CodigoPostal, D.Observaciones, " +
+                   "U.IdUsuario " +
+                   "FROM DIRECCIONES D " +
+                   "INNER JOIN USUARIOS U ON D.IdUsuario = U.IdUsuario");
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
                 {
                     Direccion aux = new Direccion();
-                    aux.Id = (int)datos.Lector["Id"];
+                    aux.Id = (int)datos.Lector["IdDireccion"];
                     aux.Calle = (string)datos.Lector["Calle"];
                     aux.Numero = (string)datos.Lector["Numero"];
                     aux.Localidad = (string)datos.Lector["Localidad"];
                     aux.CodigoPostal = (string)datos.Lector["CodigoPostal"];
-                    aux.Observaciones = (string)datos.Lector["Observaciones"];
+                    aux.Observaciones = datos.Lector["Observaciones"] != DBNull.Value
+                        ? datos.Lector["Observaciones"].ToString() : "";
 
                     aux.Usuario = new Usuario();
                     aux.Usuario.Id = (int)datos.Lector["IdUsuario"];
-
 
                     lista.Add(aux);
                 }

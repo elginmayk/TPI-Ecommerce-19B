@@ -115,13 +115,43 @@ if (!IsPostBack)
 
         protected void btnEditarDireccion_Click(object sender, EventArgs e)
         {
-            txtDireccion.ReadOnly = false;
-            txtCiudad.ReadOnly = false;
-       
-            txtCP.ReadOnly = false;
+            Usuario user = (Usuario)Session["usuario"];
 
-            btnEditarDireccion.Visible = false;
-            btnGuardarDireccion.Visible = true;
+            DireccioNegocio negocioDir = new DireccioNegocio();
+            Direccion dirExistente = negocioDir.obtenerPorUsuario(user.Id);
+
+            string calleNumero = txtDireccion.Text.Trim();
+            string[] partes = calleNumero.Split(' ');
+            string calle = partes.Length > 1 ? string.Join(" ", partes, 0, partes.Length - 1) : calleNumero;
+            string numero = partes.Length > 1 ? partes[partes.Length - 1] : "S/N";
+
+            if (dirExistente != null)
+            {
+                dirExistente.Calle = calle;
+                dirExistente.Numero = numero;
+                dirExistente.Localidad = txtCiudad.Text;
+                dirExistente.CodigoPostal = txtCP.Text;
+                negocioDir.Modificar(dirExistente);
+            }
+            else
+            {
+                Direccion nuevaDir = new Direccion();
+                nuevaDir.Calle = calle;
+                nuevaDir.Numero = numero;
+                nuevaDir.Localidad = txtCiudad.Text;
+                nuevaDir.CodigoPostal = txtCP.Text;
+                nuevaDir.Usuario = user;
+                negocioDir.Agregar(nuevaDir);
+            }
+
+            txtDireccion.ReadOnly = true;
+            txtCiudad.ReadOnly = true;
+            txtCP.ReadOnly = true;
+
+            btnEditarDireccion.Visible = true;
+            btnGuardarDireccion.Visible = false;
+
+            Response.Write("<script>alert('Dirección guardada correctamente');</script>");
         }
 
         protected void btnGuardarDireccion_Click(object sender, EventArgs e)

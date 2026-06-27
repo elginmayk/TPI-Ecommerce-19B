@@ -145,7 +145,7 @@ namespace Negocio
             {
                 datos.setearConsulta(
                     "UPDATE USUARIOS SET " +
-                    "Pass = @Pass" +
+                    "Pass = @Pass " +
                     "WHERE Email = @Email");
 
                 datos.agregarParametro("@Pass", Password);

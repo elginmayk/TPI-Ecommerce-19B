@@ -17,17 +17,19 @@ namespace Negocio
 
             try
             {
-                datos.setearConsulta("SELECT DP.Id, DP.Cantidad" +
-                                     "PE.Id AS DP.IdPedido" +
-                                     "PR.Id AS DP.IdProducto, PR.Nombre AS Nombre, PR.Descripcion AS Descripcion, PR.Precio AS Precio FROM DETALLE_PEDIDOS DP" +
-                                     "INNER JOIN PEDIDOS PE ON DP.IdPedido = PE.Id" +
-                                     "INNER JOIN PRODUCTOS PR ON DP.IdProducto = PR.Id");
+                datos.setearConsulta(
+                    "SELECT DP.IdDetallePedido, DP.Cantidad, " +
+                    "DP.IdPedido, " +
+                    "PR.IdProducto, PR.Nombre, PR.Descripcion, PR.Precio " +
+                    "FROM DETALLE_PEDIDOS DP " +
+                    "INNER JOIN PEDIDOS PE ON DP.IdPedido = PE.IdPedido " +
+                    "INNER JOIN PRODUCTOS PR ON DP.IdProducto = PR.IdProducto");
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
                 {
                     DetallePedido aux = new DetallePedido();
-                    aux.Id = (int)datos.Lector["Id"];
+                    aux.Id = (int)datos.Lector["IdDetallePedido"];
                     aux.Cantidad = (int)datos.Lector["Cantidad"];
 
                     aux.Pedido = new Pedido();
@@ -36,9 +38,9 @@ namespace Negocio
                     aux.Producto = new Producto();
                     aux.Producto.Id = (int)datos.Lector["IdProducto"];
                     aux.Producto.Nombre = (string)datos.Lector["Nombre"];
-                    aux.Producto.Descripcion = (string)datos.Lector["Decripcion"];
+                    aux.Producto.Descripcion = datos.Lector["Descripcion"] != DBNull.Value
+                        ? datos.Lector["Descripcion"].ToString() : "";
                     aux.Producto.Precio = (decimal)datos.Lector["Precio"];
-
 
                     lista.Add(aux);
                 }
@@ -63,7 +65,7 @@ namespace Negocio
                 datos.setearConsulta(
                     "INSERT INTO DETALLE_PEDIDOS " +
                     "(Cantidad, IdPedido, IdProducto) " +
-                    "OUTPUT INSERTED.Id " +
+                    "OUTPUT INSERTED.IdDetallePedido " +
                     "VALUES (@Cantidad, @Pedido, @Producto)"
                 );
 

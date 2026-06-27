@@ -58,6 +58,13 @@ namespace EcommerceWeb
                 lblSaludo.Visible = false;
                 menuAdministracion.Visible = false;
             }
+
+            List<int> carrito = Session["carrito"] as List<int>;
+            if (carrito != null && carrito.Count > 0)
+            {
+                lblCantidadCarrito.Text = carrito.Count.ToString();
+                lblCantidadCarrito.Visible = true;
+            }
         }
 
         protected void btnCerrarSesion_Click(object sender, EventArgs e)

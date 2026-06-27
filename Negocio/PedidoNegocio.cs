@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Negocio
 {
-    internal class PedidoNegocio
+    public class PedidoNegocio
     {
         public List<Pedido> listar()
         {
@@ -17,23 +17,25 @@ namespace Negocio
 
             try
             {
-                datos.setearConsulta("SELECT P.Id, P.Fecha, P.Total, P.Estado, " +
-                                     "U.Id AS P.IdUsuario, U.Nombre AS Nombre, U.Apellido AS Apellido, U.Email AS Email, U.Telefono AS Telefono, " +
-                                     "FP.Id AS P.IdFormaPago, FP.Nombre AS FormaPago, " +
-                                     "FE.Id AS P.IdFormaEntrega, FE.Nombre AS FormaEntrega, " +
-                                     "D.Id AS P.IdDireccion, D.Calle AS Calle, D.Numero AS Numero, D.Localidad AS Localidad, D.CodigoPostal AS CP, D.Observaciones AS Observaciones FROM Pedidos P" +
-                                     "INNER JOIN USUARIO U ON P.IdUsuario = U.Id" +
-                                     "INNER JOIN FORMASPAGO FP ON P.IdFormaPago = FP.Id" +
-                                     "INNER JOIN FORMASENTREGA FE ON P.IdFormaEntrega = FE.Id" +
-                                     "INNER JOIN DIRECCIONES D ON P.IdDireccion = D.Id");
+                datos.setearConsulta(
+                    "SELECT P.IdPedido, P.Fecha, P.Total, P.Estado, " +
+                    "U.IdUsuario, U.Nombre, U.Apellido, U.Email, U.Telefono, " +
+                    "FP.IdFormaPago, FP.Nombre AS FormaPago, " +
+                    "FE.IdFormaEntrega, FE.Nombre AS FormaEntrega, " +
+                    "D.IdDireccion, D.Calle, D.Numero, D.Localidad, D.CodigoPostal, D.Observaciones " +
+                    "FROM PEDIDOS P " +
+                    "INNER JOIN USUARIOS U ON P.IdUsuario = U.IdUsuario " +
+                    "INNER JOIN FORMAS_PAGO FP ON P.IdFormaPago = FP.IdFormaPago " +
+                    "INNER JOIN FORMAS_ENTREGA FE ON P.IdFormaEntrega = FE.IdFormaEntrega " +
+                    "LEFT JOIN DIRECCIONES D ON P.IdDireccion = D.IdDireccion");
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
                 {
                     Pedido aux = new Pedido();
-                    aux.Id = (int)datos.Lector["Id"];
+                    aux.Id = (int)datos.Lector["IdPedido"];
                     aux.Fecha = (DateTime)datos.Lector["Fecha"];
-                    aux.Total = (Decimal)datos.Lector["Total"];
+                    aux.Total = (decimal)datos.Lector["Total"];
                     aux.Estado = (string)datos.Lector["Estado"];
 
                     aux.Usuario = new Usuario();
@@ -51,14 +53,17 @@ namespace Negocio
                     aux.FormaEntrega.Id = (int)datos.Lector["IdFormaEntrega"];
                     aux.FormaEntrega.Nombre = (string)datos.Lector["FormaEntrega"];
 
-                    aux.Direccion = new Direccion();
-                    aux.Direccion.Id = (int)datos.Lector["IdDireccion"];
-                    aux.Direccion.Calle = (string)datos.Lector["Calle"];
-                    aux.Direccion.Numero = (string)datos.Lector["Numero"];
-                    aux.Direccion.Localidad = (string)datos.Lector["Localidad"];
-                    aux.Direccion.CodigoPostal = (string)datos.Lector["CP"];
-                    aux.Direccion.Observaciones = (string)datos.Lector["Observaciones"];
-
+                    if (datos.Lector["IdDireccion"] != DBNull.Value)
+                    {
+                        aux.Direccion = new Direccion();
+                        aux.Direccion.Id = (int)datos.Lector["IdDireccion"];
+                        aux.Direccion.Calle = (string)datos.Lector["Calle"];
+                        aux.Direccion.Numero = (string)datos.Lector["Numero"];
+                        aux.Direccion.Localidad = (string)datos.Lector["Localidad"];
+                        aux.Direccion.CodigoPostal = (string)datos.Lector["CodigoPostal"];
+                        aux.Direccion.Observaciones = datos.Lector["Observaciones"] != DBNull.Value
+                            ? datos.Lector["Observaciones"].ToString() : "";
+                    }
 
                     lista.Add(aux);
                 }
@@ -84,7 +89,7 @@ namespace Negocio
                 datos.setearConsulta(
                     "INSERT INTO PEDIDOS " +
                     "(Fecha, Total, Estado, IdUsuario, IdFormaPago, IdFormaEntrega, IdDireccion) " +
-                    "OUTPUT INSERTED.Id " +
+                    "OUTPUT INSERTED.IdPedido " +
                     "VALUES (@Fecha, @Total, @Estado, @Usuario, @FormaPago, @FormaEntrega, @Direccion)"
                 );
 
@@ -94,7 +99,7 @@ namespace Negocio
                 datos.agregarParametro("@Usuario", nuevo.Usuario.Id);
                 datos.agregarParametro("@FormaPago", nuevo.FormaPago.Id);
                 datos.agregarParametro("@FormaEntrega", nuevo.FormaEntrega.Id);
-                datos.agregarParametro("@Direccion", nuevo.Direccion.Id);
+                datos.agregarParametro("@Direccion", nuevo.Direccion != null ? (object)nuevo.Direccion.Id : DBNull.Value);
 
                 return datos.ejecutarAccionScalar();
             }
@@ -110,17 +115,18 @@ namespace Negocio
             try
             {
                 datos.setearConsulta(
-                    "UPDATE PEDIDOS SET " +
-                    "Estado = @Estado" +
-                    "FormaPago = @FormaPago" +
-                    "FormaEntrega = @FormaEntrega" +
-                    "Direccion = @Direccion" +
-                    "WHERE Id = @Id");
+                            "UPDATE PEDIDOS SET " +
+                            "Estado = @Estado, " +
+                            "IdFormaPago = @FormaPago, " +
+                            "IdFormaEntrega = @FormaEntrega, " +
+                            "IdDireccion = @Direccion " +
+                            "WHERE IdPedido = @Id");
 
                 datos.agregarParametro("@Estado", Pedido.Estado);
-                datos.agregarParametro("@FormaPago", Pedido.FormaPago);
-                datos.agregarParametro("@FormaEntrega", Pedido.FormaEntrega);
-                datos.agregarParametro("@Direccion", Pedido.Direccion);
+                datos.agregarParametro("@FormaPago", Pedido.FormaPago.Id);
+                datos.agregarParametro("@FormaEntrega", Pedido.FormaEntrega.Id);
+                datos.agregarParametro("@Direccion", Pedido.Direccion != null ? (object)Pedido.Direccion.Id : DBNull.Value);
+                datos.agregarParametro("@Id", Pedido.Id);
 
                 datos.ejecutarAccion();
             }

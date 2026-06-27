@@ -194,5 +194,72 @@ namespace Negocio
                 datos.cerrarConexion();
             }
         }
+
+        public Producto obtenerPorId(int id)
+        {
+            Acceso datos = new Acceso();
+            Producto p = null;
+
+            try
+            {
+                datos.setearConsulta(
+                    "SELECT IdProducto, Nombre, Precio, UrlImagen, IdCategoria " +
+                    "FROM PRODUCTOS WHERE IdProducto = @Id");
+                datos.agregarParametro("@Id", id);
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                {
+                    p = new Producto();
+                    p.Id = (int)datos.Lector["IdProducto"];
+                    p.Nombre = datos.Lector["Nombre"].ToString();
+                    p.Precio = (decimal)datos.Lector["Precio"];
+                    p.ImagenUrl = datos.Lector["UrlImagen"] != DBNull.Value ? datos.Lector["UrlImagen"].ToString() : "";
+                    p.Categoria = new Categoria { Id = (int)datos.Lector["IdCategoria"] };
+                }
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+            return p;
+        }
+
+        public List<IGrouping<string, Producto>> buscar(string nombre, int idCategoria)
+        {
+            if (!string.IsNullOrEmpty(nombre) && idCategoria > 0)
+            {
+                // busqueda por nombre Y categoria
+                CategoriaNegocio catNegocio = new CategoriaNegocio();
+                Categoria cat = catNegocio.listar().FirstOrDefault(c => c.Id == idCategoria);
+                string nombreCat = cat != null ? cat.Nombre : "";
+                var lista = listar();
+                return lista
+                    .Where(p => p.Estado && p.Stock > 0
+                        && p.Nombre.Contains(nombre)
+                        && p.CategoriaNombre == nombreCat)
+                    .GroupBy(p => p.CategoriaNombre)
+                    .ToList();
+            }
+            else if (idCategoria > 0)
+            {
+                CategoriaNegocio catNegocio = new CategoriaNegocio();
+                Categoria cat = catNegocio.listar().FirstOrDefault(c => c.Id == idCategoria);
+                string nombreCat = cat != null ? cat.Nombre : "";
+                return ListarCategoria(nombreCat);
+            }
+            else if (!string.IsNullOrEmpty(nombre))
+            {
+                var lista = listar();
+                return lista
+                    .Where(p => p.Estado && p.Stock > 0 && p.Nombre.Contains(nombre))
+                    .GroupBy(p => p.CategoriaNombre)
+                    .ToList();
+            }
+            else
+            {
+                return listarAgrupados();
+            }
+        }
     }
 }

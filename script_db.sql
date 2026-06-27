@@ -182,14 +182,6 @@ BEGIN
     );
 END
 GO
-INSERT INTO CATEGORIAS (Nombre)
-VALUES 
-('Ropa'),
-('Calzado'),
-('Accesorios');
-
-GO
-
 ---- =====================
 ---- ROPA (IdCategoria = 1)
 ---- =====================
@@ -197,24 +189,40 @@ GO
 --('Campera Invierno', 'Campera abrigada impermeable', 75000, 12, 1, 'https://images.unsplash.com/photo-1520975916090-3105956dac38', 1),
 --('Jeans Slim', 'Pantalón jeans moderno', 45000, 18, 1, 'https://images.unsplash.com/photo-1514996937319-344454492b37', 1);
 
+-- CATEGORIAS
+INSERT INTO CATEGORIAS (Nombre) VALUES
+('Electrónica'),
+('Ropa'),
+('Calzado'),
+('Accesorios')
+
 -- =====================
 -- INSERT PRODUCTOS CORREGIDO
 -- =====================
-INSERT INTO PRODUCTOS (Nombre, Descripcion, Precio, Stock, Estado, UrlImagen, IdCategoria) VALUES
+-- PRODUCTOS
+INSERT INTO PRODUCTOS (Nombre, Descripcion, Precio, Stock, IdCategoria, UrlImagen) VALUES
+('Mouse Inalámbrico', 'Mouse inalámbrico ergonómico', 15000, 50, 1, 'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=400'),
+('Teclado Mecánico', 'Teclado mecánico RGB', 45000, 30, 1, 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=400'),
+('Auriculares Bluetooth', 'Auriculares inalámbricos', 32000, 25, 1, 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400'),
+('Remera Básica', 'Remera 100% algodón', 8000, 100, 2, 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400'),
+('Buzo con Capucha', 'Buzo canguro de polar', 22000, 60, 2, 'https://images.unsplash.com/photo-1556821840-3a63f15732ce?w=400'),
+('Zapatillas Urbanas', 'Zapatillas deportivas urbanas', 55000, 40, 3, 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400'),
+('Botas de Cuero', 'Botas de cuero genuino', 95000, 20, 3, 'https://images.unsplash.com/photo-1608256246200-53e635b5b65f?w=400'),
+('Mochila Urbana', 'Mochila resistente al agua', 35000, 45, 4, 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400'),
+('Reloj Deportivo', 'Reloj resistente al agua', 28000, 35, 4, 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400')
 
--- =====================
--- CALZADO (IdCategoria = 2)
--- =====================
-('Zapatillas Nike Air', 'Zapatillas deportivas Nike originales', 120000, 15, 1, 'https://images.unsplash.com/photo-1542291026-7eec264c27ff', 2),
-('Adidas Running', 'Zapatillas para correr muy cómodas', 95000, 20, 1, 'https://images.unsplash.com/photo-1519744792095-2f2205e87b6f', 2),
-('Botas Cuero', 'Botas de cuero elegantes', 110000, 10, 1, 'https://images.unsplash.com/photo-1600185365483-26d7a4cc7519', 2),
+-- FORMA DE PAGO
+INSERT INTO FORMAS_PAGO (Nombre, Estado) VALUES
+('Efectivo', 1),
+('Tarjeta de débito', 1),
+('Tarjeta de crédito', 1),
+('Transferencia bancaria', 1),
+('Mercado Pago', 1)
 
--- =====================
--- ACCESORIOS (IdCategoria = 3)
--- =====================
-('Mochila Urbana', 'Mochila resistente para uso diario', 35000, 25, 1, 'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c', 3),
-('Reloj Deportivo', 'Reloj digital resistente al agua', 22000, 30, 1, 'https://images.unsplash.com/photo-1518546305927-5a555bb7020d', 3),
-('Gorra Negra', 'Gorra clásica ajustable', 9000, 40, 1, 'https://images.unsplash.com/photo-1521369909029-2afed882baee', 3);
+-- FORMA DE ENTREGA 
+INSERT INTO FORMAS_ENTREGA (Nombre, Estado) VALUES
+('Envío a domicilio', 1),
+('Retiro en punto', 1)
 
 -- =====================
 -- USUARIO ADMINISTRADOR

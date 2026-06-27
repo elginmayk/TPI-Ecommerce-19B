@@ -28,7 +28,7 @@ if (!IsPostBack)
             txtEmail.Text = user.Email;
             txtTelefono.Text = user.Telefono;
 
-            // ✅ DIRECCIÓN
+            // DIRECCIÓN
             DireccioNegocio negocioDir = new DireccioNegocio();
             Direccion dir = negocioDir.obtenerPorUsuario(user.Id);
 

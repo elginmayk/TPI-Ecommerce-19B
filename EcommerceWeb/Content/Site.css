@@ -88,7 +88,10 @@ body {
 
 .overlay p {
     animation: subir 1.2s ease forwards;
-    color: #f1f1f1;
+    color: #ffffff;
+    text-shadow: 0 0 5px #ffffff, 
+                 0 0 10px #ffffff, 
+                 0 0 20px #ffffff;
     font-size: 18px;
     text-shadow: 1px 1px 6px rgba(0,0,0,0.8);
 }
@@ -231,7 +234,7 @@ body {
 }
 
 
-/* ✅ CONTENIDO CENTRADO */
+/* CONTENIDO CENTRADO */
 .footer-contenido {
     max-width: 1200px;
     margin: auto;
@@ -242,7 +245,7 @@ body {
 }
 
 
-/* ✅ COLUMNAS */
+/* COLUMNAS */
 .footer-seccion {
     width: 30%;
     min-width: 250px;
@@ -254,7 +257,7 @@ body {
         letter-spacing: 0.5px;
     }
 
-    /* ✅ TEXTO + ICONOS */
+    /* TEXTO + ICONOS */
     .footer-seccion p {
         color: #ccc;
         margin: 6px 0;
@@ -265,13 +268,13 @@ body {
     }
 
 
-        /* ✅ ICONOS CONTACTO (EMAIL + BANDERA) */
+        /* ICONOS CONTACTO (EMAIL + BANDERA) */
         .footer-seccion p i {
             font-size: 18px;
             transition: 0.3s;
         }
 
-        /* ✉️ Email PRO */
+        /*  Email PRO */
         .footer-seccion p:first-of-type i {
             color: #00c6ff;
         }
@@ -291,7 +294,7 @@ body {
         }
 
 
-/* ✅ ICONOS DE REDES (MEJORADOS) */
+/* ICONOS DE REDES (MEJORADOS) */
 .footer-redes {
     display: flex;
     gap: 15px;
@@ -324,7 +327,7 @@ body {
     }
 
 
-    /* ✅ COLORES PRO POR RED SOCIAL */
+    /* COLORES  RED SOCIAL */
     .footer-redes a:nth-child(1):hover {
         background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366);
     }
@@ -341,7 +344,7 @@ body {
 /* WhatsApp */
 
 
-/* ✅ COPYRIGHT */
+/* COPYRIGHT */
 .footer-copy {
     text-align: center;
     border-top: 1px solid rgba(255,255,255,0.1);

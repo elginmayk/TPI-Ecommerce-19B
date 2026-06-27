@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Negocio;
+using BCrypt.Net;
 
 
 namespace Negocio
@@ -20,7 +21,7 @@ namespace Negocio
 
             try
             {
-                datos.setearConsulta("SELECT IdUsuario, Nombre, Apellido, Email, Pass, Telefono, Rol FROM USUARIOS");
+                datos.setearConsulta("SELECT IdUsuario, Nombre, Apellido, Email, Telefono, Rol FROM USUARIOS");
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
@@ -30,7 +31,6 @@ namespace Negocio
                     aux.Nombre = (string)datos.Lector["Nombre"];
                     aux.Apellido = (string)datos.Lector["Apellido"];
                     aux.Email = (string)datos.Lector["Email"];
-                    aux.Password = (string)datos.Lector["Pass"];
                     aux.Telefono = (string)datos.Lector["Telefono"];
                     aux.Rol = Convert.ToInt32(datos.Lector["Rol"]);
                     aux.Nivel = (Nivel)aux.Rol;
@@ -40,15 +40,12 @@ namespace Negocio
 
                 return lista;
             }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
             finally
             {
                 datos.cerrarConexion();
             }
         }
+
 
         public bool Login(Usuario usuario)
         {
@@ -56,26 +53,29 @@ namespace Negocio
 
             try
             {
-                datos.setearConsulta("SELECT IdUsuario, Email, Pass, Rol, Nombre FROM USUARIOS WHERE Email = @usuario AND Pass = @password");
+                datos.setearConsulta("SELECT IdUsuario, Email, Pass, Rol, Nombre FROM USUARIOS WHERE Email = @usuario");
                 datos.agregarParametro("@usuario", usuario.Email);
-                datos.agregarParametro("@password", usuario.Password);
 
                 datos.ejecutarLectura();
-                
-                while (datos.Lector.Read())
+
+                if (datos.Lector.Read())
                 {
-                    usuario.Id = (int)datos.Lector["IdUsuario"];
-                    usuario.Nombre = (string)datos.Lector["Nombre"];
-                    usuario.Rol = Convert.ToInt32(datos.Lector["Rol"]);
-                    usuario.Nivel = (Nivel)usuario.Rol;
-                    return true;
+                    string hashGuardado = datos.Lector["Pass"].ToString();
+
+                    bool esValido = BCrypt.Net.BCrypt.Verify(usuario.Password, hashGuardado);
+
+                    if (esValido)
+                    {
+                        usuario.Id = (int)datos.Lector["IdUsuario"];
+                        usuario.Nombre = (string)datos.Lector["Nombre"];
+                        usuario.Rol = Convert.ToInt32(datos.Lector["Rol"]);
+                        usuario.Nivel = (Nivel)usuario.Rol;
+
+                        return true;
+                    }
                 }
 
                 return false;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
             }
             finally
             {
@@ -83,12 +83,15 @@ namespace Negocio
             }
         }
 
+
+
         public int Agregar(Usuario nuevo)
         {
-
             Acceso datos = new Acceso();
             try
             {
+                string hash = BCrypt.Net.BCrypt.HashPassword(nuevo.Password);
+
                 datos.setearConsulta(
                     "INSERT INTO USUARIOS " +
                     "(Nombre, Apellido, Email, Pass, Telefono, Rol) " +
@@ -99,7 +102,7 @@ namespace Negocio
                 datos.agregarParametro("@Nombre", nuevo.Nombre);
                 datos.agregarParametro("@Apellido", nuevo.Apellido);
                 datos.agregarParametro("@Email", nuevo.Email);
-                datos.agregarParametro("@Pass", nuevo.Password);
+                datos.agregarParametro("@Pass", hash);
                 datos.agregarParametro("@Telefono", nuevo.Telefono);
                 datos.agregarParametro("@Rol", nuevo.Rol);
 
@@ -110,6 +113,7 @@ namespace Negocio
                 datos.cerrarConexion();
             }
         }
+
         public void Modificar(Usuario Usuario)
         {
             Acceso datos = new Acceso();
@@ -137,18 +141,19 @@ namespace Negocio
             }
         }
 
+
         public void ModificarPassword(string Email, string Password)
         {
             Acceso datos = new Acceso();
 
             try
             {
-                datos.setearConsulta(
-                    "UPDATE USUARIOS SET " +
-                    "Pass = @Pass " +
-                    "WHERE Email = @Email");
+                string hash = BCrypt.Net.BCrypt.HashPassword(Password);
 
-                datos.agregarParametro("@Pass", Password);
+                datos.setearConsulta(
+                    "UPDATE USUARIOS SET Pass = @Pass WHERE Email = @Email");
+
+                datos.agregarParametro("@Pass", hash);
                 datos.agregarParametro("@Email", Email);
 
                 datos.ejecutarAccion();
@@ -158,6 +163,7 @@ namespace Negocio
                 datos.cerrarConexion();
             }
         }
+
         public void ModificarRol(int id, int Rol)
         {
             Acceso datos = new Acceso();

@@ -20,7 +20,7 @@ BEGIN
         Nombre VARCHAR(50) NOT NULL,
         Apellido VARCHAR(50) NOT NULL,
         Email VARCHAR(70) NOT NULL,
-        Pass VARCHAR(50) NOT NULL,
+        Pass VARCHAR(255) NOT NULL,
         Telefono VARCHAR(20) NOT NULL,
         Rol SMALLINT NOT NULL
     );

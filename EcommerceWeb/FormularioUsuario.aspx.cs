@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using BCrypt.Net;
 
 namespace EcommerceWeb
 {
@@ -60,7 +61,7 @@ namespace EcommerceWeb
 
                 if (Request.QueryString["id"] != null)
                 {
-                    // modo edición
+                    // ✅ MODO EDICIÓN
                     int id = int.Parse(Request.QueryString["id"]);
 
                     Usuario usuario = new Usuario();
@@ -70,29 +71,31 @@ namespace EcommerceWeb
                     usuario.Telefono = txtTelefono.Text.Trim();
 
                     negocio.Modificar(usuario);
-                    if (usuario.Nivel == Nivel.ADMINISTRADOR)
-                        negocio.ModificarRol(id, int.Parse(ddlRol.SelectedValue));
 
-                    //if (!string.IsNullOrWhiteSpace(txtPassword.Text))
-                    //{
-                    //    negocio.ModificarPassword(id, txtPassword.Text.Trim());
-                    //}
+                    // ✅ CORREGIDO: siempre actualiza el rol
+                    negocio.ModificarRol(id, int.Parse(ddlRol.SelectedValue));
+
+                    // ✅ NUEVO: actualizar password solo si se escribió
+                    if (!string.IsNullOrWhiteSpace(txtPassword.Text))
+                    {
+                        negocio.ModificarPassword(txtEmail.Text.Trim(), txtPassword.Text.Trim());
+                    }
                 }
                 else
                 {
-                    // modo alta
+                    // ✅ MODO ALTA
                     Usuario usuario = new Usuario();
                     usuario.Nombre = txtNombre.Text.Trim();
                     usuario.Apellido = txtApellido.Text.Trim();
                     usuario.Email = txtEmail.Text.Trim();
                     usuario.Telefono = txtTelefono.Text.Trim();
                     usuario.Rol = 2;
-                    usuario.Password = txtPassword.Text.Trim();
+                    usuario.Password = txtPassword.Text.Trim(); // 👉 se hashea en Negocio
 
                     negocio.Agregar(usuario);
                 }
 
-                Response.Redirect("Default.aspx");
+                Response.Redirect("Login.aspx");
             }
             catch (Exception ex)
             {

@@ -12,10 +12,7 @@
     </div>
 </div>
 
-
-
-
-      
+     
 
 <h2 class="titulo-seccion">Productos destacados</h2>
 

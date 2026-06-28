@@ -30,19 +30,24 @@ namespace EcommerceWeb
             }
 
             ProductoNegocio negocio = new ProductoNegocio();
-            List<Producto> productos = new List<Producto>();
+            var agrupado = idsCarrito
+                .GroupBy(id => id)
+                .Select(g => {
+                    Producto p = negocio.obtenerPorId(g.Key);
+                    return new
+                    {
+                        IdProducto = p.Id,
+                        Nombre = p.Nombre,
+                        Precio = p.Precio,
+                        Cantidad = g.Count(),
+                        Subtotal = p.Precio * g.Count()
+                    };
+                }).ToList();
 
-            foreach (int id in idsCarrito)
-            {
-                Producto p = negocio.obtenerPorId(id);
-                if (p != null)
-                    productos.Add(p);
-            }
-
-            rptCarrito.DataSource = productos;
+            rptCarrito.DataSource = agrupado;
             rptCarrito.DataBind();
 
-            decimal total = productos.Sum(p => p.Precio);
+            decimal total = agrupado.Sum(x => x.Subtotal);
             lblTotal.Text = "$ " + total.ToString("N2");
         }
 

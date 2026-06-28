@@ -3,6 +3,9 @@
 <div class="container mt-5">
     <h2>Mi Carrito 🛒</h2>
     <hr />
+    <asp:Label ID="lblVacio" runat="server" Visible="false" 
+    CssClass="alert alert-warning mt-3 d-block" 
+    Text="Tu carrito está vacío. ¡Agregá productos para continuar!" />
 
     <asp:Repeater ID="rptCarrito" runat="server" OnItemCommand="rptCarrito_ItemCommand">
         <HeaderTemplate>

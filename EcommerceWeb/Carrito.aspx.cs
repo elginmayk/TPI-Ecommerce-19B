@@ -26,6 +26,8 @@ namespace EcommerceWeb
             if (idsCarrito == null || idsCarrito.Count == 0)
             {
                 // carrito vacío
+                lblVacio.Visible = true;
+                btnFinalizar.Visible = false;
                 return;
             }
 

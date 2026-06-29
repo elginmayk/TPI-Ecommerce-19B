@@ -11,6 +11,20 @@
         <asp:TextBox ID="txtPassword" runat="server" CssClass="form-control" TextMode="Password" placeholder="********" />
     </div>
 
+    <asp:RequiredFieldValidator 
+        ID="rfvEmail" runat="server"
+        ControlToValidate="txtEmail"
+        ErrorMessage="El email es obligatorio."
+        CssClass="text-danger d-block"
+        Display="Dynamic" />
+
+    <asp:RequiredFieldValidator 
+        ID="rfvPassword" runat="server"
+        ControlToValidate="txtPassword"
+        ErrorMessage="La contraseña es obligatoria."
+        CssClass="text-danger d-block"
+        Display="Dynamic" />
+
     <div class="d-grid mb-3">
         <asp:Button ID="btnConfirmar" Text="Confirmar" runat="server" CssClass="btn btn-primary py-2" OnClick="btnConfirmar_Click" />
     </div>

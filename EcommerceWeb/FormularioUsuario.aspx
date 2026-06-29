@@ -44,6 +44,34 @@
                         Text="Dejar en blanco para no cambiarla" Visible="false" />
                 </div>
 
+                <asp:RequiredFieldValidator 
+                    ID="rfvNombre" runat="server"
+                    ControlToValidate="txtNombre"
+                    ErrorMessage="El nombre es obligatorio."
+                    CssClass="text-danger d-block"
+                    Display="Dynamic" />
+
+                <asp:RequiredFieldValidator 
+                    ID="rfvApellido" runat="server"
+                    ControlToValidate="txtApellido"
+                    ErrorMessage="El apellido es obligatorio."
+                    CssClass="text-danger d-block"
+                    Display="Dynamic" />
+
+                <asp:RequiredFieldValidator 
+                    ID="rfvEmail" runat="server"
+                    ControlToValidate="txtEmail"
+                    ErrorMessage="El email es obligatorio."
+                    CssClass="text-danger d-block"
+                    Display="Dynamic" />
+
+                <asp:RequiredFieldValidator 
+                    ID="rfvTelefono" runat="server"
+                    ControlToValidate="txtTelefono"
+                    ErrorMessage="El teléfono es obligatorio."
+                    CssClass="text-danger d-block"
+                    Display="Dynamic" />
+
                 <asp:Button ID="btnGuardar" Text="Guardar" runat="server"
                     CssClass="btn btn-primary" OnClick="btnGuardar_Click" />
                 <a href="ListaUsuarios.aspx" class="btn btn-secondary ms-2">Cancelar</a>

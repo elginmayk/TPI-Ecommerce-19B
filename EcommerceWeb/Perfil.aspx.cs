@@ -90,6 +90,13 @@ namespace EcommerceWeb
 
         protected void btnGuardarDatos_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(txtNombre.Text) ||
+                string.IsNullOrWhiteSpace(txtApellido.Text) ||
+                string.IsNullOrWhiteSpace(txtEmail.Text))
+            {
+                Response.Write("<script>alert('Por favor completá nombre, apellido y email.');</script>");
+                return;
+            }
 
             Usuario user = (Usuario)Session["usuario"];
 
@@ -128,6 +135,15 @@ namespace EcommerceWeb
 
         protected void btnGuardarDireccion_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(txtDireccion.Text) ||
+                string.IsNullOrWhiteSpace(txtNumero.Text) ||
+                string.IsNullOrWhiteSpace(txtCiudad.Text) ||
+                string.IsNullOrWhiteSpace(txtCP.Text))
+            {
+                Response.Write("<script>alert('Por favor completá todos los campos de dirección.');</script>");
+                return;
+            }
+
             Usuario user = (Usuario)Session["usuario"];
             DireccioNegocio negocioDir = new DireccioNegocio();
             Direccion dirExistente = negocioDir.obtenerPorUsuario(user.Id);

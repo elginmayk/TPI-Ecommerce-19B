@@ -14,6 +14,13 @@
                     <asp:TextBox ID="txtNombre" runat="server" CssClass="form-control" />
                 </div>
 
+                <asp:RequiredFieldValidator 
+                    ID="rfvNombre" runat="server"
+                    ControlToValidate="txtNombre"
+                    ErrorMessage="El nombre es obligatorio."
+                    CssClass="text-danger d-block"
+                    Display="Dynamic" />
+
                 <asp:Button ID="btnGuardar" Text="Guardar" runat="server"
                     CssClass="btn btn-primary" OnClick="btnGuardar_Click" />
                 <a href="ListaFormasEntrega.aspx" class="btn btn-secondary ms-2">Cancelar</a>

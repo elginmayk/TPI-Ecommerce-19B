@@ -35,6 +35,28 @@
                     <label class="form-label">Estado</label>
                     <asp:CheckBox ID="chkEstado" runat="server" Text=" Activo" />
                 </div>
+
+                <asp:RequiredFieldValidator 
+                    ID="rfvNombre" runat="server"
+                    ControlToValidate="txtNombre"
+                    ErrorMessage="El nombre es obligatorio."
+                    CssClass="text-danger d-block"
+                    Display="Dynamic" />
+
+                <asp:RequiredFieldValidator 
+                    ID="rfvPrecio" runat="server"
+                    ControlToValidate="txtPrecio"
+                    ErrorMessage="El precio es obligatorio."
+                    CssClass="text-danger d-block"
+                    Display="Dynamic" />
+
+                <asp:RequiredFieldValidator 
+                    ID="rfvStock" runat="server"
+                    ControlToValidate="txtStock"
+                    ErrorMessage="El stock es obligatorio."
+                    CssClass="text-danger d-block"
+                    Display="Dynamic" />
+
                 <asp:Button ID="btnGuardar" Text="Guardar" runat="server" 
                     CssClass="btn btn-primary" OnClick="btnGuardar_Click" />
                 <a href="ListaProductos.aspx" class="btn btn-secondary ms-2">Cancelar</a>

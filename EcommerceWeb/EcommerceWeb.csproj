@@ -148,6 +148,7 @@
     <Content Include="FormularioProducto.aspx" />
     <Content Include="FormularioUsuario.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="HistorialPedidos.aspx" />
     <Content Include="imagen\banner.jpg" />
     <Content Include="ListaCategorias.aspx" />
     <Content Include="ListaFormasEntrega.aspx" />
@@ -311,6 +312,13 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="HistorialPedidos.aspx.cs">
+      <DependentUpon>HistorialPedidos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HistorialPedidos.aspx.designer.cs">
+      <DependentUpon>HistorialPedidos.aspx</DependentUpon>
     </Compile>
     <Compile Include="ListaCategorias.aspx.cs">
       <DependentUpon>ListaCategorias.aspx</DependentUpon>

@@ -149,6 +149,7 @@
     Mi Perfil
 </asp:HyperLink>
 </li>
+                    <li><asp:HyperLink runat="server" CssClass="dropdown-item" NavigateUrl="~/HistorialPedidos.aspx">Mis Pedidos</asp:HyperLink></li>
                     <li><hr class="dropdown-divider"></li>
             
                     <li>

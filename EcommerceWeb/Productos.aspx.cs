@@ -22,8 +22,20 @@ namespace EcommerceWeb
                 ddlCategoria.DataBind();
                 ddlCategoria.Items.Insert(0, new ListItem("Todas las categorías", "0"));
 
+                string idCat = Request.QueryString["idCat"];
                 string Categoria = Request.QueryString["Categoria"];
-                if (!string.IsNullOrEmpty(Categoria))
+
+                if (!string.IsNullOrEmpty(idCat))
+                {
+                    CategoriaNegocio catNegocio = new CategoriaNegocio();
+                    string nombreCategoria = catNegocio.listar()
+                        .FirstOrDefault(c => c.Id == int.Parse(idCat))?.Nombre;
+                    if (!string.IsNullOrEmpty(nombreCategoria))
+                        CargarProductos(nombreCategoria);
+                    else
+                        CargarProductos();
+                }
+                else if (!string.IsNullOrEmpty(Categoria))
                     CargarProductos(Categoria);
                 else
                     CargarProductos();

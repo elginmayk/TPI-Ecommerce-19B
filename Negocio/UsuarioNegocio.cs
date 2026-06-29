@@ -230,6 +230,39 @@ namespace Negocio
             }
         }
 
+        public Usuario obtenerPorEmail(string email)
+        {
+            Acceso datos = new Acceso();
+            try
+            {
+                datos.setearConsulta(
+                    "SELECT IdUsuario, Nombre, Apellido, Email, Telefono, Rol " +
+                    "FROM USUARIOS WHERE Email = @Email");
+                datos.agregarParametro("@Email", email);
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                {
+                    Usuario u = new Usuario();
+                    u.Id = (int)datos.Lector["IdUsuario"];
+                    u.Nombre = (string)datos.Lector["Nombre"];
+                    u.Apellido = (string)datos.Lector["Apellido"];
+                    u.Email = (string)datos.Lector["Email"];
+                    u.Telefono = (string)datos.Lector["Telefono"];
+                    u.Rol = Convert.ToInt32(datos.Lector["Rol"]);
+                    return u;
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
 
 
     }

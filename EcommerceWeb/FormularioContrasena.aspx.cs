@@ -1,4 +1,5 @@
 ﻿using Microsoft.Ajax.Utilities;
+using Dominio;
 using Negocio;
 using System;
 using System.Collections.Generic;
@@ -20,13 +21,23 @@ namespace EcommerceWeb
         {
             UsuarioNegocio negocio = new UsuarioNegocio();
 
-            if (!txtPassword.Text.IsNullOrWhiteSpace() || !txtEmail.Text.IsNullOrWhiteSpace())
-                negocio.ModificarPassword(txtEmail.Text, txtPassword.Text);
-            else
+            if (string.IsNullOrWhiteSpace(txtPassword.Text) || string.IsNullOrWhiteSpace(txtEmail.Text))
             {
                 lblMensajeError.Visible = true;
                 lblMensajeError.Text = "Ingrese una contraseña por favor";
+                return;
             }
+
+            Usuario usuario = negocio.obtenerPorEmail(txtEmail.Text);
+            if (usuario == null)
+            {
+                lblMensajeError.Visible = true;
+                lblMensajeError.Text = "No existe una cuenta con ese email.";
+                return;
+            }
+
+            negocio.ModificarPassword(txtEmail.Text, txtPassword.Text);
+            Response.Redirect("~/Login.aspx");
         }
     }
 }

@@ -25,13 +25,23 @@
                     <tr>
                         <td><%# Eval("Nombre") %></td>
                         <td>$ <%# Eval("Precio", "{0:N2}") %></td>
-                        <td><%# Eval("Cantidad") %></td>
-                        <td>$ <%# Eval("Subtotal", "{0:N2}") %></td>
-                    <td>
-                        <asp:Button runat="server" Text="Eliminar"
-                            CssClass="btn btn-danger btn-sm"
-                            CommandName="Eliminar"
-                            CommandArgument='<%# Eval("IdProducto") %>' />
+                        <td>
+                           <asp:Button runat="server" Text="-"
+                               CssClass="btn btn-outline-secondary btn-sm"
+                               CommandName="Restar"
+                               CommandArgument='<%# Eval("IdProducto") %>' />
+                           <%# Eval("Cantidad") %>
+                           <asp:Button runat="server" Text="+"
+                               CssClass="btn btn-outline-secondary btn-sm"
+                               CommandName="Sumar"
+                               CommandArgument='<%# Eval("IdProducto") %>' />
+                       </td>
+                       <td>$ <%# Eval("Subtotal", "{0:N2}") %></td>
+                       <td>
+                          <asp:Button runat="server" Text="Eliminar"
+                              CssClass="btn btn-danger btn-sm"
+                              CommandName="Eliminar"
+                              CommandArgument='<%# Eval("IdProducto") %>' />
                         </td>
                     </tr>
         </ItemTemplate>

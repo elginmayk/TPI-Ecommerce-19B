@@ -55,17 +55,37 @@ namespace EcommerceWeb
 
         protected void rptCarrito_ItemCommand(object source, RepeaterCommandEventArgs e)
         {
+            int idProducto = int.Parse(e.CommandArgument.ToString());
+            List<int> carrito = Session["carrito"] as List<int>;
+
             if (e.CommandName == "Eliminar")
             {
-                int idProducto = int.Parse(e.CommandArgument.ToString());
-                List<int> carrito = Session["carrito"] as List<int>;
                 if (carrito != null)
                 {
                     carrito.RemoveAll(x => x == idProducto);
                     Session["carrito"] = carrito;
                 }
-                Response.Redirect("Carrito.aspx");
             }
+            else if (e.CommandName == "Restar")
+            {
+                if (carrito != null)
+                {
+                    int index = carrito.IndexOf(idProducto);
+                    if (index >= 0)
+                        carrito.RemoveAt(index);
+                    Session["carrito"] = carrito;
+                }
+            }
+            else if (e.CommandName == "Sumar")
+            {
+                if (carrito != null)
+                {
+                    carrito.Add(idProducto);
+                    Session["carrito"] = carrito;
+                }
+            }
+
+            Response.Redirect("Carrito.aspx");
         }
 
         protected void btnFinalizar_Click(object sender, EventArgs e)

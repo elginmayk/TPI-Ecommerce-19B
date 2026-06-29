@@ -227,7 +227,9 @@ INSERT INTO FORMAS_ENTREGA (Nombre, Estado) VALUES
 -- =====================
 -- USUARIO ADMINISTRADOR
 -- =====================
+--   Administrador -> Administrador
+--   Usuario       -> Usuario
 INSERT INTO USUARIOS (Nombre, Apellido, Email, Pass, Telefono, Rol) VALUES
 
-('Administrador', '-', 'Admin@TheDibaStore.com', 'Administrador', '1234', 1),
-('Usuario', '-', 'Usuario@TheDibaStore.com', 'Usuario', '1234', 2);
+('Administrador', '-', 'Admin@TheDibaStore.com', '$2b$11$QIg.um86ueMVuooEhpOE4OgP0zU/suO7ekW0iBbdYUHNV/jufWL.G', '1234', 1),
+('Usuario', '-', 'Usuario@TheDibaStore.com', '$2b$11$bmxqd2Zgla8vgmPB8rocjuO7qbNUidzzjVbjF2vN51GXVzSgEKbdy', '1234', 2);

@@ -14,6 +14,15 @@ namespace EcommerceWeb
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Request.QueryString["id"] != null)
+            {
+                if (Session["usuario"] == null || ((Usuario)Session["usuario"]).Nivel != Nivel.ADMINISTRADOR)
+                {
+                    Response.Redirect("~/Login.aspx");
+                    return;
+                }
+            }
+
             if (!IsPostBack)
             {
                 ddlRol.Visible = false;

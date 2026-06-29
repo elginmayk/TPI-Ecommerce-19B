@@ -132,20 +132,22 @@ namespace Negocio
 
             try
             {
-                datos.setearConsulta("SELECT Calle, Numero, Localidad, CodigoPostal FROM DIRECCIONES WHERE IdUsuario = @IdUsuario");
-
+                datos.setearConsulta(
+                    "SELECT IdDireccion, Calle, Numero, Localidad, CodigoPostal, Observaciones " +
+                    "FROM DIRECCIONES WHERE IdUsuario = @IdUsuario");
                 datos.agregarParametro("@IdUsuario", idUsuario);
-
                 datos.ejecutarLectura();
 
                 if (datos.Lector.Read())
                 {
                     dir = new Direccion();
-
+                    dir.Id = (int)datos.Lector["IdDireccion"];
                     dir.Calle = (string)datos.Lector["Calle"];
                     dir.Numero = (string)datos.Lector["Numero"];
                     dir.Localidad = (string)datos.Lector["Localidad"];
                     dir.CodigoPostal = (string)datos.Lector["CodigoPostal"];
+                    dir.Observaciones = datos.Lector["Observaciones"] != DBNull.Value
+                        ? datos.Lector["Observaciones"].ToString() : "";
                 }
             }
             catch (Exception ex)
@@ -159,7 +161,5 @@ namespace Negocio
 
             return dir;
         }
-
-
     }
 }

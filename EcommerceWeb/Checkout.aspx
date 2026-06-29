@@ -11,7 +11,7 @@
             <div class="card mb-4">
                 <div class="card-header bg-dark text-white">
                     <h5 class="mb-0">📦 Resumen del pedido</h5>
-                </div>
+            </div>
                 <div class="card-body">
                     <asp:Repeater ID="rptProductos" runat="server">
                         <HeaderTemplate>
@@ -71,12 +71,23 @@
 
                     <!-- DIRECCION (solo si elige envio) -->
                     <asp:Panel ID="pnlDireccion" runat="server" Visible="false">
+                        <!-- BOTONES USAR DIRECCIÓN -->
+                        <div class="d-flex gap-2 mb-3">
+                            <asp:Button ID="btnUsarMiDireccion" runat="server" 
+                                Text="📍 Usar mi dirección guardada"
+                                CssClass="btn btn-outline-primary btn-sm"
+                                OnClick="btnUsarMiDireccion_Click" />
+                            <asp:Button ID="btnOtraDireccion" runat="server"
+                                Text="✏️ Usar otra dirección"
+                                CssClass="btn btn-outline-secondary btn-sm"
+                                OnClick="btnOtraDireccion_Click" />
+                        </div>
                         <div class="row">
-                            <div class="col-md-8 mb-3">
+                            <div class="col-md-6 mb-3">
                                 <label class="form-label">Calle</label>
                                 <asp:TextBox ID="txtCalle" runat="server" CssClass="form-control" placeholder="Ej: Av. Corrientes" />
                             </div>
-                            <div class="col-md-4 mb-3">
+                            <div class="col-md-6 mb-3">
                                 <label class="form-label">Número</label>
                                 <asp:TextBox ID="txtNumero" runat="server" CssClass="form-control" placeholder="Ej: 1234" />
                             </div>
@@ -91,10 +102,12 @@
                                 <asp:TextBox ID="txtCodigoPostal" runat="server" CssClass="form-control" placeholder="Ej: 1642" />
                             </div>
                         </div>
-                        <div class="mb-3">
-                             <label class="form-label">Observaciones (opcional)</label>
-                             <asp:TextBox ID="txtObservaciones" runat="server" CssClass="form-control" 
-                                 placeholder="Ej: Entre calles, piso, timbre..." TextMode="MultiLine" Rows="2" />
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <label class="form-label">Observaciones (opcional)</label>
+                                <asp:TextBox ID="txtObservaciones" runat="server" CssClass="form-control" 
+                                    placeholder="Ej: Entre calles, piso, timbre..." TextMode="MultiLine" Rows="2" />
+                            </div>
                         </div>
                     </asp:Panel>
 
@@ -154,7 +167,5 @@
                 </div>
             </div>
         </div>
-
-    </div>
-</div>
+      </div>
 </asp:Content>

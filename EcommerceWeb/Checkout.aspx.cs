@@ -162,5 +162,48 @@ namespace EcommerceWeb
             Session["carrito"] = null;
             Response.Redirect("Confirmacion.aspx?id=" + idPedido);
         }
+        protected void btnUsarMiDireccion_Click(object sender, EventArgs e)
+        {
+            Usuario usuario = (Usuario)Session["usuario"];
+            DireccioNegocio negocioDir = new DireccioNegocio();
+            Direccion dir = negocioDir.obtenerPorUsuario(usuario.Id);
+
+            if (dir != null)
+            {
+                txtCalle.Text = dir.Calle;
+                txtNumero.Text = dir.Numero;
+                txtLocalidad.Text = dir.Localidad;
+                txtCodigoPostal.Text = dir.CodigoPostal;
+                txtObservaciones.Text = dir.Observaciones;
+
+                txtCalle.ReadOnly = true;
+                txtNumero.ReadOnly = true;
+                txtLocalidad.ReadOnly = true;
+                txtCodigoPostal.ReadOnly = true;
+                txtObservaciones.ReadOnly = true;
+            }
+            else
+            {
+                lblError.Text = "No tenés una dirección guardada en tu perfil.";
+                lblError.Visible = true;
+            }
+        }
+
+        protected void btnOtraDireccion_Click(object sender, EventArgs e)
+        {
+            txtCalle.Text = "";
+            txtNumero.Text = "";
+            txtLocalidad.Text = "";
+            txtCodigoPostal.Text = "";
+            txtObservaciones.Text = "";
+
+            txtCalle.ReadOnly = false;
+            txtNumero.ReadOnly = false;
+            txtLocalidad.ReadOnly = false;
+            txtCodigoPostal.ReadOnly = false;
+            txtObservaciones.ReadOnly = false;
+
+            lblError.Visible = false;
+        }
     }
 }

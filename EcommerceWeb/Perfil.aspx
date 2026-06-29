@@ -56,6 +56,11 @@
 </div>
 
 <div class="form-group">
+    <label>Número</label>
+    <asp:TextBox ID="txtNumero" runat="server" CssClass="input" ReadOnly="true"></asp:TextBox>
+</div>
+
+<div class="form-group">
     <label>Localidad</label>
     <asp:TextBox ID="txtCiudad" runat="server" CssClass="input" ReadOnly="true"></asp:TextBox>
 </div>

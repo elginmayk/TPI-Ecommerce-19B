@@ -16,38 +16,39 @@ namespace EcommerceWeb
 
 
 
-            
-if (!IsPostBack)
-    {
-        if (Session["usuario"] != null)
-        {
-            Usuario user = (Usuario)Session["usuario"];
 
-            txtNombre.Text = user.Nombre;
-            txtApellido.Text = user.Apellido;
-            txtEmail.Text = user.Email;
-            txtTelefono.Text = user.Telefono;
-
-            // DIRECCIÓN
-            DireccioNegocio negocioDir = new DireccioNegocio();
-            Direccion dir = negocioDir.obtenerPorUsuario(user.Id);
-
-            if (dir != null)
+            if (!IsPostBack)
             {
-                txtDireccion.Text = dir.Calle + " " + dir.Numero;
-                txtCiudad.Text = dir.Localidad;
-                txtCP.Text = dir.CodigoPostal;
+                if (Session["usuario"] != null)
+                {
+                    Usuario user = (Usuario)Session["usuario"];
+
+                    txtNombre.Text = user.Nombre;
+                    txtApellido.Text = user.Apellido;
+                    txtEmail.Text = user.Email;
+                    txtTelefono.Text = user.Telefono;
+
+                    // DIRECCIÓN
+                    DireccioNegocio negocioDir = new DireccioNegocio();
+                    Direccion dir = negocioDir.obtenerPorUsuario(user.Id);
+
+                    if (dir != null)
+                    {
+                        txtDireccion.Text = dir.Calle;
+                        txtNumero.Text = dir.Numero;
+                        txtCiudad.Text = dir.Localidad;
+                        txtCP.Text = dir.CodigoPostal;
+                    }
+                }
+                else
+                {
+                    Response.Redirect("Login.aspx");
+                }
             }
-        }
-        else
-        {
-            Response.Redirect("Login.aspx"); 
-        }
-    }
-
 
 
         }
+        
 
 
         protected void btnActualizarDatos_Click(object sender, EventArgs e)
@@ -115,36 +116,45 @@ if (!IsPostBack)
 
         protected void btnEditarDireccion_Click(object sender, EventArgs e)
         {
-            Usuario user = (Usuario)Session["usuario"];
+            txtDireccion.ReadOnly = false;
+            txtNumero.ReadOnly = false;
+            txtCiudad.ReadOnly = false;
+            txtCP.ReadOnly = false;
 
+            btnEditarDireccion.Visible = false;
+            btnGuardarDireccion.Visible = true;
+
+        }
+
+        protected void btnGuardarDireccion_Click(object sender, EventArgs e)
+        {
+            Usuario user = (Usuario)Session["usuario"];
             DireccioNegocio negocioDir = new DireccioNegocio();
             Direccion dirExistente = negocioDir.obtenerPorUsuario(user.Id);
 
-            string calleNumero = txtDireccion.Text.Trim();
-            string[] partes = calleNumero.Split(' ');
-            string calle = partes.Length > 1 ? string.Join(" ", partes, 0, partes.Length - 1) : calleNumero;
-            string numero = partes.Length > 1 ? partes[partes.Length - 1] : "S/N";
-
             if (dirExistente != null)
             {
-                dirExistente.Calle = calle;
-                dirExistente.Numero = numero;
+                dirExistente.Calle = txtDireccion.Text;
+                dirExistente.Numero = txtNumero.Text;
                 dirExistente.Localidad = txtCiudad.Text;
                 dirExistente.CodigoPostal = txtCP.Text;
+                dirExistente.Observaciones = "";
                 negocioDir.Modificar(dirExistente);
             }
             else
             {
                 Direccion nuevaDir = new Direccion();
-                nuevaDir.Calle = calle;
-                nuevaDir.Numero = numero;
+                nuevaDir.Calle = txtDireccion.Text;
+                nuevaDir.Numero = txtNumero.Text;
                 nuevaDir.Localidad = txtCiudad.Text;
                 nuevaDir.CodigoPostal = txtCP.Text;
+                nuevaDir.Observaciones = "";
                 nuevaDir.Usuario = user;
                 negocioDir.Agregar(nuevaDir);
             }
 
             txtDireccion.ReadOnly = true;
+            txtNumero.ReadOnly = true;
             txtCiudad.ReadOnly = true;
             txtCP.ReadOnly = true;
 
@@ -153,23 +163,5 @@ if (!IsPostBack)
 
             Response.Write("<script>alert('Dirección guardada correctamente');</script>");
         }
-
-        protected void btnGuardarDireccion_Click(object sender, EventArgs e)
-        {
-            txtDireccion.ReadOnly = true;
-            txtCiudad.ReadOnly = true;
-    
-            txtCP.ReadOnly = true;
-
-            btnEditarDireccion.Visible = true;
-            btnGuardarDireccion.Visible = false;
-
-            Response.Write("<script>alert('Dirección actualizada');</script>");
-        }
-
-
-       
-
-
     }
 }

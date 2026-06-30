@@ -36,12 +36,12 @@ namespace EcommerceWeb
                 return;
             }
 
-            ProductoNegocio negocio = new ProductoNegocio();
+            ProductoNegocio prodNegocio = new ProductoNegocio();
             List<Producto> productos = new List<Producto>();
 
             foreach (int id in idsCarrito)
             {
-                Producto p = negocio.obtenerPorId(id);
+                Producto p = prodNegocio.obtenerPorId(id);
                 if (p != null)
                     productos.Add(p);
             }
@@ -57,8 +57,8 @@ namespace EcommerceWeb
 
         private void CargarFormasPago()
         {
-            FormaPagoNegocio negocio = new FormaPagoNegocio();
-            ddlFormaPago.DataSource = negocio.listar();
+            FormaPagoNegocio fpNegocio = new FormaPagoNegocio();
+            ddlFormaPago.DataSource = fpNegocio.listar();
             ddlFormaPago.DataTextField = "Nombre";
             ddlFormaPago.DataValueField = "Id";
             ddlFormaPago.DataBind();
@@ -111,6 +111,7 @@ namespace EcommerceWeb
             int? idDireccion = null;
             if (rbEnvio.Checked)
             {
+                DireccioNegocio dirNegocio = new DireccioNegocio();
                 Direccion direccion = new Direccion();
                 direccion.Usuario = usuario;
                 direccion.Calle = txtCalle.Text.Trim();
@@ -119,19 +120,7 @@ namespace EcommerceWeb
                 direccion.CodigoPostal = txtCodigoPostal.Text.Trim();
                 direccion.Observaciones = txtObservaciones.Text.Trim();
 
-                AccesoDatos.Acceso datos = new AccesoDatos.Acceso();
-                datos.setearConsulta(
-                    "INSERT INTO DIRECCIONES (Calle, Numero, Localidad, CodigoPostal, Observaciones, IdUsuario) " +
-                    "OUTPUT INSERTED.IdDireccion " +
-                    "VALUES (@Calle, @Numero, @Localidad, @CP, @Observaciones, @Usuario)");
-                datos.agregarParametro("@Calle", direccion.Calle);
-                datos.agregarParametro("@Numero", direccion.Numero);
-                datos.agregarParametro("@Localidad", direccion.Localidad);
-                datos.agregarParametro("@CP", direccion.CodigoPostal);
-                datos.agregarParametro("@Observaciones", direccion.Observaciones);
-                datos.agregarParametro("@Usuario", usuario.Id);
-                idDireccion = datos.ejecutarAccionScalar();
-                datos.cerrarConexion();
+                idDireccion = dirNegocio.Agregar(direccion);
             }
 
             // Crear pedido
@@ -145,8 +134,8 @@ namespace EcommerceWeb
             if (idDireccion.HasValue)
                 pedido.Direccion = new Direccion { Id = idDireccion.Value };
 
-            PedidoNegocio negocio = new PedidoNegocio();
-            int idPedido = negocio.Agregar(pedido);
+            PedidoNegocio pedNegocio = new PedidoNegocio();
+            int idPedido = pedNegocio.Agregar(pedido);
 
             // Agregar detalles
             DetallePedidoNegocio detNegocio = new DetallePedidoNegocio();

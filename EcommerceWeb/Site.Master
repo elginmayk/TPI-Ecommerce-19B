@@ -114,6 +114,8 @@
                       <li><a class="dropdown-item" runat="server" href="~/ListaUsuarios.aspx">Usuarios</a></li>
                       <li><a class="dropdown-item" runat="server" href="~/ListaFormasPago.aspx">Formas de Pago</a></li>
                       <li><a class="dropdown-item" runat="server" href="~/ListaFormasEntrega.aspx">Formas de Entrega</a></li>
+                      <li><hr class="dropdown-divider"></li>
+                      <li><a class="dropdown-item" runat="server" href="~/Dashboard.aspx">📊 Dashboard</a></li>
                   </ul>
                </li>
 

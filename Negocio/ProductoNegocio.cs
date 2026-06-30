@@ -113,7 +113,49 @@ namespace Negocio
         }
 
 
+        public List<Producto> listarPorIds(List<int> ids)
+        {
+            List<Producto> lista = new List<Producto>();
 
+            if (ids == null || ids.Count == 0)
+                return lista;
+
+            Acceso datos = new Acceso();
+
+            try
+            {
+                string cadenaIds = string.Join(",", ids.Distinct()); // se separan los ID en un string separados por ,
+
+                datos.setearConsulta($"SELECT P.IdProducto, P.Nombre, P.Descripcion, P.Precio, P.Stock, P.Estado, P.UrlImagen, P.IdCategoria, C.Nombre AS CategoriaNombre FROM PRODUCTOS P INNER JOIN CATEGORIAS C ON P.IdCategoria = C.IdCategoria WHERE P.Estado = 1 AND P.IdProducto IN ({cadenaIds})");
+
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    Producto aux = new Producto();
+                    aux.Id = (int)datos.Lector["IdProducto"];
+                    aux.Nombre = (string)datos.Lector["Nombre"];
+                    aux.Descripcion = datos.Lector["Descripcion"] != DBNull.Value ? datos.Lector["Descripcion"].ToString() : "";
+                    aux.Precio = (decimal)datos.Lector["Precio"];
+                    aux.Stock = (int)datos.Lector["Stock"];
+                    aux.Estado = (bool)datos.Lector["Estado"];
+                    aux.ImagenUrl = datos.Lector["UrlImagen"] != DBNull.Value ? datos.Lector["UrlImagen"].ToString() : "";
+                    aux.CategoriaNombre = (string)datos.Lector["CategoriaNombre"];
+
+                    lista.Add(aux);
+                }
+
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
 
 
         public int Agregar(Producto nuevo)

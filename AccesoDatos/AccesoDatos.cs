@@ -19,10 +19,12 @@ namespace AccesoDatos
 
         public Acceso()
         {
-            conexion = new SqlConnection("Server=.\\SQLEXPRESS;Database=TPI_ECOMMERCE;Integrated Security=True;TrustServerCertificate=True");
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["EcommerceDB"].ConnectionString;
+            conexion = new SqlConnection(connectionString);
+            comando = new SqlCommand();
+            //conexion = new SqlConnection("Server=.\\SQLEXPRESS;Database=TPI_ECOMMERCE;Integrated Security=True;TrustServerCertificate=True");
             //conexion = new SqlConnection("server=.\\SQLEXPRESS; database=TPI_ECOMMERCE; integrated security=true");
             //conexion = new SqlConnection("Server=localhost,1433;Database=TPI_ECOMMERCE;User Id=sa;Password=Maycol-123456;TrustServerCertificate=True");
-            comando = new SqlCommand();
         }
 
         public void setearConsulta(string consulta)

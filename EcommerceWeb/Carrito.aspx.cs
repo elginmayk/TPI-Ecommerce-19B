@@ -32,10 +32,14 @@ namespace EcommerceWeb
             }
 
             ProductoNegocio negocio = new ProductoNegocio();
+            List<Producto> productosDetalle = negocio.listarPorIds(idsCarrito);
+
             var agrupado = idsCarrito
                 .GroupBy(id => id)
                 .Select(g => {
-                    Producto p = negocio.obtenerPorId(g.Key);
+                    Producto p = productosDetalle.FirstOrDefault(x => x.Id == g.Key); // Busca el producto en la lista local que devuelve la Base de Datos.
+                    if (p == null) return null;
+
                     return new
                     {
                         IdProducto = p.Id,
@@ -44,7 +48,9 @@ namespace EcommerceWeb
                         Cantidad = g.Count(),
                         Subtotal = p.Precio * g.Count()
                     };
-                }).ToList();
+                })
+                .Where(x => x != null) //Se evitan los NULL
+                .ToList();
 
             rptCarrito.DataSource = agrupado;
             rptCarrito.DataBind();

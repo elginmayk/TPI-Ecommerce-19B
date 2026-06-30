@@ -39,22 +39,36 @@ namespace EcommerceWeb
                         txtCiudad.Text = dir.Localidad;
                         txtCP.Text = dir.CodigoPostal;
                     }
-
+                    pnlMensaje.Visible = false;
                     switch(Request.QueryString["success"])
                     {
-                        case "-3":  Response.Write("<script>alert('Por favor completá todos los campos de dirección.');</script>");
+                        case "-3":  lblMensajeTexto.Text = "Por favor completá todos los campos de dirección.";
+                                    pnlMensaje.CssClass = "alert alert-danger alert-dismissible fade show"; // Color ROJO
+                                    pnlMensaje.Visible = true;
                                     break;
-                        case "-2":  Response.Write("<script>alert('Por favor completá nombre, apellido y email.');</script>");
+                        case "-2":  lblMensajeTexto.Text = "Por favor completá nombre, apellido y email.";
+                                    pnlMensaje.CssClass = "alert alert-danger alert-dismissible fade show";
+                                    pnlMensaje.Visible = true;
                                     break;
-                        case "-1":  Response.Write("<script>alert('Las contraseñas no coinciden');</script>");
+                        case "-1":  lblMensajeTexto.Text = "Las contraseñas no coinciden";
+                                    pnlMensaje.CssClass = "alert alert-danger alert-dismissible fade show";
+                                    pnlMensaje.Visible = true;
                                     break;
-                        case "1":   Response.Write("<script>alert('Datos actualizados correctamente');</script>");
+                        case "1":   lblMensajeTexto.Text = "Datos actualizados correctamente";
+                                    pnlMensaje.CssClass = "alert alert-success alert-dismissible fade show";
+                                    pnlMensaje.Visible = true;
                                     break;
-                        case "2":   Response.Write("<script>alert('Contraseña actualizada');</script>");
+                        case "2":   lblMensajeTexto.Text = "Contraseña actualizada";
+                                    pnlMensaje.CssClass = "alert alert-success alert-dismissible fade show";
+                                    pnlMensaje.Visible = true;
                                     break;
-                        case "3":   Response.Write("<script>alert('Datos guardados en base de datos');</script>");
+                        case "3":   lblMensajeTexto.Text = "Datos guardados en base de datos";
+                                    pnlMensaje.CssClass = "alert alert-success alert-dismissible fade show";
+                                    pnlMensaje.Visible = true;
                                     break;
-                        case "4":   Response.Write("<script>alert('Dirección guardada correctamente');</script>");
+                        case "4":   lblMensajeTexto.Text = "Dirección guardada correctamente";
+                                    pnlMensaje.CssClass = "alert alert-success alert-dismissible fade show";
+                                    pnlMensaje.Visible = true;
                                     break;
                     }
                 }

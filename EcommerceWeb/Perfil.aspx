@@ -3,7 +3,10 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
- 
+<asp:Panel ID="pnlMensaje" runat="server" CssClass="alert alert-success alert-dismissible fade show" Visible="false" role="alert">
+    <asp:Label ID="lblMensajeTexto" runat="server"></asp:Label>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</asp:Panel>
 
 <div class="perfil-container">
 

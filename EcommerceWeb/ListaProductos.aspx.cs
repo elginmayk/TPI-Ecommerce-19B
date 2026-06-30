@@ -5,19 +5,13 @@ using System.Collections.Generic;
 
 namespace EcommerceWeb
 {
-    public partial class ListaProductos : System.Web.UI.Page
+    public partial class ListaProductos : AdminPage
     {
         // Esta lista debe ser pública para que el .aspx la vea
         public List<Producto> ListaProducto { get; set; }
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["usuario"] == null || ((Usuario)Session["usuario"]).Nivel != Nivel.ADMINISTRADOR)
-            {
-                Response.Redirect("~/Login.aspx");
-                return;
-            }
-
             if (!IsPostBack)
             {
                 CargarProductos();

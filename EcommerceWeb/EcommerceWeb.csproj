@@ -146,6 +146,7 @@
     <Content Include="FormularioFormaEntrega.aspx" />
     <Content Include="FormularioFormaPago.aspx" />
     <Content Include="FormularioProducto.aspx" />
+    <Content Include="FormularioRegistro.aspx" />
     <Content Include="FormularioUsuario.aspx" />
     <Content Include="Global.asax" />
     <Content Include="HistorialPedidos.aspx" />
@@ -224,6 +225,9 @@
     <Content Include="Site.Mobile.Master" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdminPage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="About.aspx.cs">
       <DependentUpon>About.aspx</DependentUpon>
@@ -302,6 +306,13 @@
     </Compile>
     <Compile Include="FormularioProducto.aspx.designer.cs">
       <DependentUpon>FormularioProducto.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FormularioRegistro.aspx.cs">
+      <DependentUpon>FormularioRegistro.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FormularioRegistro.aspx.designer.cs">
+      <DependentUpon>FormularioRegistro.aspx</DependentUpon>
     </Compile>
     <Compile Include="FormularioUsuario.aspx.cs">
       <DependentUpon>FormularioUsuario.aspx</DependentUpon>

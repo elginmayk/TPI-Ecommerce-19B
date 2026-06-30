@@ -10,28 +10,16 @@ using BCrypt.Net;
 
 namespace EcommerceWeb
 {
-    public partial class FormularioUsuario : System.Web.UI.Page
+    public partial class FormularioUsuario : AdminPage
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Request.QueryString["id"] != null)
-            {
-                if (Session["usuario"] == null || ((Usuario)Session["usuario"]).Nivel != Nivel.ADMINISTRADOR)
-                {
-                    Response.Redirect("~/Login.aspx");
-                    return;
-                }
-            }
-
             if (!IsPostBack)
             {
-                ddlRol.Visible = false;
-                lblRol.Visible = false;
-
                 if (Request.QueryString["id"] != null)
                 {
                     litTitulo.Text = "Editar Usuario";
-                    //lblPasswordHelp.Visible = true; // modo edición: aviso de "opcional"
+                    lblPasswordHelp.Visible = true; // modo edición: aviso de "opcional"
 
                     int id = int.Parse(Request.QueryString["id"]);
                     CargarUsuario(id);
@@ -39,7 +27,7 @@ namespace EcommerceWeb
                 else
                 {
                     litTitulo.Text = "Nuevo Usuario";
-                    //lblPasswordHelp.Visible = false; // modo alta: contraseña obligatoria
+                    lblPasswordHelp.Visible = false; // modo alta: contraseña obligatoria
                 }
             }
         }
@@ -130,12 +118,12 @@ namespace EcommerceWeb
             }
 
             // En alta, la contraseña es obligatoria
-            //if (Request.QueryString["id"] == null && string.IsNullOrWhiteSpace(txtPassword.Text))
-            //{
-            //    lblError.Text = "La contraseña es obligatoria.";
-            //    lblError.Visible = true;
-            //    return false;
-            //}
+            if (Request.QueryString["id"] == null && string.IsNullOrWhiteSpace(txtPassword.Text))
+            {
+                lblError.Text = "La contraseña es obligatoria.";
+                lblError.Visible = true;
+                return false;
+            }
 
             lblError.Visible = false;
             return true;

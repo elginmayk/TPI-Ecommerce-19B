@@ -39,6 +39,24 @@ namespace EcommerceWeb
                         txtCiudad.Text = dir.Localidad;
                         txtCP.Text = dir.CodigoPostal;
                     }
+
+                    switch(Request.QueryString["success"])
+                    {
+                        case "-3":  Response.Write("<script>alert('Por favor completá todos los campos de dirección.');</script>");
+                                    break;
+                        case "-2":  Response.Write("<script>alert('Por favor completá nombre, apellido y email.');</script>");
+                                    break;
+                        case "-1":  Response.Write("<script>alert('Las contraseñas no coinciden');</script>");
+                                    break;
+                        case "1":   Response.Write("<script>alert('Datos actualizados correctamente');</script>");
+                                    break;
+                        case "2":   Response.Write("<script>alert('Contraseña actualizada');</script>");
+                                    break;
+                        case "3":   Response.Write("<script>alert('Datos guardados en base de datos');</script>");
+                                    break;
+                        case "4":   Response.Write("<script>alert('Dirección guardada correctamente');</script>");
+                                    break;
+                    }
                 }
                 else
                 {
@@ -58,7 +76,8 @@ namespace EcommerceWeb
             string email = txtEmail.Text;
             string telefono = txtTelefono.Text;
 
-            Response.Write("<script>alert('Datos actualizados correctamente');</script>");
+            //Response.Write("<script>alert('Datos actualizados correctamente');</script>");
+            Response.Redirect("Perfil.aspx?success=1");
         }
 
 
@@ -67,11 +86,13 @@ namespace EcommerceWeb
         {
             if (txtPassNueva.Text == txtConfirmarPass.Text)
             {
-                Response.Write("<script>alert('Contraseña actualizada');</script>");
+                //Response.Write("<script>alert('Contraseña actualizada');</script>");
+                Response.Redirect("Perfil.aspx?success=2");
             }
             else
             {
-                Response.Write("<script>alert('Las contraseñas no coinciden');</script>");
+                //Response.Write("<script>alert('Las contraseñas no coinciden');</script>");
+                Response.Redirect("Perfil.aspx?success=-1");
             }
         }
 
@@ -94,7 +115,8 @@ namespace EcommerceWeb
                 string.IsNullOrWhiteSpace(txtApellido.Text) ||
                 string.IsNullOrWhiteSpace(txtEmail.Text))
             {
-                Response.Write("<script>alert('Por favor completá nombre, apellido y email.');</script>");
+                //Response.Write("<script>alert('Por favor completá nombre, apellido y email.');</script>");
+                Response.Redirect("Perfil.aspx?success=-2");
                 return;
             }
 
@@ -116,7 +138,8 @@ namespace EcommerceWeb
             btnEditarDatos.Visible = true;
             btnGuardarDatos.Visible = false;
 
-            Response.Write("<script>alert('Datos guardados en base de datos');</script>");
+            //Response.Write("<script>alert('Datos guardados en base de datos');</script>");
+            Response.Redirect("Perfil.aspx?success=3");
 
         }
 
@@ -140,7 +163,8 @@ namespace EcommerceWeb
                 string.IsNullOrWhiteSpace(txtCiudad.Text) ||
                 string.IsNullOrWhiteSpace(txtCP.Text))
             {
-                Response.Write("<script>alert('Por favor completá todos los campos de dirección.');</script>");
+                //Response.Write("<script>alert('Por favor completá todos los campos de dirección.');</script>");
+                Response.Redirect("Perfil.aspx?success=-3");
                 return;
             }
 
@@ -177,7 +201,8 @@ namespace EcommerceWeb
             btnEditarDireccion.Visible = true;
             btnGuardarDireccion.Visible = false;
 
-            Response.Write("<script>alert('Dirección guardada correctamente');</script>");
+            //Response.Write("<script>alert('Dirección guardada correctamente');</script>");
+            Response.Redirect("Perfil.aspx?success=4");
         }
     }
 }

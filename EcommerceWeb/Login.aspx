@@ -43,7 +43,7 @@
 
                         <div class="mt-3">
                             <span class="text-muted">¿No tienes cuenta?</span> 
-                            <a href="FormularioUsuario.aspx" class="text-decoration-none fw-bold">Regístrate aquí</a>
+                            <a href="FormularioRegistro.aspx" class="text-decoration-none fw-bold">Regístrate aquí</a>
                         </div>
                         <div class="mt-3">
                             <a href="FormularioContrasena.aspx" class="text-decoration-none fw-bold">Olvidé mi contraseña</a>

@@ -107,9 +107,36 @@ namespace EcommerceWeb
         {
             string busqueda = txtBuscar.Text.Trim();
             int idCategoria = int.Parse(ddlCategoria.SelectedValue);
+            string orden = ddlOrden.SelectedValue;
 
             ProductoNegocio negocio = new ProductoNegocio();
-            rptCategorias.DataSource = negocio.buscar(busqueda, idCategoria);
+            var productos = negocio.buscar(busqueda, idCategoria);
+
+            switch (orden)
+            {
+                case "nombre_asc":
+                    productos = productos
+                        .Select(g => g.OrderBy(p => p.Nombre)
+                            .GroupBy(p => p.CategoriaNombre).First())
+                        .ToList();
+                    break;
+                case "nombre_desc":
+                    productos = productos
+                        .Select(g => g.OrderByDescending(p => p.Nombre)
+                            .GroupBy(p => p.CategoriaNombre).First())
+                        .ToList();
+                    break;
+                case "precio_asc":
+                    productos = productos.Select(g => g.OrderBy(p => p.Precio)
+                        .GroupBy(p => p.CategoriaNombre).First()).ToList();
+                    break;
+                case "precio_desc":
+                    productos = productos.Select(g => g.OrderByDescending(p => p.Precio)
+                        .GroupBy(p => p.CategoriaNombre).First()).ToList();
+                    break;
+            }
+
+            rptCategorias.DataSource = productos;
             rptCategorias.DataBind();
         }
     }

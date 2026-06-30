@@ -7,14 +7,23 @@
 
     <!-- BUSCADOR Y FILTRO -->
 <div class="row mb-4">
-    <div class="col-md-6">
+    <div class="col-md-4">
         <asp:TextBox ID="txtBuscar" runat="server" 
             CssClass="form-control" 
             placeholder="Buscar producto..." />
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
         <asp:DropDownList ID="ddlCategoria" runat="server" CssClass="form-select">
             <asp:ListItem Text="Todas las categorías" Value="0" />
+        </asp:DropDownList>
+    </div>
+    <div class="col-md-3">
+        <asp:DropDownList ID="ddlOrden" runat="server" CssClass="form-select">
+            <asp:ListItem Text="Ordenar por..." Value="0" />
+            <asp:ListItem Text="Nombre A-Z" Value="nombre_asc" />
+            <asp:ListItem Text="Nombre Z-A" Value="nombre_desc" />
+            <asp:ListItem Text="Precio menor a mayor" Value="precio_asc" />
+            <asp:ListItem Text="Precio mayor a menor" Value="precio_desc" />
         </asp:DropDownList>
     </div>
     <div class="col-md-2">

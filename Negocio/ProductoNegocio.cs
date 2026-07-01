@@ -17,7 +17,13 @@ namespace Negocio
 
             try
             {
-                datos.setearConsulta("SELECT P.IdProducto,P.Nombre,P.Descripcion,P.Precio,P.Stock,P.Estado,P.UrlImagen,P.IdCategoria,C.Nombre AS CategoriaNombre FROM PRODUCTOS P INNER JOIN CATEGORIAS C ON P.IdCategoria = C.IdCategoria WHERE P.Estado = 1 AND P.Stock > 0 ORDER BY C.Nombre");
+                datos.setearConsulta("SELECT P.IdProducto,P.Nombre,P.Descripcion,P.Precio,P.Stock,P.Estado,P.UrlImagen,P.IdCategoria,C.Nombre AS CategoriaNombre, " +
+                    "ISNULL(R.Promedio,0) AS PromedioResena, ISNULL(R.Cantidad,0) AS CantidadResenas " +
+                    "FROM PRODUCTOS P " +
+                    "INNER JOIN CATEGORIAS C ON P.IdCategoria = C.IdCategoria " +
+                    "LEFT JOIN (SELECT IdProducto, AVG(CAST(Puntuacion AS DECIMAL(3,2))) AS Promedio, COUNT(*) AS Cantidad " +
+                    "FROM RESENAS GROUP BY IdProducto) R ON R.IdProducto = P.IdProducto " +
+                    "WHERE P.Estado = 1 AND P.Stock > 0 ORDER BY C.Nombre");
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
@@ -32,6 +38,8 @@ namespace Negocio
                     aux.Estado = (bool)datos.Lector["Estado"];
                     aux.ImagenUrl = datos.Lector["UrlImagen"] != DBNull.Value ? datos.Lector["UrlImagen"].ToString() : "";
                     aux.CategoriaNombre = (string)datos.Lector["CategoriaNombre"];
+                    aux.PromedioResena = Convert.ToDecimal(datos.Lector["PromedioResena"]);
+                    aux.CantidadResenas = Convert.ToInt32(datos.Lector["CantidadResenas"]);
                     lista.Add(aux);
                 }
 
@@ -245,8 +253,13 @@ namespace Negocio
             try
             {
                 datos.setearConsulta(
-                    "SELECT IdProducto, Nombre, Precio, UrlImagen, IdCategoria " +
-                    "FROM PRODUCTOS WHERE IdProducto = @Id");
+                    "SELECT P.IdProducto, P.Nombre, P.Descripcion, P.Precio, P.Stock, P.Estado, P.UrlImagen, P.IdCategoria, C.Nombre AS CategoriaNombre, " +
+                    "ISNULL(R.Promedio,0) AS PromedioResena, ISNULL(R.Cantidad,0) AS CantidadResenas " +
+                    "FROM PRODUCTOS P " +
+                    "INNER JOIN CATEGORIAS C ON P.IdCategoria = C.IdCategoria " +
+                    "LEFT JOIN (SELECT IdProducto, AVG(CAST(Puntuacion AS DECIMAL(3,2))) AS Promedio, COUNT(*) AS Cantidad " +
+                    "FROM RESENAS GROUP BY IdProducto) R ON R.IdProducto = P.IdProducto " +
+                    "WHERE P.IdProducto = @Id");
                 datos.agregarParametro("@Id", id);
                 datos.ejecutarLectura();
 
@@ -257,7 +270,11 @@ namespace Negocio
                     p.Nombre = datos.Lector["Nombre"].ToString();
                     p.Precio = (decimal)datos.Lector["Precio"];
                     p.ImagenUrl = datos.Lector["UrlImagen"] != DBNull.Value ? datos.Lector["UrlImagen"].ToString() : "";
+                    p.CategoriaNombre = (string)datos.Lector["CategoriaNombre"];
                     p.Categoria = new Categoria { Id = (int)datos.Lector["IdCategoria"] };
+                    p.PromedioResena = Convert.ToDecimal(datos.Lector["PromedioResena"]);
+                    p.CantidadResenas = Convert.ToInt32(datos.Lector["CantidadResenas"]);
+
                 }
             }
             finally

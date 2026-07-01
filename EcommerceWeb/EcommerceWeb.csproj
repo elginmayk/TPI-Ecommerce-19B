@@ -140,6 +140,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Dashboard.aspx" />
     <Content Include="Default.aspx" />
+    <Content Include="DetalleProducto.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="font\fontello.svg" />
     <Content Include="FormularioCategoria.aspx" />
@@ -280,6 +281,13 @@
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DetalleProducto.aspx.cs">
+      <DependentUpon>DetalleProducto.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DetalleProducto.aspx.designer.cs">
+      <DependentUpon>DetalleProducto.aspx</DependentUpon>
     </Compile>
     <Compile Include="FormularioCategoria.aspx.cs">
       <DependentUpon>FormularioCategoria.aspx</DependentUpon>

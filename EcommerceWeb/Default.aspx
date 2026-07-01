@@ -23,11 +23,11 @@
         <ItemTemplate>
 
             <div class="card-producto">
-
+            <a href='DetalleProducto.aspx?id=<%# Eval("Id") %>'>
                 <img src='<%# Eval("ImagenUrl") %>' />
 
                 <h4><%# Eval("Nombre") %></h4>
-
+            </a>
                 <p class="precio">
                     $ <%# Eval("Precio", "{0:N2}") %>
                 </p>

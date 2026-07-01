@@ -114,7 +114,7 @@ namespace Negocio
 
             try
             {
-                datos.setearConsulta("DELETE FROM DIRECCIONES WHERE Id = @Id");
+                datos.setearConsulta("DELETE FROM DIRECCIONES WHERE IdDireccion = @Id");
                 datos.agregarParametro("@Id", id);
                 datos.ejecutarAccion();
             }

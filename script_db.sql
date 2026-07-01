@@ -204,7 +204,7 @@ BEGIN
         FOREIGN KEY (IdUsuario)
         REFERENCES USUARIOS(IdUsuario),
 
-        -- Un usuario solo puede tener UNA reseña por producto (si comenta de nuevo, se actualiza)
+        -- Un usuario solo puede tener una reseña por producto (si comenta de nuevo, se actualiza)
         CONSTRAINT UQ_RESENAS_PRODUCTO_USUARIO
         UNIQUE (IdProducto, IdUsuario),
 

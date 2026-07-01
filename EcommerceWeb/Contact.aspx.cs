@@ -13,5 +13,14 @@ namespace EcommerceWeb
         {
 
         }
+
+        protected void btnEnviar_Click(object sender, EventArgs e)
+        {
+            if (!Page.IsValid)
+                return;
+
+            pnlFormulario.Visible = false;
+            pnlExito.Visible = true;
+        }
     }
 }

@@ -45,6 +45,26 @@ namespace EcommerceWeb
                 rptPedidos.DataSource = pedidos;
                 rptPedidos.DataBind();
             }
+          
         }
+
+
+
+        protected string ObtenerEstadoUsuario(string estado)
+        {
+            if (estado == "Entregado")
+            {
+                return "<span class='badge bg-success'>✅ Recibido</span>";
+            }
+
+            if (estado == "Pendiente")
+            {
+                return "<span class='badge bg-warning text-dark'>⏳ Pendiente</span>";
+            }
+
+            return "<span class='badge bg-secondary'>" + estado + "</span>";
+        }
+
+
     }
 }

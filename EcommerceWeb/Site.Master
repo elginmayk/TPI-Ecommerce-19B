@@ -88,13 +88,13 @@
                     </ul>
                 </li>
 
-                <!-- ACERCA -->
+                <%-- ACERCA 
                 <li class="nav-item">
                     <a class='nav-link <%: Request.Url.AbsolutePath.ToLower().Contains("about") ? "active" : "" %>'
                         runat="server" href="~/About">
                         Acerca de
                     </a>
-                </li>
+                </li> --%>
 
                 <!-- CONTACTO -->
                 <li class="nav-item">

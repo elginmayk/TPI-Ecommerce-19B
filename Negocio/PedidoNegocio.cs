@@ -150,5 +150,30 @@ namespace Negocio
                 datos.cerrarConexion();
             }
         }
+
+
+        public void MarcarEntregado(int id)
+        {
+            Acceso datos = new Acceso();
+
+            try
+            {
+                datos.setearConsulta("UPDATE PEDIDOS SET Estado = @estado WHERE IdPedido = @id");
+                datos.agregarParametro("@estado", "Entregado");
+                datos.agregarParametro("@id", id);
+
+                datos.ejecutarAccion();
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+
     }
+
+
+
+
 }

@@ -155,6 +155,7 @@
     <Content Include="ListaCategorias.aspx" />
     <Content Include="ListaFormasEntrega.aspx" />
     <Content Include="ListaFormasPago.aspx" />
+    <Content Include="ListaPedidos.aspx" />
     <Content Include="ListaProductos.aspx" />
     <Content Include="ListaUsuarios.aspx" />
     <Content Include="Login.aspx" />
@@ -359,6 +360,13 @@
     </Compile>
     <Compile Include="ListaFormasPago.aspx.designer.cs">
       <DependentUpon>ListaFormasPago.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ListaPedidos.aspx.cs">
+      <DependentUpon>ListaPedidos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ListaPedidos.aspx.designer.cs">
+      <DependentUpon>ListaPedidos.aspx</DependentUpon>
     </Compile>
     <Compile Include="ListaProductos.aspx.cs">
       <DependentUpon>ListaProductos.aspx</DependentUpon>

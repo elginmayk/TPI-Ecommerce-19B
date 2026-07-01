@@ -20,6 +20,7 @@
 </head>
 <body>
     <form runat="server">
+      <div class="wrapper">
         <asp:ScriptManager runat="server">
             <Scripts>
                 <%--To learn more about bundling scripts in ScriptManager see https://go.microsoft.com/fwlink/?LinkID=301884 --%>
@@ -114,7 +115,9 @@
                       <li><a class="dropdown-item" runat="server" href="~/ListaUsuarios.aspx">Usuarios</a></li>
                       <li><a class="dropdown-item" runat="server" href="~/ListaFormasPago.aspx">Formas de Pago</a></li>
                       <li><a class="dropdown-item" runat="server" href="~/ListaFormasEntrega.aspx">Formas de Entrega</a></li>
-                      <li><hr class="dropdown-divider"></li>
+                      <li><hr class="dropdown-divider"></li>               
+                      <li><a class="dropdown-item" runat="server" href="~/ListaPedidos.aspx">📦 Pedidos</a></li>
+
                       <li><a class="dropdown-item" runat="server" href="~/Dashboard.aspx">📊 Dashboard</a></li>
                   </ul>
                </li>
@@ -222,7 +225,7 @@
     }
 </script>
 
-
+</div>
     </form>
 </body>
 </html>

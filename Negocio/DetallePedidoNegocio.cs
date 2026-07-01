@@ -88,14 +88,16 @@ namespace Negocio
             {
                 datos.setearConsulta(
                     "UPDATE DETALLE_PEDIDOS SET " +
-                    "Cantidad = @Cantidad" +
-                    "Pedido = @Pedido" +
-                    "Producto = @Producto" +
-                    "WHERE Id = @Id");
+                    "Cantidad = @Cantidad, " +
+                    "Pedido = @Pedido, " +
+                    "Producto = @Producto, " +
+                    "WHERE IdDetallePedido = @Id");
 
                 datos.agregarParametro("@Cantidad", Detalle.Cantidad);
                 datos.agregarParametro("@Pedido", Detalle.Pedido.Id);
                 datos.agregarParametro("@Producto", Detalle.Producto.Id);
+                datos.agregarParametro("@Id", Detalle.Id);
+
 
                 datos.ejecutarAccion();
             }
@@ -110,7 +112,7 @@ namespace Negocio
 
             try
             {
-                datos.setearConsulta("DELETE FROM DETALLE_PEDIDOS WHERE Id = @Id");
+                datos.setearConsulta("DELETE FROM DETALLE_PEDIDOS WHERE IdDetallePedido = @Id");
                 datos.agregarParametro("@Id", id);
                 datos.ejecutarAccion();
             }

@@ -17,5 +17,7 @@ namespace Dominio
         public string ImagenUrl { get; set; }
         public Categoria Categoria { get; set; } // Relación
         public string CategoriaNombre { get; set; }
+        public decimal PromedioResena { get; set; }
+        public int CantidadResenas { get; set; }
     }
 }

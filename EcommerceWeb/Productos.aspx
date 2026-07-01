@@ -50,14 +50,22 @@
 
                             <div class="card-producto">
 
+                             <a href='DetalleProducto.aspx?id=<%# Eval("Id") %>'>
                                 <img src='<%# Eval("ImagenUrl") %>' />
 
                                 <h4><%# Eval("Nombre") %></h4>
+                             </a>
 
                                 <p class="precio">
                                     $ <%# Eval("Precio", "{0:N2}") %>
                                 </p>
                                 
+                                <p class="text-muted small">
+                                    <%# (int)Eval("CantidadResenas") > 0
+                                        ? "⭐ " + Eval("PromedioResena", "{0:N1}") + " (" + Eval("CantidadResenas") + ")"
+                                        : "Sin reseñas todavía" %>
+                                </p>
+
                           <!--  BOTON CARRITO -->
                           <asp:Button runat="server" 
                                 Text="🛒 Agregar al carrito"

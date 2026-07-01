@@ -182,6 +182,38 @@ BEGIN
     );
 END
 GO
+
+-- =========================
+-- RESENAS 
+-- =========================
+IF OBJECT_ID('RESENAS', 'U') IS NULL
+BEGIN
+    CREATE TABLE RESENAS(
+        IdResena INT IDENTITY(1,1) PRIMARY KEY,
+        IdProducto INT NOT NULL,
+        IdUsuario INT NOT NULL,
+        Puntuacion INT NOT NULL,
+        Comentario VARCHAR(500) NULL,
+        Fecha DATETIME NOT NULL DEFAULT GETDATE(),
+
+        CONSTRAINT FK_RESENAS_PRODUCTOS
+        FOREIGN KEY (IdProducto)
+        REFERENCES PRODUCTOS(IdProducto),
+
+        CONSTRAINT FK_RESENAS_USUARIOS
+        FOREIGN KEY (IdUsuario)
+        REFERENCES USUARIOS(IdUsuario),
+
+        -- Un usuario solo puede tener UNA reseña por producto (si comenta de nuevo, se actualiza)
+        CONSTRAINT UQ_RESENAS_PRODUCTO_USUARIO
+        UNIQUE (IdProducto, IdUsuario),
+
+        -- Puntuación de 1 a 5 estrellas
+        CONSTRAINT CK_RESENAS_PUNTUACION
+        CHECK (Puntuacion BETWEEN 1 AND 5)
+    );
+END
+GO
 ---- =====================
 ---- ROPA (IdCategoria = 1)
 ---- =====================

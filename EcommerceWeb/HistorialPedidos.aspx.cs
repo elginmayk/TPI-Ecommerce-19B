@@ -66,5 +66,21 @@ namespace EcommerceWeb
         }
 
 
+        protected void rptPedidos_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                Pedido pedido = (Pedido)e.Item.DataItem;
+
+                Repeater rpt = (Repeater)e.Item.FindControl("rptDetalles");
+
+                DetallePedidoNegocio detalleNegocio = new DetallePedidoNegocio();
+                rpt.DataSource = detalleNegocio.listarPorPedido(pedido.Id);
+                rpt.DataBind();
+            }
+        }
+
+
+
     }
 }

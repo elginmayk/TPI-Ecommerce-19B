@@ -12,5 +12,8 @@ namespace Dominio
         public Pedido Pedido { get; set; }
         public Producto Producto { get; set; } // Relación con Producto
         public int Cantidad { get; set; }
+
+        public decimal Precio { get; set; }
+
     }
 }

@@ -17,13 +17,21 @@ namespace Negocio
 
             try
             {
-                datos.setearConsulta(
-                    "SELECT DP.IdDetallePedido, DP.Cantidad, " +
-                    "DP.IdPedido, " +
-                    "PR.IdProducto, PR.Nombre, PR.Descripcion, PR.Precio " +
-                    "FROM DETALLE_PEDIDOS DP " +
-                    "INNER JOIN PEDIDOS PE ON DP.IdPedido = PE.IdPedido " +
-                    "INNER JOIN PRODUCTOS PR ON DP.IdProducto = PR.IdProducto");
+                datos.setearConsulta(@"
+                    SELECT 
+                    DP.IdDetallePedido,
+                    DP.Cantidad, 
+                    DP.IdPedido, 
+                    PR.IdProducto, 
+                    PR.Nombre, 
+                    PR.Descripcion, 
+                    PR.Precio,
+                    PR.UrlImagen
+                    FROM DETALLE_PEDIDOS DP 
+                    INNER JOIN PEDIDOS PE
+                    ON DP.IdPedido = PE.IdPedido 
+                    INNER JOIN PRODUCTOS PR 
+                    ON DP.IdProducto = PR.IdProducto");
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
@@ -41,6 +49,7 @@ namespace Negocio
                     aux.Producto.Descripcion = datos.Lector["Descripcion"] != DBNull.Value
                         ? datos.Lector["Descripcion"].ToString() : "";
                     aux.Producto.Precio = (decimal)datos.Lector["Precio"];
+                    aux.Producto.ImagenUrl = datos.Lector["UrlImagen"].ToString();
 
                     lista.Add(aux);
                 }
@@ -56,6 +65,13 @@ namespace Negocio
                 datos.cerrarConexion();
             }
         }
+
+
+        public List<DetallePedido> listarPorPedido(int idPedido)
+        {
+            return listar().Where(x => x.Pedido.Id == idPedido).ToList();
+        }
+
         public int Agregar(DetallePedido nuevo)
         {
 

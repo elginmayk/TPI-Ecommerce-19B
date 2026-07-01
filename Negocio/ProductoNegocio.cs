@@ -17,13 +17,15 @@ namespace Negocio
 
             try
             {
-                datos.setearConsulta("SELECT P.IdProducto,P.Nombre,P.Descripcion,P.Precio,P.Stock,P.Estado,P.UrlImagen,P.IdCategoria,C.Nombre AS CategoriaNombre, " +
-                    "ISNULL(R.Promedio,0) AS PromedioResena, ISNULL(R.Cantidad,0) AS CantidadResenas " +
-                    "FROM PRODUCTOS P " +
-                    "INNER JOIN CATEGORIAS C ON P.IdCategoria = C.IdCategoria " +
-                    "LEFT JOIN (SELECT IdProducto, AVG(CAST(Puntuacion AS DECIMAL(3,2))) AS Promedio, COUNT(*) AS Cantidad " +
-                    "FROM RESENAS GROUP BY IdProducto) R ON R.IdProducto = P.IdProducto " +
-                    "WHERE P.Estado = 1 AND P.Stock > 0 ORDER BY C.Nombre");
+                
+     datos.setearConsulta("SELECT P.IdProducto,P.Nombre,P.Descripcion,P.Precio,P.Stock,P.Estado,P.UrlImagen,P.IdCategoria,C.Nombre AS CategoriaNombre, " +
+    "ISNULL(R.Promedio,0) AS PromedioResena, ISNULL(R.Cantidad,0) AS CantidadResenas " +
+    "FROM PRODUCTOS P " +
+    "INNER JOIN CATEGORIAS C ON P.IdCategoria = C.IdCategoria " +
+    "LEFT JOIN (SELECT IdProducto, AVG(CAST(Puntuacion AS DECIMAL(3,2))) AS Promedio, COUNT(*) AS Cantidad " +
+    "FROM RESENAS GROUP BY IdProducto) R ON R.IdProducto = P.IdProducto " +
+    "WHERE P.Estado = 1 ORDER BY C.Nombre");
+
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
@@ -320,5 +322,28 @@ namespace Negocio
                 return listarAgrupados();
             }
         }
+
+
+        public void DescontarStock(int idProducto)
+        {
+            Acceso datos = new Acceso();
+
+            try
+            {
+                datos.setearConsulta(
+                    "UPDATE PRODUCTOS " +
+                    "SET Stock = Stock - 1 " +
+                    "WHERE IdProducto = @IdProducto AND Stock > 0");
+
+                datos.agregarParametro("@IdProducto", idProducto);
+                datos.ejecutarAccion();
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+
     }
 }

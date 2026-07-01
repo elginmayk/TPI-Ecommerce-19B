@@ -1,4 +1,5 @@
-﻿using Negocio;
+﻿using Dominio;
+using Negocio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -71,24 +72,35 @@ namespace EcommerceWeb
             rptCategorias.DataBind();
         }
 
+
         protected void AgregarCarrito_Click(object sender, CommandEventArgs e)
         {
             int idProducto = int.Parse(e.CommandArgument.ToString());
 
-            // Obtener o crear el carrito en Session
-            List<int> carrito = Session["carrito"] as List<int>;
-            if (carrito == null)
+            ProductoNegocio negocio = new ProductoNegocio();
+            Producto producto = negocio.listarTodos()
+                                       .FirstOrDefault(x => x.Id == idProducto);
+
+            if (producto == null)
+                return;
+
+            if (producto.Stock <= 0)
             {
-                carrito = new List<int>();
+                return;
             }
 
-            // Agregar el producto
+            List<int> carrito = Session["carrito"] as List<int>;
+
+            if (carrito == null)
+                carrito = new List<int>();
+
             carrito.Add(idProducto);
+
             Session["carrito"] = carrito;
 
-            // Redirigir al carrito
             Response.Redirect("Carrito.aspx");
         }
+
 
         protected void rptCategorias_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {

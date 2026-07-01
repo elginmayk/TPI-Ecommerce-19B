@@ -137,16 +137,24 @@ namespace EcommerceWeb
             PedidoNegocio pedNegocio = new PedidoNegocio();
             int idPedido = pedNegocio.Agregar(pedido);
 
-            // Agregar detalles
+
+            // Agregar detalles y descontar stock
             DetallePedidoNegocio detNegocio = new DetallePedidoNegocio();
+            ProductoNegocio prodNegocio = new ProductoNegocio();
+
             foreach (int idProducto in idsCarrito)
             {
                 DetallePedido detalle = new DetallePedido();
                 detalle.Pedido = new Pedido { Id = idPedido };
                 detalle.Producto = new Producto { Id = idProducto };
                 detalle.Cantidad = 1;
+
                 detNegocio.Agregar(detalle);
+
+                // Descontar stock
+                prodNegocio.DescontarStock(idProducto);
             }
+
 
             Session["carrito"] = null;
             Response.Redirect("Confirmacion.aspx?id=" + idPedido);

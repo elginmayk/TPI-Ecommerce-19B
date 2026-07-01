@@ -230,28 +230,33 @@ namespace Negocio
             }
         }
 
-        public Usuario obtenerPorEmail(string email)
+
+        public Usuario obtenerPorId(int id)
         {
             Acceso datos = new Acceso();
+
             try
             {
                 datos.setearConsulta(
                     "SELECT IdUsuario, Nombre, Apellido, Email, Telefono, Rol " +
-                    "FROM USUARIOS WHERE Email = @Email");
-                datos.agregarParametro("@Email", email);
+                    "FROM USUARIOS WHERE IdUsuario = @Id");
+
+                datos.agregarParametro("@Id", id);
                 datos.ejecutarLectura();
 
                 if (datos.Lector.Read())
                 {
                     Usuario u = new Usuario();
                     u.Id = (int)datos.Lector["IdUsuario"];
-                    u.Nombre = (string)datos.Lector["Nombre"];
-                    u.Apellido = (string)datos.Lector["Apellido"];
-                    u.Email = (string)datos.Lector["Email"];
-                    u.Telefono = (string)datos.Lector["Telefono"];
+                    u.Nombre = datos.Lector["Nombre"].ToString();
+                    u.Apellido = datos.Lector["Apellido"].ToString();
+                    u.Email = datos.Lector["Email"].ToString();
+                    u.Telefono = datos.Lector["Telefono"].ToString();
                     u.Rol = Convert.ToInt32(datos.Lector["Rol"]);
+
                     return u;
                 }
+
                 return null;
             }
             catch (Exception ex)
@@ -263,6 +268,36 @@ namespace Negocio
                 datos.cerrarConexion();
             }
         }
+        public Usuario obtenerPorEmail(string email)
+        {
+            Acceso datos = new Acceso();
+
+            try
+            {
+                datos.setearConsulta("SELECT * FROM USUARIOS WHERE Email = @Email");
+                datos.agregarParametro("@Email", email);
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                {
+                    Usuario u = new Usuario();
+                    u.Id = (int)datos.Lector["IdUsuario"];
+                    u.Nombre = datos.Lector["Nombre"].ToString();
+                    u.Apellido = datos.Lector["Apellido"].ToString();
+                    u.Email = datos.Lector["Email"].ToString();
+                    u.Telefono = datos.Lector["Telefono"].ToString();
+                    u.Rol = Convert.ToInt32(datos.Lector["Rol"]);
+                    return u;
+                }
+
+                return null;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
 
 
     }

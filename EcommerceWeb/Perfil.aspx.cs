@@ -15,13 +15,18 @@ namespace EcommerceWeb
         {
 
 
-
-
-            if (!IsPostBack)
+             if (!IsPostBack)
             {
                 if (Session["usuario"] != null)
                 {
-                    Usuario user = (Usuario)Session["usuario"];
+
+           
+                    Usuario userSesion = (Usuario)Session["usuario"];
+
+   
+                    UsuarioNegocio negocio = new UsuarioNegocio();
+                    Usuario user = negocio.obtenerPorId(userSesion.Id);
+
 
                     txtNombre.Text = user.Nombre;
                     txtApellido.Text = user.Apellido;
@@ -39,37 +44,55 @@ namespace EcommerceWeb
                         txtCiudad.Text = dir.Localidad;
                         txtCP.Text = dir.CodigoPostal;
                     }
+
+                    // 🔥 actualizar sesión (opcional muy recomendado)
+                    Session["usuario"] = user;
+
                     pnlMensaje.Visible = false;
-                    switch(Request.QueryString["success"])
+
+                    switch (Request.QueryString["success"])
                     {
-                        case "-3":  lblMensajeTexto.Text = "Por favor completá todos los campos de dirección.";
-                                    pnlMensaje.CssClass = "alert alert-danger alert-dismissible fade show"; // Color ROJO
-                                    pnlMensaje.Visible = true;
-                                    break;
-                        case "-2":  lblMensajeTexto.Text = "Por favor completá nombre, apellido y email.";
-                                    pnlMensaje.CssClass = "alert alert-danger alert-dismissible fade show";
-                                    pnlMensaje.Visible = true;
-                                    break;
-                        case "-1":  lblMensajeTexto.Text = "Las contraseñas no coinciden";
-                                    pnlMensaje.CssClass = "alert alert-danger alert-dismissible fade show";
-                                    pnlMensaje.Visible = true;
-                                    break;
-                        case "1":   lblMensajeTexto.Text = "Datos actualizados correctamente";
-                                    pnlMensaje.CssClass = "alert alert-success alert-dismissible fade show";
-                                    pnlMensaje.Visible = true;
-                                    break;
-                        case "2":   lblMensajeTexto.Text = "Contraseña actualizada";
-                                    pnlMensaje.CssClass = "alert alert-success alert-dismissible fade show";
-                                    pnlMensaje.Visible = true;
-                                    break;
-                        case "3":   lblMensajeTexto.Text = "Datos guardados en base de datos";
-                                    pnlMensaje.CssClass = "alert alert-success alert-dismissible fade show";
-                                    pnlMensaje.Visible = true;
-                                    break;
-                        case "4":   lblMensajeTexto.Text = "Dirección guardada correctamente";
-                                    pnlMensaje.CssClass = "alert alert-success alert-dismissible fade show";
-                                    pnlMensaje.Visible = true;
-                                    break;
+                        case "-3":
+                            lblMensajeTexto.Text = "Por favor completá todos los campos de dirección.";
+                            pnlMensaje.CssClass = "alert alert-danger alert-dismissible fade show";
+                            pnlMensaje.Visible = true;
+                            break;
+
+                        case "-2":
+                            lblMensajeTexto.Text = "Por favor completá nombre, apellido y email.";
+                            pnlMensaje.CssClass = "alert alert-danger alert-dismissible fade show";
+                            pnlMensaje.Visible = true;
+                            break;
+
+                        case "-1":
+                            lblMensajeTexto.Text = "Las contraseñas no coinciden";
+                            pnlMensaje.CssClass = "alert alert-danger alert-dismissible fade show";
+                            pnlMensaje.Visible = true;
+                            break;
+
+                        case "1":
+                            lblMensajeTexto.Text = "Datos actualizados correctamente";
+                            pnlMensaje.CssClass = "alert alert-success alert-dismissible fade show";
+                            pnlMensaje.Visible = true;
+                            break;
+
+                        case "2":
+                            lblMensajeTexto.Text = "Contraseña actualizada";
+                            pnlMensaje.CssClass = "alert alert-success alert-dismissible fade show";
+                            pnlMensaje.Visible = true;
+                            break;
+
+                        case "3":
+                            lblMensajeTexto.Text = "Datos guardados en base de datos";
+                            pnlMensaje.CssClass = "alert alert-success alert-dismissible fade show";
+                            pnlMensaje.Visible = true;
+                            break;
+
+                        case "4":
+                            lblMensajeTexto.Text = "Dirección guardada correctamente";
+                            pnlMensaje.CssClass = "alert alert-success alert-dismissible fade show";
+                            pnlMensaje.Visible = true;
+                            break;
                     }
                 }
                 else
@@ -79,8 +102,10 @@ namespace EcommerceWeb
             }
 
 
+
+
         }
-        
+
 
 
         protected void btnActualizarDatos_Click(object sender, EventArgs e)

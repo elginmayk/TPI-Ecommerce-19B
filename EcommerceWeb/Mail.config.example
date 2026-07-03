@@ -1,0 +1,6 @@
+﻿<appSettings>
+	<add key="SmtpHost" value="smtp.gmail.com" />
+	<add key="SmtpPort" value="587" />
+	<add key="SmtpUser" value="TU_CORREO_AQUI@gmail.com" />
+	<add key="SmtpPassword" value="TU_APP_PASSWORD_AQUI" />
+</appSettings>

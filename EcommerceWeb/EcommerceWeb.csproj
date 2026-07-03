@@ -194,6 +194,8 @@
     <Content Include="font\fontello.ttf" />
     <Content Include="font\fontello.woff" />
     <Content Include="font\fontello.woff2" />
+    <Content Include="Mail.config" />
+    <Content Include="Mail.config.example" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />

@@ -26,3 +26,6 @@ Release/
 # OS files
 .DS_Store
 Thumbs.db
+
+# Configuración de mail (contiene credenciales, no se sube)
+EcommerceWeb/Mail.config

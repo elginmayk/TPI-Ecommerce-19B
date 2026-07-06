@@ -97,7 +97,7 @@ namespace Negocio
             var lista = listar();
 
             return lista
-                .Where(p => p.Estado && p.Stock > 0)
+                .Where(p => p.Estado)
                 .GroupBy(p => p.CategoriaNombre)
                 .ToList();
         }
@@ -107,9 +107,9 @@ namespace Negocio
             var lista = listar();
 
             return lista
-                .Where(p => p.Estado && p.Stock > 0 && p.CategoriaNombre == Categoria)
-                .GroupBy(p => p.CategoriaNombre)
-                .ToList();
+                   .Where(p => p.Estado)
+                   .GroupBy(p => p.CategoriaNombre)
+                   .ToList();
         }
 
         public List<Producto> listarDestacados()

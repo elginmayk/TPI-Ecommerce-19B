@@ -45,6 +45,7 @@ namespace EcommerceWeb
                         IdProducto = p.Id,
                         Nombre = p.Nombre,
                         Precio = p.Precio,
+                        Stock = p.Stock,
                         Cantidad = g.Count(),
                         Subtotal = p.Precio * g.Count()
                     };
@@ -82,25 +83,51 @@ namespace EcommerceWeb
                     Session["carrito"] = carrito;
                 }
             }
-            else if (e.CommandName == "Sumar")
-            {
-                if (carrito != null)
-                {
-                    carrito.Add(idProducto);
-                    Session["carrito"] = carrito;
-                }
-            }
+          else if (e.CommandName == "Sumar")
+{
+    if (carrito != null)
+    {
+        ProductoNegocio negocio = new ProductoNegocio();
+        Producto producto = negocio.listarPorIds(new List<int> { idProducto })
+                                  .FirstOrDefault();
+
+        int cantidadEnCarrito = carrito.Count(x => x == idProducto);
+
+        if (producto != null && cantidadEnCarrito < producto.Stock)
+        {
+            carrito.Add(idProducto);
+            Session["carrito"] = carrito;
+        }
+        else
+        {
+            Session["ErrorStock"] = "No hay stock suficiente.";
+        }
+    }
+}
 
             Response.Redirect("Carrito.aspx");
         }
 
         protected void btnFinalizar_Click(object sender, EventArgs e)
         {
+            List<int> carrito = Session["carrito"] as List<int>;
 
-          
+            ProductoNegocio negocio = new ProductoNegocio();
+            List<Producto> productos = negocio.listarPorIds(carrito);
+
+            foreach (var grupo in carrito.GroupBy(x => x))
+            {
+                Producto producto = productos.FirstOrDefault(p => p.Id == grupo.Key);
+
+                if (producto != null && grupo.Count() > producto.Stock)
+                {
+                    lblVacio.Text = $"El producto {producto.Nombre} no tiene stock suficiente.";
+                    lblVacio.Visible = true;
+                    return;
+                }
+            }
 
             Response.Redirect("Checkout.aspx");
-
         }
 
     }

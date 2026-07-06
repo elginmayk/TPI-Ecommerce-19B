@@ -3,4 +3,5 @@
 	<add key="SmtpPort" value="587" />
 	<add key="SmtpUser" value="TU_CORREO_AQUI@gmail.com" />
 	<add key="SmtpPassword" value="TU_APP_PASSWORD_AQUI" />
+	<add key="MercadoPagoAccessToken" value="TEST-TU_ACCESS_TOKEN_AQUI" />
 </appSettings>

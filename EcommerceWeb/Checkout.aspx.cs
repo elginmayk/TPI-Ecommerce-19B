@@ -9,11 +9,18 @@ using System.Web.UI.WebControls;
 using System.Net;
 using System.Net.Mail;
 using System.Configuration;
+using MercadoPago.Config;
+using MercadoPago.Client.Preference;
+using MercadoPago.Resource.Preference;
 
 namespace EcommerceWeb
 {
     public partial class Checkout : System.Web.UI.Page
     {
+        private const decimal COSTO_ENVIO = 2000m;
+        private const decimal TASA_INTERES_6_CUOTAS = 0.15m;
+        private const decimal TASA_INTERES_12_CUOTAS = 0.35m;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["usuario"] == null)
@@ -67,24 +74,106 @@ namespace EcommerceWeb
             ddlFormaPago.DataBind();
         }
 
+        protected void ddlFormaPago_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string formaPago = ddlFormaPago.SelectedItem.Text;
+
+            pnlTarjeta.Visible = false;
+            pnlCuotas.Visible = false;
+            pnlTransferencia.Visible = false;
+            pnlMercadoPago.Visible = false;
+            pnlEfectivo.Visible = false;
+
+            switch (formaPago)
+            {
+                case "Efectivo":
+                    pnlEfectivo.Visible = true;
+                    break;
+
+                case "Tarjeta de débito":
+                    pnlTarjeta.Visible = true;
+                    break;
+
+                case "Tarjeta de crédito":
+                    pnlTarjeta.Visible = true;
+                    pnlCuotas.Visible = true;
+                    break;
+
+                case "Transferencia bancaria":
+                    pnlTransferencia.Visible = true;
+                    imgQrAlias.ImageUrl = "https://api.qrserver.com/v1/create-qr-code/?size=160x160&data="
+                        + Server.UrlEncode("alias:thedibastore.mp");
+                    break;
+
+                case "Mercado Pago":
+                    pnlMercadoPago.Visible = true;
+                    break;
+            }
+
+            rfvNumeroTarjeta.Enabled = pnlTarjeta.Visible;
+            rfvTitular.Enabled = pnlTarjeta.Visible;
+            rfvVencimiento.Enabled = pnlTarjeta.Visible;
+            rfvCodSeguridad.Enabled = pnlTarjeta.Visible;
+
+            RecalcularTotal();
+        }
+
+        protected void rblCuotas_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            RecalcularTotal();
+        }
+
+        private void RecalcularTotal()
+        {
+            decimal subtotal = (decimal)Session["subtotal"];
+            decimal envio = rbEnvio.Checked ? COSTO_ENVIO : 0;
+            decimal baseCalculo = subtotal + envio;
+
+            lblEnvio.Text = "$ " + envio.ToString("N2");
+
+            bool esCredito = ddlFormaPago.SelectedItem != null
+                && ddlFormaPago.SelectedItem.Text == "Tarjeta de crédito";
+
+            if (esCredito && pnlCuotas.Visible)
+            {
+                int cuotas = int.Parse(rblCuotas.SelectedValue);
+
+                decimal tasaInteres = 0;
+                if (cuotas == 6) tasaInteres = TASA_INTERES_6_CUOTAS;
+                else if (cuotas == 12) tasaInteres = TASA_INTERES_12_CUOTAS;
+
+                decimal totalConInteres = baseCalculo * (1 + tasaInteres);
+                decimal valorCuota = totalConInteres / cuotas;
+
+                Session["totalFinal"] = totalConInteres;
+
+                lblDetalleCuotas.Text = tasaInteres == 0
+                    ? $"{cuotas} cuota{(cuotas > 1 ? "s" : "")} de $ {valorCuota:N2} — Total: $ {totalConInteres:N2} (sin interés)"
+                    : $"{cuotas} cuotas de $ {valorCuota:N2} — Total: $ {totalConInteres:N2} (interés del {tasaInteres:P0})";
+
+                lblTotal.Text = "$ " + totalConInteres.ToString("N2");
+            }
+            else
+            {
+                Session["totalFinal"] = baseCalculo;
+                lblTotal.Text = "$ " + baseCalculo.ToString("N2");
+            }
+        }
+
         protected void rbEntrega_Changed(object sender, EventArgs e)
         {
             if (rbEnvio.Checked)
             {
                 pnlDireccion.Visible = true;
                 pnlRetiro.Visible = false;
-                lblEnvio.Text = "$ 2.000,00";
-                decimal subtotal = (decimal)Session["subtotal"];
-                lblTotal.Text = "$ " + (subtotal + 2000).ToString("N2");
             }
             else
             {
                 pnlDireccion.Visible = false;
                 pnlRetiro.Visible = true;
-                lblEnvio.Text = "$ 0,00";
-                decimal subtotal = (decimal)Session["subtotal"];
-                lblTotal.Text = "$ " + subtotal.ToString("N2");
             }
+
+            RecalcularTotal();
         }
 
         private void EnviarMailConfirmacion(Usuario usuario, int idPedido, decimal total)
@@ -121,6 +210,38 @@ namespace EcommerceWeb
                 // el pedido ya se guardó en la base correctamente.
                 System.Diagnostics.Debug.WriteLine("Error al enviar mail: " + ex.Message);
             }
+        }
+
+        private string CrearPreferenciaMercadoPago(int idPedido, decimal total)
+        {
+            MercadoPagoConfig.AccessToken = ConfigurationManager.AppSettings["MercadoPagoAccessToken"];
+
+            string urlBase = Request.Url.GetLeftPart(UriPartial.Authority) + Request.ApplicationPath.TrimEnd('/');
+
+            var request = new PreferenceRequest
+            {
+                Items = new List<PreferenceItemRequest>
+                {
+                    new PreferenceItemRequest
+                    {
+                        Title = $"Pedido #{idPedido} - The Diba Store",
+                        Quantity = 1,
+                        CurrencyId = "ARS",
+                        UnitPrice = total
+                    }
+                },
+                BackUrls = new PreferenceBackUrlsRequest
+                {
+                    Success = urlBase + "/Confirmacion.aspx?id=" + idPedido,
+                    Failure = urlBase + "/Checkout.aspx",
+                    Pending = urlBase + "/Confirmacion.aspx?id=" + idPedido
+                }
+            };
+
+            var client = new PreferenceClient();
+            Preference preference = client.Create(request);
+
+            return preference.SandboxInitPoint;
         }
 
         protected void btnConfirmar_Click(object sender, EventArgs e)
@@ -165,7 +286,9 @@ namespace EcommerceWeb
             // Crear pedido
             Pedido pedido = new Pedido();
             pedido.Usuario = usuario;
-            pedido.Total = (decimal)Session["subtotal"];
+            pedido.Total = Session["totalFinal"] != null
+                ? (decimal)Session["totalFinal"]
+                : (decimal)Session["subtotal"];
             pedido.Estado = "Pendiente";
             pedido.Fecha = DateTime.Now;
             pedido.FormaPago = new FormaPago { Id = int.Parse(ddlFormaPago.SelectedValue) };
@@ -196,9 +319,41 @@ namespace EcommerceWeb
 
 
             Session["carrito"] = null;
-            EnviarMailConfirmacion(usuario, idPedido, pedido.Total);
-            Response.Redirect("Confirmacion.aspx?id=" + idPedido);
+
+            bool esMercadoPago = ddlFormaPago.SelectedItem.Text == "Mercado Pago";
+
+            // Para las demás formas de pago, "Confirmar compra" ya es el paso final -> mandamos el mail ahora.
+            // Para Mercado Pago, todavía falta que la persona pague afuera de nuestro sitio,
+            // así que el mail se manda recién en Confirmacion.aspx si el pago vuelve aprobado.
+            if (!esMercadoPago)
+            {
+                EnviarMailConfirmacion(usuario, idPedido, pedido.Total);
+            }
+
+            string linkMercadoPago = null;
+
+            if (esMercadoPago)
+            {
+                try
+                {
+                    linkMercadoPago = CrearPreferenciaMercadoPago(idPedido, pedido.Total);
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine("Error al crear preferencia de Mercado Pago: " + ex.Message);
+                }
+            }
+
+            if (!string.IsNullOrEmpty(linkMercadoPago))
+            {
+                Response.Redirect(linkMercadoPago);
+            }
+            else
+            {
+                Response.Redirect("Confirmacion.aspx?id=" + idPedido);
+            }
         }
+
         protected void btnUsarMiDireccion_Click(object sender, EventArgs e)
         {
             Usuario usuario = (Usuario)Session["usuario"];

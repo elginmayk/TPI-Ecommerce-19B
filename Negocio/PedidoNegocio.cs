@@ -80,6 +80,46 @@ namespace Negocio
             }
         }
 
+        public Pedido obtenerPorId(int id)
+        {
+            Pedido pedido = null;
+            Acceso datos = new Acceso();
+
+            try
+            {
+                datos.setearConsulta(
+                    "SELECT P.IdPedido, P.Fecha, P.Total, P.Estado, " +
+                    "U.IdUsuario, U.Nombre, U.Apellido, U.Email, U.Telefono " +
+                    "FROM PEDIDOS P " +
+                    "INNER JOIN USUARIOS U ON P.IdUsuario = U.IdUsuario " +
+                    "WHERE P.IdPedido = @Id");
+                datos.agregarParametro("@Id", id);
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                {
+                    pedido = new Pedido();
+                    pedido.Id = (int)datos.Lector["IdPedido"];
+                    pedido.Fecha = (DateTime)datos.Lector["Fecha"];
+                    pedido.Total = (decimal)datos.Lector["Total"];
+                    pedido.Estado = (string)datos.Lector["Estado"];
+
+                    pedido.Usuario = new Usuario();
+                    pedido.Usuario.Id = (int)datos.Lector["IdUsuario"];
+                    pedido.Usuario.Nombre = (string)datos.Lector["Nombre"];
+                    pedido.Usuario.Apellido = (string)datos.Lector["Apellido"];
+                    pedido.Usuario.Email = (string)datos.Lector["Email"];
+                    pedido.Usuario.Telefono = (string)datos.Lector["Telefono"];
+                }
+
+                return pedido;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
         public int Agregar(Pedido nuevo)
         {
 

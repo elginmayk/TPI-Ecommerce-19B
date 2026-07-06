@@ -128,12 +128,87 @@
                     <h5 class="mb-0">💳 Forma de pago</h5>
                 </div>
                 <div class="card-body">
-                    <asp:DropDownList ID="ddlFormaPago" runat="server" CssClass="form-select" />
+                    <asp:DropDownList ID="ddlFormaPago" runat="server" CssClass="form-select"
+                        AutoPostBack="true" OnSelectedIndexChanged="ddlFormaPago_SelectedIndexChanged" />
+
+                    <!-- EFECTIVO -->
+                    <asp:Panel ID="pnlEfectivo" runat="server" Visible="false" CssClass="mt-3 p-3 border rounded text-center bg-light">
+                        <p class="mb-0">💵 Vas a abonar en efectivo al momento de la entrega o el retiro.</p>
+                    </asp:Panel>
+
+                    <!-- DATOS DE TARJETA (débito y crédito comparten estos campos) -->
+                    <asp:Panel ID="pnlTarjeta" runat="server" Visible="false" CssClass="mt-3 p-3 border rounded bg-light">
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <label class="form-label">Número de tarjeta</label>
+                                <asp:TextBox ID="txtNumeroTarjeta" runat="server" CssClass="form-control"
+                                    placeholder="•••• •••• •••• ••••" MaxLength="19" />
+                                <asp:RequiredFieldValidator ID="rfvNumeroTarjeta" runat="server"
+                                    ControlToValidate="txtNumeroTarjeta" ErrorMessage="Ingresá el número de tarjeta"
+                                    CssClass="text-danger small d-block" Display="Dynamic" Enabled="false" />
+                            </div>
+                            <div class="col-md-8 mb-3">
+                                <label class="form-label">Nombre del titular</label>
+                                <asp:TextBox ID="txtTitular" runat="server" CssClass="form-control"
+                                    placeholder="Como figura en la tarjeta" />
+                                <asp:RequiredFieldValidator ID="rfvTitular" runat="server"
+                                    ControlToValidate="txtTitular" ErrorMessage="Ingresá el titular"
+                                    CssClass="text-danger small d-block" Display="Dynamic" Enabled="false" />
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">DNI del titular</label>
+                                <asp:TextBox ID="txtDniTitular" runat="server" CssClass="form-control" placeholder="Ej: 30123456" />
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Vencimiento</label>
+                                <asp:TextBox ID="txtVencimiento" runat="server" CssClass="form-control" placeholder="MM/AA" MaxLength="5" />
+                                <asp:RequiredFieldValidator ID="rfvVencimiento" runat="server"
+                                    ControlToValidate="txtVencimiento" ErrorMessage="Ingresá el vencimiento"
+                                    CssClass="text-danger small d-block" Display="Dynamic" Enabled="false" />
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Código de seguridad</label>
+                                <asp:TextBox ID="txtCodSeguridad" runat="server" CssClass="form-control"
+                                    placeholder="CVV" MaxLength="4" TextMode="Password" />
+                                <asp:RequiredFieldValidator ID="rfvCodSeguridad" runat="server"
+                                    ControlToValidate="txtCodSeguridad" ErrorMessage="Ingresá el CVV"
+                                    CssClass="text-danger small d-block" Display="Dynamic" Enabled="false" />
+                            </div>
+                        </div>
+                    </asp:Panel>
+
+                    <!-- CUOTAS (solo tarjeta de crédito) -->
+                    <asp:Panel ID="pnlCuotas" runat="server" Visible="false" CssClass="mt-3 p-3 border rounded">
+                        <label class="form-label"><strong>¿En cuántas cuotas?</strong></label>
+                        <asp:RadioButtonList ID="rblCuotas" runat="server" CssClass="mb-2"
+                            AutoPostBack="true" OnSelectedIndexChanged="rblCuotas_SelectedIndexChanged">
+                            <asp:ListItem Text="1 cuota - sin interés" Value="1" Selected="True" />
+                            <asp:ListItem Text="3 cuotas - sin interés" Value="3" />
+                            <asp:ListItem Text="6 cuotas - 15% de interés" Value="6" />
+                            <asp:ListItem Text="12 cuotas - 35% de interés" Value="12" />
+                        </asp:RadioButtonList>
+                        <div class="alert alert-info mb-0">
+                            <asp:Label ID="lblDetalleCuotas" runat="server" />
+                        </div>
+                    </asp:Panel>
+
+                    <!-- TRANSFERENCIA -->
+                    <asp:Panel ID="pnlTransferencia" runat="server" Visible="false" CssClass="mt-3 p-3 border rounded text-center">
+                        <p class="mb-2">Escaneá el código QR con tu billetera virtual o transferí al siguiente alias:</p>
+                        <asp:Image ID="imgQrAlias" runat="server" Width="160" Height="160" AlternateText="QR alias de transferencia" />
+                        <p class="mt-2 mb-0"><strong>Alias:</strong> thedibastore.mp</p>
+                    </asp:Panel>
+
+                    <!-- MERCADO PAGO -->
+                    <asp:Panel ID="pnlMercadoPago" runat="server" Visible="false" CssClass="mt-3 p-3 border rounded text-center"
+                        style="background-color:#eef6ff;">
+                        <p class="mb-1" style="color:#009ee3;"><strong>Mercado Pago</strong></p>
+                        <p class="mb-0 small text-muted">Vas a completar el pago en el entorno seguro de Mercado Pago al confirmar la compra.</p>
+                    </asp:Panel>
                 </div>
             </div>
 
         </div>
-
         <!-- COLUMNA DERECHA - TOTAL -->
         <div class="col-md-4">
             <div class="card sticky-top" style="top: 20px;">
